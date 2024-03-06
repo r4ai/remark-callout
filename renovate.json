@@ -1,0 +1,38 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "dependencyDashboard": false,
+  "lockFileMaintenance": {
+    "automerge": true,
+    "platformAutomerge": true,
+    "enabled": true,
+    "recreateWhen": "always",
+    "rebaseStalePrs": true,
+    "branchTopic": "lock-file-maintenance",
+    "commitMessageAction": "Lock file maintenance",
+    "commitMessageTopic": null,
+    "commitMessageExtra": null,
+    "schedule": [
+      "before 4am on monday"
+    ],
+    "groupName": null,
+    "prBodyDefinitions": {
+      "Change": "All locks refreshed"
+    }
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+        "pinDigest"
+      ],
+      "automerge": true,
+      "platformAutomerge": true
+    }
+  ]
+}
