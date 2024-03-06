@@ -1,9 +1,135 @@
+import defu from "defu";
+import type { Properties } from "hast";
 import type * as mdast from "mdast";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
+import type { VFile } from "vfile";
 
-export const remarkCallout: Plugin<[], mdast.Root> = () => {
-  return (tree) => {
+export type Options = OptionsBuilder<NodeOptions | NodeOptionsFunction>;
+
+export type OptionsBuilder<N> = {
+  /**
+   * The root node of the callout.
+   *
+   * @default
+   * (callout) => ({
+   *   tagName: "div",
+   *   properties: {
+   *     "data-callout-type": callout.type,
+   *     "data-callout-is-foldable": String(callout.isFoldable),
+   *   },
+   * })
+   */
+  root?: N;
+
+  /**
+   * The title node of the callout.
+   *
+   * @default
+   * {
+   *   tagName: "div",
+   *   properties: {
+   *     dataCalloutTitle: true,
+   *   },
+   * }
+   */
+  title?: N;
+
+  /**
+   * The body node of the callout.
+   *
+   * @default
+   * {
+   *   tagName: "div",
+   *   properties: {},
+   * }
+   */
+  body?: N;
+
+  /**
+   * A list of callout types that are supported.
+   * - If `undefined`, all callout types are supported. This means that this plugin will not check if the given callout type is in `callouts` and never call `onUnknownCallout`.
+   * - If a list, only the callout types in the list are supported. This means that if the given callout type is not in `callouts`, this plugin will call `onUnknownCallout`.
+   * @example ["info", "warning", "danger"]
+   * @default undefined
+   */
+  callouts?: string[] | null;
+
+  /**
+   * A function that is called when the given callout type is not in `callouts`.
+   *
+   * - If the function returns `undefined`, the callout is ignored. This means that the callout is rendered as a normal blockquote.
+   * - If the function returns a `Callout`, the callout is replaced with the returned `Callout`.
+   */
+  onUnknownCallout?: (callout: Callout, file: VFile) => Callout | undefined;
+};
+
+export type NodeOptions = {
+  /**
+   * The HTML tag name of the node.
+   *
+   * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
+   */
+  tagName: string;
+
+  /**
+   * The html properties of the node.
+   *
+   * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#properties
+   * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
+   * @example { "className": "callout callout-info" }
+   */
+  properties: Properties;
+};
+
+export type NodeOptionsFunction = (callout: Callout) => NodeOptions;
+
+export const defaultOptions: Required<Options> = {
+  root: (callout) => ({
+    tagName: "div",
+    properties: {
+      dataCallout: true,
+      dataCalloutType: callout.type,
+      dataCalloutIsFoldable: String(callout.isFoldable),
+    },
+  }),
+  title: {
+    tagName: "div",
+    properties: {
+      dataCalloutTitle: true,
+    },
+  },
+  body: {
+    tagName: "div",
+    properties: {},
+  },
+  callouts: null,
+  onUnknownCallout: () => undefined,
+};
+
+const initOptions = (options?: Options) => {
+  const defaultedOptions = defu(options, defaultOptions);
+
+  return Object.fromEntries(
+    Object.entries(defaultedOptions).map(([key, value]) => {
+      if (
+        ["root", "title", "body"].includes(key) &&
+        typeof value !== "function"
+      )
+        return [key, () => value];
+
+      return [key, value];
+    }),
+  ) as Required<OptionsBuilder<NodeOptionsFunction>>;
+};
+
+/**
+ * A remark plugin to parse callout syntax.
+ */
+export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
+  const options = initOptions(_options);
+
+  return (tree, file) => {
     visit(tree, "blockquote", (node) => {
       const paragraphNode = node.children[0];
       if (paragraphNode.type !== "paragraph") return;
@@ -17,14 +143,25 @@ export const remarkCallout: Plugin<[], mdast.Root> = () => {
         calloutTypeTextNode.value.split("\n");
       const calloutData = parseCallout(calloutTypeText);
       if (calloutData == null) return;
+      if (
+        options.callouts != null &&
+        !options.callouts.includes(calloutData.type)
+      ) {
+        const newCallout = options.onUnknownCallout(calloutData, file);
+        if (newCallout == null) return;
+
+        calloutData.type = newCallout.type;
+        calloutData.isFoldable = newCallout.isFoldable;
+        calloutData.title = newCallout.title;
+      }
 
       // Generate callout root node
       node.data = {
         ...node.data,
-        hName: "callout",
+        hName: options.root(calloutData).tagName,
         hProperties: {
-          calloutType: calloutData.type,
-          calloutIsFoldable: String(calloutData.isFoldable),
+          ...node.data?.hProperties,
+          ...options.root(calloutData).properties,
         },
       };
 
@@ -33,6 +170,12 @@ export const remarkCallout: Plugin<[], mdast.Root> = () => {
         {
           type: "paragraph",
           children: [],
+          data: {
+            hName: options.body(calloutData).tagName,
+            hProperties: {
+              ...options.body(calloutData).properties,
+            },
+          },
         },
         ...node.children.splice(1),
       ];
@@ -48,9 +191,9 @@ export const remarkCallout: Plugin<[], mdast.Root> = () => {
       const titleNode: mdast.Paragraph = {
         type: "paragraph",
         data: {
-          hName: "callout-title",
+          hName: options.title(calloutData).tagName,
           hProperties: {
-            calloutType: calloutData.type,
+            ...options.title(calloutData).properties,
           },
         },
         children: [],
