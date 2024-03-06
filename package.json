@@ -36,9 +36,7 @@
   ],
   "scripts": {
     "test": "vitest",
-    "build": "rimraf dist && concurrently 'bun run build:cjs' 'bun run build:esm'",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "rimraf dist && bun run build:esm",
     "prepublishOnly": "bun run build",
     "check": "bunx @biomejs/biome check --apply .",
     "prepare": "husky install"
@@ -54,7 +52,6 @@
     "@types/hast": "^3.0.4",
     "@types/jsdom": "^21.1.6",
     "@types/mdast": "^4.0.3",
-    "concurrently": "^8.2.2",
     "dedent": "^1.5.1",
     "husky": "^9.0.11",
     "jsdom": "^24.0.0",
