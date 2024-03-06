@@ -7,15 +7,15 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { beforeAll, describe, expect, test } from "vitest";
-import { parseCallout, remarkCallout } from "./plugin";
+import { type Options, parseCallout, remarkCallout } from "./plugin";
 
-const process = async (md: string) => {
+const process = async (md: string, options?: Options) => {
   let hast: hast.Node;
   let mdast: mdast.Root;
   const html = (
     await unified()
       .use(remarkParse)
-      .use(remarkCallout)
+      .use(remarkCallout, options)
       .use(() => (tree: mdast.Root) => {
         mdast = tree;
         return mdast;
@@ -101,7 +101,6 @@ describe("remarkCallout", () => {
     `;
 
     const { html } = await process(md);
-    console.log(html);
     const doc = parser.parseFromString(html, "text/html");
 
     const callout = doc.querySelector("[data-callout]");
@@ -216,5 +215,155 @@ describe("remarkCallout", () => {
     expect(callout?.children[1].innerHTML).toBe(
       "body <strong>first</strong> <em>line</em> <code>code</code> here",
     );
+  });
+
+  test("options.root", async () => {
+    const md = dedent`
+      > [!warn] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      root: (callout) => ({
+        tagName: "callout",
+        properties: {
+          calloutType: callout.type,
+          isFoldable: String(callout.isFoldable),
+        },
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("callout");
+    expect(callout).not.toBeNull();
+    expect(callout?.getAttribute("calloutType")).toBe("warn");
+    expect(callout?.getAttribute("isFoldable")).toBe("false");
+
+    const calloutTitle = callout?.querySelector("[data-callout-title]");
+    expect(calloutTitle?.textContent).toBe("title here");
+
+    const calloutBody = callout?.children[1];
+    expect(calloutBody?.textContent).toBe("body here");
+  });
+
+  test("options.title", async () => {
+    const md = dedent`
+      > [!warn] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      title: (callout) => ({
+        tagName: "h2",
+        properties: {
+          className: "callout-title",
+          calloutType: callout.type,
+        },
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const calloutTitle = doc.querySelector(".callout-title");
+    expect(calloutTitle).not.toBeNull();
+    expect(calloutTitle?.getAttribute("calloutType")).toBe("warn");
+    expect(calloutTitle?.textContent).toBe("title here");
+  });
+
+  test("options.body", async () => {
+    const md = dedent`
+      > [!warn] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      body: (callout) => ({
+        tagName: "div",
+        properties: {
+          className: "callout-body",
+          calloutType: callout.type,
+        },
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const calloutBody = doc.querySelector(".callout-body");
+    expect(calloutBody).not.toBeNull();
+    expect(calloutBody?.tagName.toLowerCase()).toBe("div");
+    expect(calloutBody?.getAttribute("calloutType")).toBe("warn");
+    expect(calloutBody?.textContent).toBe("body here");
+  });
+
+  test("options.callouts", async () => {
+    for (const calloutType of ["info", "warn", "error"]) {
+      const md = dedent`
+        > [!${calloutType}] title here
+        > body here
+      `;
+
+      const { html } = await process(md, {
+        callouts: ["info", "warn"],
+      });
+
+      const doc = parser.parseFromString(html, "text/html");
+
+      switch (calloutType) {
+        case "info":
+        case "warn": {
+          const callout = doc.querySelector("[data-callout]");
+          expect(callout).not.toBeNull();
+          expect(callout?.getAttribute("data-callout-type")).toBe(calloutType);
+          expect(callout?.getAttribute("data-callout-is-foldable")).toBe(
+            "false",
+          );
+
+          const calloutTitle = callout?.querySelector("[data-callout-title]");
+          expect(calloutTitle?.textContent).toBe("title here");
+
+          const calloutBody = callout?.children[1];
+          expect(calloutBody?.textContent).toBe("body here");
+          break;
+        }
+
+        case "error": {
+          const callout = doc.querySelector("[data-callout]");
+          expect(callout).toBeNull();
+          break;
+        }
+      }
+    }
+  });
+
+  test("options.onUnknownCallout", async () => {
+    const md = dedent`
+      > [!warn] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      callouts: ["info"],
+      onUnknownCallout: (callout) => {
+        return {
+          type: "info",
+          isFoldable: callout.isFoldable,
+          title: callout.title,
+        };
+      },
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("[data-callout]");
+    expect(callout).not.toBeNull();
+    expect(callout?.getAttribute("data-callout-type")).toBe("info");
+    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("false");
+
+    const calloutTitle = callout?.querySelector("[data-callout-title]");
+    expect(calloutTitle?.textContent).toBe("title here");
+
+    const calloutBody = callout?.children[1];
+    expect(calloutBody?.textContent).toBe("body here");
   });
 });
