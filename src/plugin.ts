@@ -160,6 +160,7 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
         ...node.data,
         hName: options.root(calloutData).tagName,
         hProperties: {
+          // @ts-ignore error TS2339: Property 'hProperties' does not exist on type 'BlockquoteData'.
           ...node.data?.hProperties,
           ...options.root(calloutData).properties,
         },

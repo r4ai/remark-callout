@@ -36,7 +36,7 @@
   ],
   "scripts": {
     "test": "vitest",
-    "build": "rimraf dist && bun run build:esm",
+    "build": "rimraf dist && tsc -p tsconfig.esm.json",
     "prepublishOnly": "bun run build",
     "check": "bunx @biomejs/biome check --apply .",
     "prepare": "husky install"
