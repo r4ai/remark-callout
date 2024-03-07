@@ -161,6 +161,31 @@ yields:
 </div>
 ```
 
+### Foldable callouts
+
+You can make a callout foldable by adding a plus (+) or a minus (-) directly after the type identifier.
+
+A plus sign expands the callout by default, and a minus sign collapses it instead.
+
+```md
+> [!note]- title here
+> body here
+```
+
+yields:
+
+```html
+<div
+  data-callout
+  data-callout-type="note"
+  data-callout-is-foldable="true"
+  data-callout-default-folded="true"
+>
+  <div data-callout-title>title here</div>
+  <p>body here</p>
+</div>
+```
+
 ## Quick Start
 
 ### Vanilla JS
@@ -193,7 +218,7 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title>title here</div>
-  <div>body here</div>
+  <p>body here</p>
 </div>
 ```
 
@@ -237,7 +262,7 @@ yields:
    ```html
    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
      <div data-callout-title>title here</div>
-     <div>body here</div>
+     <p>body here</p>
    </div>
    ```
 
@@ -446,6 +471,28 @@ export type NodeOptions = {
 };
 
 export type NodeOptionsFunction = (callout: Callout) => NodeOptions;
+
+export type Callout = {
+  /**
+   * The type of the callout.
+   */
+  type: string;
+
+  /**
+   * Whether the callout is foldable.
+   */
+  isFoldable: boolean;
+
+  /**
+   * Whether the callout is folded by default.
+   */
+  defaultFolded?: boolean;
+
+  /**
+   * The title of the callout.
+   */
+  title?: string;
+};
 ```
 
 Default options:
@@ -458,6 +505,10 @@ export const defaultOptions: Required<Options> = {
       dataCallout: true,
       dataCalloutType: callout.type,
       dataCalloutIsFoldable: String(callout.isFoldable),
+      dataCalloutDefaultFolded:
+        callout.defaultFolded == null
+          ? undefined
+          : String(callout.defaultFolded),
     },
   }),
   title: {

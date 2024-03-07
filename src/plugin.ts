@@ -80,6 +80,10 @@ export const defaultOptions: Required<Options> = {
       dataCallout: true,
       dataCalloutType: callout.type,
       dataCalloutIsFoldable: String(callout.isFoldable),
+      dataCalloutDefaultFolded:
+        callout.defaultFolded == null
+          ? undefined
+          : String(callout.defaultFolded),
     },
   }),
   title: {
@@ -225,8 +229,24 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
 };
 
 export type Callout = {
+  /**
+   * The type of the callout.
+   */
   type: string;
+
+  /**
+   * Whether the callout is foldable.
+   */
   isFoldable: boolean;
+
+  /**
+   * Whether the callout is folded by default.
+   */
+  defaultFolded?: boolean;
+
+  /**
+   * The title of the callout.
+   */
   title?: string;
 };
 
@@ -243,13 +263,17 @@ export const parseCallout = (
   if (text == null) return;
 
   const match = text.match(
-    /^\[!(?<type>.+?)\](?<isFoldable>-)?\s?(?<title>.+)?$/,
+    /^\[!(?<type>.+?)\](?<isFoldable>[-+])?\s?(?<title>.+)?$/,
   );
   if (match?.groups?.type == null) return undefined;
 
   return {
     type: match.groups.type,
     isFoldable: match.groups.isFoldable != null,
+    defaultFolded:
+      match.groups.isFoldable == null
+        ? undefined
+        : match.groups.isFoldable === "-",
     title: match.groups.title,
   };
 };
