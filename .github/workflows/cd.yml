@@ -19,7 +19,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: .tool-versions
-          registry-url: https://registry.npmjs.org
+
+      - name: Creating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Setup bun
         uses: oven-sh/setup-bun@v1
