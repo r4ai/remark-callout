@@ -39,7 +39,8 @@
     "build": "rimraf dist && tsc -p tsconfig.esm.json",
     "prepublishOnly": "bun run build",
     "check": "bunx @biomejs/biome check --apply .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "bun run vitest run && bun run build && bun run changeset publish"
   },
   "peerDependencies": {},
   "dependencies": {
