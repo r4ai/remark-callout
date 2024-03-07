@@ -271,31 +271,6 @@ describe("remarkCallout", () => {
     expect(calloutTitle?.textContent).toBe("title here");
   });
 
-  test("options.body", async () => {
-    const md = dedent`
-      > [!warn] title here
-      > body here
-    `;
-
-    const { html } = await process(md, {
-      body: (callout) => ({
-        tagName: "div",
-        properties: {
-          className: "callout-body",
-          calloutType: callout.type,
-        },
-      }),
-    });
-
-    const doc = parser.parseFromString(html, "text/html");
-
-    const calloutBody = doc.querySelector(".callout-body");
-    expect(calloutBody).not.toBeNull();
-    expect(calloutBody?.tagName.toLowerCase()).toBe("div");
-    expect(calloutBody?.getAttribute("calloutType")).toBe("warn");
-    expect(calloutBody?.textContent).toBe("body here");
-  });
-
   test("options.callouts", async () => {
     for (const calloutType of ["info", "warn", "error"]) {
       const md = dedent`

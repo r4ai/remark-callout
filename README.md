@@ -50,7 +50,7 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title>title here</div>
-  <div>body here</div>
+  <p>body here</p>
 </div>
 ```
 
@@ -71,7 +71,7 @@ yields:
     The <strong>reason</strong> for why <em>this</em> <del>is</del>
     <code>true</code> when <code class="language-math math-inline">a=1</code>.
   </div>
-  <div>body here</div>
+  <p>body here</p>
 </div>
 ```
 
@@ -106,10 +106,10 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title>title here</div>
-  <div>
+  <p>
     The <strong>reason</strong> for why <em>this</em> <del>is</del>
     <code>true</code> when <code class="language-math math-inline">a=1</code>.
-  </div>
+  </p>
   <ul>
     <li>item 1</li>
     <li>item 2</li>
@@ -145,17 +145,17 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title></div>
-  <div>Nested callout</div>
+  <p>Nested callout</p>
   <div data-callout data-callout-type="info" data-callout-is-foldable="false">
     <div data-callout-title></div>
-    <div>Further nested callout</div>
+    <p>Further nested callout</p>
     <div
       data-callout
       data-callout-type="warning"
       data-callout-is-foldable="false"
     >
       <div data-callout-title></div>
-      <div>Even further nested callout</div>
+      <p>Even further nested callout</p>
     </div>
   </div>
 </div>
@@ -410,17 +410,6 @@ export type Options = {
   title?: NodeOptions | NodeOptionsFunctio;
 
   /**
-   * The body node of the callout.
-   *
-   * @default
-   * {
-   *   tagName: "div",
-   *   properties: {},
-   * }
-   */
-  body?: NodeOptions | NodeOptionsFunctio;
-
-  /**
    * A list of callout types that are supported.
    * - If `undefined`, all callout types are supported. This means that this plugin will not check if the given callout type is in `callouts` and never call `onUnknownCallout`.
    * - If a list, only the callout types in the list are supported. This means that if the given callout type is not in `callouts`, this plugin will call `onUnknownCallout`.
@@ -476,10 +465,6 @@ export const defaultOptions: Required<Options> = {
     properties: {
       dataCalloutTitle: true,
     },
-  },
-  body: {
-    tagName: "div",
-    properties: {},
   },
   callouts: null,
   onUnknownCallout: () => undefined,
