@@ -419,7 +419,7 @@ export type Options = {
    *   },
    * })
    */
-  root?: NodeOptions | NodeOptionsFunctio;
+  root?: NodeOptions | NodeOptionsFunction;
 
   /**
    * The title node of the callout.
@@ -432,7 +432,7 @@ export type Options = {
    *   },
    * }
    */
-  title?: NodeOptions | NodeOptionsFunctio;
+  title?: NodeOptions | NodeOptionsFunction;
 
   /**
    * A list of callout types that are supported.
