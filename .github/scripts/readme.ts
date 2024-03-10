@@ -4,7 +4,7 @@ import remarkMath from "remark-math";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
-import remarkCallout from "../src/index";
+import remarkCallout from "../../src/index";
 
 const md = await Bun.file(`${import.meta.dirname}/input.md`).text();
 
