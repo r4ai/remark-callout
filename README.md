@@ -50,7 +50,9 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title>title here</div>
-  <p>body here</p>
+  <div data-callout-body>
+    <p>body here</p>
+  </div>
 </div>
 ```
 
@@ -71,7 +73,9 @@ yields:
     The <strong>reason</strong> for why <em>this</em> <del>is</del>
     <code>true</code> when <code class="language-math math-inline">a=1</code>.
   </div>
-  <p>body here</p>
+  <div data-callout-body>
+    <p>body here</p>
+  </div>
 </div>
 ```
 
@@ -106,20 +110,22 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title>title here</div>
-  <p>
-    The <strong>reason</strong> for why <em>this</em> <del>is</del>
-    <code>true</code> when <code class="language-math math-inline">a=1</code>.
-  </p>
-  <ul>
-    <li>item 1</li>
-    <li>item 2</li>
-  </ul>
-  <pre><code class="language-js">console.log("Hello, World!");
+  <div data-callout-body>
+    <p>
+      The <strong>reason</strong> for why <em>this</em> <del>is</del>
+      <code>true</code> when <code class="language-math math-inline">a=1</code>.
+    </p>
+    <ul>
+      <li>item 1</li>
+      <li>item 2</li>
+    </ul>
+    <pre><code class="language-js">console.log("Hello, World!");
 </code></pre>
-  <pre><code class="language-math math-display">\forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| &#x3C; \delta \Rightarrow |f(x) - b| &#x3C; \epsilon</code></pre>
-  <blockquote>
-    <p>Done is better than perfect.</p>
-  </blockquote>
+    <pre><code class="language-math math-display">\forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| &#x3C; \delta \Rightarrow |f(x) - b| &#x3C; \epsilon</code></pre>
+    <blockquote>
+      <p>Done is better than perfect.</p>
+    </blockquote>
+  </div>
 </div>
 ```
 
@@ -145,17 +151,23 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title></div>
-  <p>Nested callout</p>
-  <div data-callout data-callout-type="info" data-callout-is-foldable="false">
-    <div data-callout-title></div>
-    <p>Further nested callout</p>
-    <div
-      data-callout
-      data-callout-type="warning"
-      data-callout-is-foldable="false"
-    >
+  <div data-callout-body>
+    <p>Nested callout</p>
+    <div data-callout data-callout-type="info" data-callout-is-foldable="false">
       <div data-callout-title></div>
-      <p>Even further nested callout</p>
+      <div data-callout-body>
+        <p>Further nested callout</p>
+        <div
+          data-callout
+          data-callout-type="warning"
+          data-callout-is-foldable="false"
+        >
+          <div data-callout-title></div>
+          <div data-callout-body>
+            <p>Even further nested callout</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -182,7 +194,9 @@ yields:
   data-callout-default-folded="true"
 >
   <div data-callout-title>title here</div>
-  <p>body here</p>
+  <div data-callout-body>
+    <p>body here</p>
+  </div>
 </div>
 ```
 
@@ -218,7 +232,9 @@ yields:
 ```html
 <div data-callout data-callout-type="note" data-callout-is-foldable="false">
   <div data-callout-title>title here</div>
-  <p>body here</p>
+  <div data-callout-body>
+    <p>body here</p>
+  </div>
 </div>
 ```
 
@@ -262,7 +278,9 @@ yields:
    ```html
    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
      <div data-callout-title>title here</div>
-     <p>body here</p>
+     <div data-callout-body>
+       <p>body here</p>
+     </div>
    </div>
    ```
 
@@ -528,4 +546,16 @@ To install dependencies:
 
 ```bash
 bun install
+```
+
+To run tests with web ui:
+
+```bash
+bun run test --ui
+```
+
+To build the project:
+
+```bash
+bun run build
 ```
