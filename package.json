@@ -65,6 +65,8 @@
     "jsdom": "^24.0.0",
     "lint-staged": "^15.2.2",
     "rehype-stringify": "^10.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-math": "^6.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
     "rimraf": "^5.0.5",

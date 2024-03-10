@@ -3,6 +3,8 @@ import type * as hast from "hast";
 import { JSDOM } from "jsdom";
 import type * as mdast from "mdast";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
@@ -15,6 +17,8 @@ const process = async (md: string, options?: Options) => {
   const html = (
     await unified()
       .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkMath)
       .use(remarkCallout, options)
       .use(() => (tree: mdast.Root) => {
         mdast = tree;
@@ -155,7 +159,7 @@ describe("remarkCallout", () => {
 
   test("callout with title consisting of multiple nodes", async () => {
     const md = dedent`
-      > [!note] title here \`inline code\`
+      > [!note] The **reason** for why _this_ ~~is~~ \`true\` when $a=1$.
       > body here
     `;
 
@@ -169,7 +173,9 @@ describe("remarkCallout", () => {
     expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
-    expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
+    expect(calloutTitle?.innerHTML).toBe(
+      'The <strong>reason</strong> for why <em>this</em> <del>is</del> <code>true</code> when <code class="language-math math-inline">a=1</code>.',
+    );
 
     const calloutBody = callout?.querySelector("[data-callout-body]");
     expect(calloutBody?.children[0].textContent).toBe("body here");
