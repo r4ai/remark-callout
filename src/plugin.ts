@@ -99,18 +99,18 @@ export const defaultOptions: Required<Options> = {
           : String(callout.defaultFolded),
     },
   }),
-  title: {
+  title: () => ({
     tagName: "div",
     properties: {
       dataCalloutTitle: true,
     },
-  },
-  body: {
+  }),
+  body: () => ({
     tagName: "div",
     properties: {
       dataCalloutBody: true,
     },
-  },
+  }),
   callouts: null,
   onUnknownCallout: () => undefined,
 };
