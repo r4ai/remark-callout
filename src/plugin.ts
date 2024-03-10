@@ -36,6 +36,19 @@ export type OptionsBuilder<N> = {
   title?: N;
 
   /**
+   * The body node of the callout.
+   *
+   * @default
+   * {
+   *   tagName: "div",
+   *   properties: {
+   *     dataCalloutBody: true,
+   *   },
+   * }
+   */
+  body?: N;
+
+  /**
    * A list of callout types that are supported.
    * - If `undefined`, all callout types are supported. This means that this plugin will not check if the given callout type is in `callouts` and never call `onUnknownCallout`.
    * - If a list, only the callout types in the list are supported. This means that if the given callout type is not in `callouts`, this plugin will call `onUnknownCallout`.
@@ -90,6 +103,12 @@ export const defaultOptions: Required<Options> = {
     tagName: "div",
     properties: {
       dataCalloutTitle: true,
+    },
+  },
+  body: {
+    tagName: "div",
+    properties: {
+      dataCalloutBody: true,
     },
   },
   callouts: null,
@@ -223,7 +242,19 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       }
 
       // Add body and title to callout root node children
-      node.children = [titleNode, ...bodyNode];
+      node.children = [
+        titleNode,
+        {
+          type: "blockquote",
+          data: {
+            hName: options.body(calloutData).tagName,
+            hProperties: {
+              ...options.body(calloutData).properties,
+            },
+          },
+          children: bodyNode,
+        },
+      ];
     });
   };
 };

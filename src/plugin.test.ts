@@ -149,8 +149,8 @@ describe("remarkCallout", () => {
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.textContent).toBe("title here");
 
-    const calloutBody = callout?.children[1];
-    expect(calloutBody?.textContent).toBe("body here");
+    const calloutBody = callout?.querySelector("[data-callout-body]");
+    expect(calloutBody?.children[0].textContent).toBe("body here");
   });
 
   test("callout with title consisting of multiple nodes", async () => {
@@ -171,8 +171,8 @@ describe("remarkCallout", () => {
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
 
-    const calloutBody = callout?.children[1];
-    expect(calloutBody?.textContent).toBe("body here");
+    const calloutBody = callout?.querySelector("[data-callout-body]");
+    expect(calloutBody?.children[0].textContent).toBe("body here");
   });
 
   test("callout with body consisting of multiple nodes", async () => {
@@ -201,9 +201,19 @@ describe("remarkCallout", () => {
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
 
-    const calloutBody = callout?.children[1];
+    const calloutBody = callout?.querySelector("[data-callout-body]");
     expect(calloutBody?.innerHTML).toBe(
-      "body first line <code>code</code> here",
+      [
+        "",
+        "<p>body first line <code>code</code> here</p>",
+        "<ul>",
+        "<li>list 1</li>",
+        "<li>list 2</li>",
+        "</ul>",
+        '<pre><code class="language-js">console.log("Hello, World!")',
+        "</code></pre>",
+        "",
+      ].join("\n"),
     );
   });
 
@@ -233,9 +243,19 @@ describe("remarkCallout", () => {
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
 
-    const calloutBody = callout?.children[1];
+    const calloutBody = callout?.querySelector("[data-callout-body]");
     expect(calloutBody?.innerHTML).toBe(
-      "body first line <code>code</code> here",
+      [
+        "",
+        "<p>body first line <code>code</code> here</p>",
+        "<ul>",
+        "<li>list 1</li>",
+        "<li>list 2</li>",
+        "</ul>",
+        '<pre><code class="language-js">console.log("Hello, World!")',
+        "</code></pre>",
+        "",
+      ].join("\n"),
     );
   });
 
@@ -265,9 +285,19 @@ describe("remarkCallout", () => {
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
 
-    const calloutBody = callout?.children[1];
+    const calloutBody = callout?.querySelector("[data-callout-body]");
     expect(calloutBody?.innerHTML).toBe(
-      "body first line <code>code</code> here",
+      [
+        "",
+        "<p>body first line <code>code</code> here</p>",
+        "<ul>",
+        "<li>list 1</li>",
+        "<li>list 2</li>",
+        "</ul>",
+        '<pre><code class="language-js">console.log("Hello, World!")',
+        "</code></pre>",
+        "",
+      ].join("\n"),
     );
   });
 
@@ -286,9 +316,9 @@ describe("remarkCallout", () => {
     expect(callout?.getAttribute("data-callout-type")).toBe("warn");
     expect(callout?.getAttribute("data-callout-is-foldable")).toBe("false");
     expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
-    expect(callout?.children[1].innerHTML).toBe(
-      "body <strong>first</strong> <em>line</em> <code>code</code> here",
-    );
+    expect(
+      callout?.querySelector("[data-callout-body]")?.children[0].innerHTML,
+    ).toBe("body <strong>first</strong> <em>line</em> <code>code</code> here");
   });
 
   test("options.root", async () => {
@@ -318,8 +348,8 @@ describe("remarkCallout", () => {
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.textContent).toBe("title here");
 
-    const calloutBody = callout?.children[1];
-    expect(calloutBody?.textContent).toBe("body here");
+    const calloutBody = callout?.querySelector("[data-callout-body]");
+    expect(calloutBody?.children[0].textContent).toBe("body here");
   });
 
   test("options.title", async () => {
@@ -375,8 +405,8 @@ describe("remarkCallout", () => {
           const calloutTitle = callout?.querySelector("[data-callout-title]");
           expect(calloutTitle?.textContent).toBe("title here");
 
-          const calloutBody = callout?.children[1];
-          expect(calloutBody?.textContent).toBe("body here");
+          const calloutBody = callout?.querySelector("[data-callout-body]");
+          expect(calloutBody?.children[0].textContent).toBe("body here");
           break;
         }
 
@@ -417,7 +447,7 @@ describe("remarkCallout", () => {
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.textContent).toBe("title here");
 
-    const calloutBody = callout?.children[1];
-    expect(calloutBody?.textContent).toBe("body here");
+    const calloutBody = callout?.querySelector("[data-callout-body]");
+    expect(calloutBody?.children[0].textContent).toBe("body here");
   });
 });
