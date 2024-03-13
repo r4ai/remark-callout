@@ -409,7 +409,7 @@ yields:
 
    ```astro
    ---
-   // src/pages/callout-example.mdx
+   // src/pages/callout-example.astro
 
    import { Content, components } from "../content.mdx";
    import Callout from "../components/Callout.astro";
