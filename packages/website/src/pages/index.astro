@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import { Callout } from "@/components/Callout"
+import { InlineMath, BlockMath } from "@/components/Math"
 ---
 
 <BaseLayout route="/">
@@ -9,11 +10,49 @@ import { Callout } from "@/components/Callout"
       <h1 class="text-5xl font-black">@r4ai/remark-callout</h1>
       <p class="text-lg text-muted-foreground">A remark plugin to add obsidian style callouts to markdown</p>
     </div>
-    <div>
-      <Callout type="note" isFoldable={false} className="max-w-sm">
+    <div class="flex flex-col gap-6">
+      <Callout type="note" isFoldable={false} className="max-w-sm" client:visible>
         <>
           <p>This is a note callout. It's a great way to add a little extra information to your markdown.</p>
         </>
+      </Callout>
+      <Callout type="theorem" isFoldable={true} defaultFolded className="max-w-sm" client:visible>
+        <div slot="title" class="space-x-1 font-serif">
+          <em>Theorem</em>
+          <span>1.1.2</span>
+        </div>
+        <sl>
+          <p>
+            Let <InlineMath tex="(\\Omega, \\mathcal{F}, \\mu)" /> be a measure space.
+          </p>
+          <p class="my-6">
+            Let <InlineMath tex="A, B, A_{1}, A_{2}, \\cdots \\in \\mathcal{F}" />. Then, the following holds:
+          </p>
+          <ol class="mb-2 ml-6 mt-6 list-decimal">
+            <li>
+              <InlineMath tex="\\mu" /> is additive.
+            </li>
+            <li class="mt-2">
+              <InlineMath
+                tex="\\displaystyle A_{n} \\uparrow \\implies \\mu \\left( \\bigcup_{i=1}^{\\infty} A_{i} \\right) = \\lim_{ n \\to \\infty } \\mu(A_{n})"
+              />
+            </li>
+            <li class="mt-4">
+              <InlineMath
+                tex="[~A_{n} \\downarrow ~ \\land ~~ \\exists n \\in \\mathbb{N};\\ \\mu(A_{n}) < +\\infty ~]"
+              />
+              <br />
+              <InlineMath
+                tex="\\implies \\mu \\left( \\bigcap_{n=1}^{\\infty}A_{n} \\right) = \\lim_{ n \\to \\infty }\\mu(A_{n})"
+              />
+            </li>
+            <li class="mt-4">
+              <InlineMath
+                tex="\\displaystyle\\mu \\left( \\bigcup_{n=1}^{\\infty} A_{n} \\right) \\leq \\sum_{n=1}^{\\infty}\\mu(A_{n})"
+              />
+            </li>
+          </ol>
+        </sl>
       </Callout>
     </div>
   </section>

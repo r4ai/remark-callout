@@ -2,6 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "katex/dist/katex.min.css";
+
 @layer base {
   :root {
     --background: 0 0% 100%;
