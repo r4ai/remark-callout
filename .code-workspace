@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "remark-callout",
+      "path": "packages/remark-callout"
+    },
+    {
+      "name": "website",
+      "path": "packages/website"
+    }
+  ]
+}
