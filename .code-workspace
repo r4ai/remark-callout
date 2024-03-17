@@ -12,5 +12,10 @@
       "name": "website",
       "path": "packages/website"
     }
-  ]
+  ],
+  "settings": {
+    "tailwindCSS.experimental.classRegex": [
+      "tw`([\\s\\S]*?)`"
+    ]
+  }
 }
