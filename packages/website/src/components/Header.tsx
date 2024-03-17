@@ -3,6 +3,15 @@ import { cn } from "@/lib/utils"
 import { GitHubLogoIcon, HamburgerMenuIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { useState, type FC, type ReactNode, useEffect } from "react"
 import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "./ui/tooltip"
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./ui/drawer"
 
 type Route = {
   label: string
@@ -66,9 +75,7 @@ export const Header: FC<HeaderProps> = ({ route }) => {
             </ul>
           </nav>
           <div className="sm:hidden">
-            <Button variant="outline" size="icon">
-              <HamburgerMenuIcon className="size-5" />
-            </Button>
+            <NavDrawer />
           </div>
           <div className="flex flex-row">
             <IconButton tooltip="GitHub">
@@ -81,6 +88,48 @@ export const Header: FC<HeaderProps> = ({ route }) => {
         </div>
       </header>
     </TooltipProvider>
+  )
+}
+
+const NavDrawer: FC = () => {
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="outline" size="icon">
+          <HamburgerMenuIcon className="size-5" />
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <div className="flex flex-col gap-4">
+          <DrawerHeader>
+            <DrawerTitle>@r4ai/remark-callout</DrawerTitle>
+            <DrawerDescription>A remark plugin to add obsidian style callouts to markdown</DrawerDescription>
+          </DrawerHeader>
+          <nav>
+            <ul className="mx-24 flex flex-col">
+              {Object.values(routes).map((route, i) => (
+                <li key={route.href}>
+                  {i > 0 && <div className="h-[1px] w-full bg-border" />}
+                  <a href={route.href} className="block py-2.5 text-left hover:underline">
+                    {route.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <DrawerFooter>
+            <div className="ml-auto flex flex-row">
+              <Button variant="ghost" asChild>
+                <a href="https://github.com/r4ai/remark-callout">
+                  <span className="mr-2">GitHub</span>
+                  <GitHubLogoIcon className="size-5" />
+                </a>
+              </Button>
+            </div>
+          </DrawerFooter>
+        </div>
+      </DrawerContent>
+    </Drawer>
   )
 }
 
