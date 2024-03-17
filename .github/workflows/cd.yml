@@ -15,10 +15,8 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20.x
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .tool-versions
+      - name: Setup Node.js and Bun
+        uses: jdx/mise-action@v2
 
       - name: Creating .npmrc
         run: |
@@ -27,9 +25,6 @@ jobs:
           EOF
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Setup bun
-        uses: oven-sh/setup-bun@v1
 
       - name: Install Dependencies
         run: bun install --frozen-lockfile
