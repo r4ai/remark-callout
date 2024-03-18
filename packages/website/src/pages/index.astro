@@ -9,14 +9,14 @@ import { PaintbrushIcon, Settings2Icon } from "lucide-react"
 ---
 
 <BaseLayout route="/" title={meta.name}>
-  <section class="container my-8 flex h-full flex-row items-center justify-between gap-12">
-    <div class="flex flex-col gap-6">
-      <h1 class="text-6xl font-black">
-        <span>@r4ai/</span><br />
-        <span>remark-callout</span>
+  <section class="container my-8 flex h-full flex-col items-center justify-between gap-12 lg:flex-row">
+    <div class="flex w-full max-w-screen-md flex-col gap-6">
+      <h1 class="mx-auto flex flex-col space-x-0 text-4xl font-black sm:flex-row md:text-6xl lg:mx-0 lg:flex-col">
+        <div>@r4ai/</div>
+        <div>remark-callout</div>
       </h1>
-      <p class="text-xl text-muted-foreground">{meta.description}</p>
-      <div class="mt-4 flex flex-row gap-4">
+      <p class="mx-auto text-muted-foreground sm:text-lg lg:mx-0 lg:text-xl">{meta.description}</p>
+      <div class="mx-auto mt-4 flex flex-row flex-wrap justify-center gap-4 lg:mx-0 lg:justify-start">
         <FeatureCard title="Headless">
           <PaintbrushIcon slot="icon" className="m-auto size-6" />
           <p>You can style the callouts however you want.</p>
@@ -27,11 +27,12 @@ import { PaintbrushIcon, Settings2Icon } from "lucide-react"
         </FeatureCard>
       </div>
     </div>
-    <div class="flex max-w-2xl grow flex-col gap-6">
+    <div class="flex w-full max-w-2xl grow flex-col items-center gap-6">
+      <h2 class="text-2xl font-bold lg:hidden">Examples</h2>
       <Callout
         type="note"
         isFoldable={false}
-        className="max-w-md shadow-2xl shadow-zinc-300 dark:shadow-blue-900/30"
+        className="w-full max-w-md shadow-2xl shadow-zinc-300 dark:shadow-blue-900/30 lg:self-start"
         client:visible
       >
         <p>This is a note callout. It's a great way to add a little extra information to your markdown.</p>
@@ -50,7 +51,7 @@ import { PaintbrushIcon, Settings2Icon } from "lucide-react"
         type="theorem"
         isFoldable={true}
         defaultFolded
-        className="w-[28rem] self-end shadow-2xl shadow-purple-300 dark:shadow-purple-900/30"
+        className="w-full max-w-md shadow-2xl shadow-purple-300 dark:shadow-purple-900/30 sm:w-[28rem] lg:self-end"
         client:visible
       >
         <div slot="title" class="space-x-1 font-serif">
