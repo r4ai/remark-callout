@@ -4,6 +4,8 @@ import { Callout } from "@/components/Callout"
 import { InlineMath } from "@/components/Math"
 import meta from "@/lib/metadata"
 import CodeBlock from "@/components/CodeBlock.astro"
+import { FeatureCard } from "@/components/FeatureCard"
+import { PaintbrushIcon, Settings2Icon } from "lucide-react"
 ---
 
 <BaseLayout route="/" title={meta.name}>
@@ -14,6 +16,16 @@ import CodeBlock from "@/components/CodeBlock.astro"
         <span>remark-callout</span>
       </h1>
       <p class="text-xl text-muted-foreground">{meta.description}</p>
+      <div class="mt-4 flex flex-row gap-4">
+        <FeatureCard title="Headless">
+          <PaintbrushIcon slot="icon" className="m-auto size-6" />
+          <p>You can style the callouts however you want.</p>
+        </FeatureCard>
+        <FeatureCard title="Customizable">
+          <Settings2Icon slot="icon" className="m-auto size-6" />
+          <p>You can customize the structure of the Callout output HTML</p>
+        </FeatureCard>
+      </div>
     </div>
     <div class="flex max-w-2xl grow flex-col gap-6">
       <Callout
