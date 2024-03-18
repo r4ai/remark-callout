@@ -1,20 +1,19 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import { Callout } from "@/components/Callout"
-import { InlineMath, BlockMath } from "@/components/Math"
+import { InlineMath } from "@/components/Math"
+import meta from "@/lib/metadata"
 ---
 
-<BaseLayout route="/">
+<BaseLayout route="/" title="@r4ai/remark-callout">
   <section class="container my-8 flex flex-row items-center justify-between">
     <div class="flex flex-col gap-4">
-      <h1 class="text-5xl font-black">@r4ai/remark-callout</h1>
-      <p class="text-lg text-muted-foreground">A remark plugin to add obsidian style callouts to markdown</p>
+      <h1 class="text-5xl font-black">{meta.name}</h1>
+      <p class="text-lg text-muted-foreground">{meta.description}</p>
     </div>
     <div class="flex flex-col gap-6">
       <Callout type="note" isFoldable={false} className="max-w-sm" client:visible>
-        <>
-          <p>This is a note callout. It's a great way to add a little extra information to your markdown.</p>
-        </>
+        <p>This is a note callout. It's a great way to add a little extra information to your markdown.</p>
       </Callout>
       <Callout type="theorem" isFoldable={true} defaultFolded className="max-w-sm" client:visible>
         <div slot="title" class="space-x-1 font-serif">

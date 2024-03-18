@@ -12,6 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer"
+import meta from "@/lib/metadata"
 
 type Route = {
   label: string
@@ -47,7 +48,7 @@ export const Header: FC<HeaderProps> = ({ route }) => {
             <ul className="flex flex-row items-center gap-4">
               <li>
                 <Button variant="ghost" className="font-bold" asChild>
-                  <a href={routes.index.href}>@r4ai/remark-callout</a>
+                  <a href={routes.index.href}>{meta.name}</a>
                 </Button>
               </li>
               <li>
@@ -79,7 +80,7 @@ export const Header: FC<HeaderProps> = ({ route }) => {
           </div>
           <div className="flex flex-row">
             <IconButton tooltip="GitHub">
-              <a href="https://github.com/r4ai/remark-callout">
+              <a href={meta.repository.url.href}>
                 <GitHubLogoIcon className="size-5" />
               </a>
             </IconButton>
@@ -102,8 +103,8 @@ const NavDrawer: FC = () => {
       <DrawerContent>
         <div className="flex flex-col gap-4">
           <DrawerHeader>
-            <DrawerTitle>@r4ai/remark-callout</DrawerTitle>
-            <DrawerDescription>A remark plugin to add obsidian style callouts to markdown</DrawerDescription>
+            <DrawerTitle>{meta.name}</DrawerTitle>
+            <DrawerDescription>{meta.description}</DrawerDescription>
           </DrawerHeader>
           <nav>
             <ul className="mx-24 flex flex-col">
@@ -120,7 +121,7 @@ const NavDrawer: FC = () => {
           <DrawerFooter>
             <div className="ml-auto flex flex-row">
               <Button variant="ghost" asChild>
-                <a href="https://github.com/r4ai/remark-callout">
+                <a href={meta.repository.url.href}>
                   <span className="mr-2">GitHub</span>
                   <GitHubLogoIcon className="size-5" />
                 </a>
