@@ -1,5 +1,5 @@
 import { cn, tw } from "@/lib/utils"
-import { ChevronDownIcon, ChevronRightIcon, Pencil1Icon, RocketIcon } from "@radix-ui/react-icons"
+import { ChevronRightIcon, Pencil1Icon, RocketIcon } from "@radix-ui/react-icons"
 import type { FC, ReactNode } from "react"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible"
 

@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss"
 import { fontFamily } from "tailwindcss/defaultTheme"
+import scrollbar from "tailwind-scrollbar"
 
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}"],
@@ -72,5 +73,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [scrollbar],
 } satisfies Config
