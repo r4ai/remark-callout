@@ -1,5 +1,11 @@
 # @r4ai/remark-callout
 
+## 0.2.1
+
+### Patch Changes
+
+- 552fae9: make repository mono-repository
+
 ## 0.2.0
 
 ### Minor Changes
