@@ -22,9 +22,9 @@
     "url": "https://github.com/r4ai/remark-callout/issues"
   },
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "src",
     "dist",

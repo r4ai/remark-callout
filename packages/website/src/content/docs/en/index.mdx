@@ -1,0 +1,229 @@
+---
+title: Documentation
+---
+
+import { Tabs } from "./Tabs"
+import meta from "@/lib/metadata"
+
+## Installation
+
+<Tabs defaultValue="npm" client:visible>
+  <div slot="npm">```sh npm install @r4ai/remark-callout ```</div>
+  <div slot="yarn">```sh yarn add @r4ai/remark-callout ```</div>
+  <div slot="pnpm">```sh pnpm add @r4ai/remark-callout ```</div>
+  <div slot="bun">```sh bun add @r4ai/remark-callout ```</div>
+</Tabs>
+
+## Usage
+
+```ts
+import remarkParse from "remark-parse"
+import { unified } from "unified"
+import remarkCallout from "@r4ai/remark-callout"
+import remarkRehype from "remark-rehype"
+import rehypeStringify from "rehype-stringify"
+
+const md = `
+  > [!note] title here
+  > body here
+`
+
+const html = unified()
+  .use(remarkParse)
+  .use(remarkCallout)
+  .use(remarkRehype)
+  .use(rehypeStringify)
+  .processSync(md)
+  .toString()
+
+console.log(html)
+```
+
+yields:
+
+<Tabs defaultValue="Preview" client:visible>
+  <div slot="Preview">> [!note] title here > body here</div>
+  <div slot="Code">
+    ```html
+    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+      <div data-callout-title>title here</div>
+      <div data-callout-body>
+        <p>body here</p>
+      </div>
+    </div>
+    ```
+  </div>
+</Tabs>
+
+The preview above is an example implementation.
+
+### Callout Title
+
+Callout title can include any inline element.
+
+```md
+> [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$.
+> body here
+```
+
+yields:
+
+<Tabs defaultValue="Preview" client:visible>
+  <div slot="Preview">> [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$. > body here</div>
+  <div slot="Code">
+    ```html
+    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+      <div data-callout-title>
+        The <strong>reason</strong> for why <em>this</em> <del>is</del>
+        <code>true</code> when <code class="language-math math-inline">a=1</code>.
+      </div>
+      <div data-callout-body>
+        <p>body here</p>
+      </div>
+    </div>
+    ```
+  </div>
+</Tabs>
+
+> [!caution] > `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
+
+### Callout Body
+
+Callout body can include any block element.
+
+````md
+> [!note] title here
+> The **reason** for why _this_ ~~is~~ `true` when $a=1$.
+>
+> - item 1
+> - item 2
+>
+> ```js
+> console.log("Hello, World!")
+> ```
+>
+> $$
+> \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| < \delta \Rightarrow |f(x) - b| < \epsilon
+> $$
+>
+> > Done is better than perfect.
+````
+
+yields:
+
+<Tabs defaultValue="Preview" client:visible>
+  <div slot="Preview">
+    > [!note] title here
+    > The **reason** for why _this_ ~~is~~ `true` when $a=1$.
+    >
+    > - item 1
+    > - item 2
+    >
+    > ```js
+    > console.log("Hello, World!");
+    > ```
+    >
+    > $$
+    > \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| < \delta \Rightarrow |f(x) - b| < \epsilon
+    > $$
+    >
+    > > Done is better than perfect.
+  </div>
+  <div slot="Code">
+    ```html
+    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+      <div data-callout-title>title here</div>
+      <div data-callout-body>
+        <p>The <strong>reason</strong> for why <em>this</em> <del>is</del>
+        <code>true</code> when <code class="language-math math-inline">a=1</code>.</p>
+        <ul>
+          <li>item 1</li>
+          <li>item 2</li>
+        </ul>
+        <pre><code class="language-js">console.log("Hello, World!");</code></pre>
+        <div class="math math-display">
+          <div class="math-display">
+            <span class="math" style="display: none;">\forall \epsilon &gt; 0, \exists \delta &gt; 0 \text{ s.t. } |x - a| &lt; \delta \Rightarrow |f(x) - b| &lt; \epsilon</span>
+          </div>
+        </div>
+        <blockquote>
+          <p>Done is better than perfect.</p>
+        </blockquote>
+      </div>
+    </div>
+    ```
+  </div>
+</Tabs>
+
+> [!caution] > `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
+
+Callouts can also be nested recursively.
+
+```md
+> [!note]
+> Nested callout
+>
+> > [!info]
+> > Further nested callout
+> >
+> > > [!warning]
+> > > Even further nested callout
+```
+
+yields:
+
+<Tabs defaultValue="Preview" client:visible>
+  <div slot="Preview">
+    > [!note] > Nested callout > > > [!important] > > Further nested callout > > > > > [!caution] > > > Even further
+    nested callout
+  </div>
+  <div slot="Code">
+    ```html
+    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+      <div data-callout-title></div>
+      <div data-callout-body>
+        <p>Nested callout</p>
+        <div data-callout data-callout-type="important" data-callout-is-foldable="false">
+          <div data-callout-title></div>
+          <div data-callout-body>
+            <p>Further nested callout</p>
+            <div data-callout data-callout-type="caution" data-callout-is-foldable="false">
+              <div data-callout-title></div>
+              <div data-callout-body>
+                <p>Even further nested callout</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    ```
+  </div>
+</Tabs>
+
+### Foldable Callouts
+
+You can make a callout foldable by adding a plus (+) or a minus (-) directly after the type identifier.
+
+A plus sign expands the callout by default, and a minus sign collapses it instead.
+
+```md
+> [!note]- title here
+> body here
+```
+
+yields:
+
+<Tabs defaultValue="Preview" client:visible>
+  <div slot="Preview">> [!abstract]- title here > body here</div>
+  <div slot="Code">
+    ```html
+    <div data-callout data-callout-type="note" data-callout-is-foldable="true" data-callout-default-folded="true">
+      <div data-callout-title>title here</div>
+      <div data-callout-body>
+        <p>body here</p>
+      </div>
+    </div>
+    ```
+  </div>
+</Tabs>

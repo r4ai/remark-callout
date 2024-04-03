@@ -4,6 +4,8 @@
 
 @import "katex/dist/katex.min.css";
 
+@import "./codeblock.css";
+
 @layer base {
   :root {
     --background: 0 0% 100%;

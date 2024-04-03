@@ -1,0 +1,40 @@
+---
+import type { GetStaticPaths } from "astro"
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import meta from "@/lib/metadata"
+import { getCollection } from "astro:content"
+import type { CollectionEntry } from "astro:content"
+import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout"
+
+export const getStaticPaths = (async () => {
+  const docs = await getCollection("docs")
+  return docs.map((doc) => ({
+    params: { slug: doc.slug },
+    props: {
+      entry: {
+        ...doc,
+      },
+    },
+  }))
+}) satisfies GetStaticPaths
+
+type Props = {
+  entry: CollectionEntry<"docs">
+}
+const { entry } = Astro.props
+
+const { Content } = await entry.render()
+---
+
+<BaseLayout route="/docs" title={`Docs | ${meta.name}`}>
+  <div class="container prose dark:prose-invert">
+    <h1>Docs</h1>
+    <Content
+      components={{
+        "callout-root": CalloutRoot,
+        "callout-title": CalloutTitle,
+        "callout-body": CalloutBody,
+      }}
+    />
+  </div>
+</BaseLayout>
