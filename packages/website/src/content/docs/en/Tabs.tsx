@@ -10,7 +10,7 @@ export type TabsProps = {
 export const Tabs: FC<TabsProps> = ({ defaultValue, children, ...props }) => {
   const keys = Object.keys(props).sort()
   return (
-    <ShadcnTabs defaultValue={defaultValue}>
+    <ShadcnTabs defaultValue={defaultValue} className="mx-auto max-w-screen-md">
       <TabsList>
         {keys.map((key) => (
           <TabsTrigger key={key} value={key}>

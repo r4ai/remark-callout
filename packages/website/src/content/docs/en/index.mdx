@@ -3,6 +3,7 @@ title: Documentation
 ---
 
 import { Tabs } from "./Tabs"
+import { TwoCols } from "./TwoCols"
 import meta from "@/lib/metadata"
 
 ## Installation
@@ -82,33 +83,38 @@ The preview above is an example implementation.
 
 Callout title can include any inline element.
 
-```md
-> [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$.
-> body here
-```
-
-yields:
-
 {/* prettier-ignore */}
-<Tabs defaultValue="Preview" client:visible>
-  <div slot="Preview">
+<TwoCols>
+  <div slot="left">
+    ```md
     > [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$.
     > body here
-  </div>
-  <div slot="Code">
-    ```html
-    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
-      <div data-callout-title>
-        The <strong>reason</strong> for why <em>this</em> <del>is</del>
-        <code>true</code> when <code class="language-math math-inline">a=1</code>.
-      </div>
-      <div data-callout-body>
-        <p>body here</p>
-      </div>
-    </div>
     ```
   </div>
-</Tabs>
+  <div slot="right">
+    <Tabs defaultValue="Preview" client:visible>
+      <div slot="Preview" class="*:mb-0">
+        > [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$.
+        > body here
+      </div>
+      <div slot="Code">
+        ```html
+        <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+          <div data-callout-title>
+            The <strong>reason</strong> for why <em>this</em> <del>is</del>
+            <code>true</code> when <code class="language-math math-inline">a=1</code>.
+          </div>
+          <div data-callout-body>
+            <p>body here</p>
+          </div>
+        </div>
+        ```
+      </div>
+    </Tabs>
+  </div>
+</TwoCols>
+
+Left side is the markdown source, and right side is the rendered HTML.
 
 {/* prettier-ignore */}
 > [!caution]
@@ -118,29 +124,10 @@ yields:
 
 Callout body can include any block element.
 
-````md
-> [!note] title here
-> The **reason** for why _this_ ~~is~~ `true` when $a=1$.
->
-> - item 1
-> - item 2
->
-> ```js
-> console.log("Hello, World!")
-> ```
->
-> $$
-> \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| < \delta \Rightarrow |f(x) - b| < \epsilon
-> $$
->
-> > Done is better than perfect.
-````
-
-yields:
-
 {/* prettier-ignore */}
-<Tabs defaultValue="Preview" client:visible>
-  <div slot="Preview">
+<TwoCols>
+  <div slot="left">
+    ````md
     > [!note] title here
     > The **reason** for why _this_ ~~is~~ `true` when $a=1$.
     >
@@ -148,96 +135,117 @@ yields:
     > - item 2
     >
     > ```js
-    > console.log("Hello, World!");
+    > console.log("Hello, World!")
     > ```
     >
     > $$
-    > \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| < \delta \Rightarrow |f(x) - b| < \epsilon
+    > \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| < \delta \Rightarrow |f(x) - b| <div \epsilon
     > $$
     >
     > > Done is better than perfect.
+    ````
   </div>
-  <div slot="Code">
-    ```html
-    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
-      <div data-callout-title>title here</div>
-      <div data-callout-body>
-        <p>The <strong>reason</strong> for why <em>this</em> <del>is</del>
-        <code>true</code> when <code class="language-math math-inline">a=1</code>.</p>
-        <ul>
-          <li>item 1</li>
-          <li>item 2</li>
-        </ul>
-        <pre><code class="language-js">console.log("Hello, World!");</code></pre>
-        <div class="math math-display">
-          <div class="math-display">
-            <span class="math" style="display: none;">\forall \epsilon &gt; 0, \exists \delta &gt; 0 \text{ s.t. } |x - a| &lt; \delta \Rightarrow |f(x) - b| &lt; \epsilon</span>
+  <div slot="right">
+    <Tabs defaultValue="Preview" client:visible>
+      <div slot="Preview">
+        > [!note] title here
+        > The **reason** for why _this_ ~~is~~ `true` when $a=1$.
+        >
+        > - item 1
+        > - item 2
+        >
+        > ```js
+        > console.log("Hello, World!");
+        > ```
+        >
+        > $$
+        > \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| < \delta \Rightarrow |f(x) - b| < \epsilon
+        > $$
+        >
+        > > Done is better than perfect.
+      </div>
+      <div slot="Code">
+        ```html
+        <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+          <div data-callout-title>title here</div>
+          <div data-callout-body>
+            <p>The <strong>reason</strong> for why <em>this</em> <del>is</del>
+            <code>true</code> when <code class="language-math math-inline">a=1</code>.</p>
+            <ul>
+              <li>item 1</li>
+              <li>item 2</li>
+            </ul>
+            <pre><code class="language-js">console.log("Hello, World!");</code></pre>
+            <div class="math math-display">
+              <div class="math-display">
+                <span class="math" style="display: none;">\forall \epsilon &gt; 0, \exists \delta &gt; 0 \text{ s.t. } |x - a| &lt; \delta \Rightarrow |f(x) - b| &lt; \epsilon</span>
+              </div>
+            </div>
+            <blockquote>
+              <p>Done is better than perfect.</p>
+            </blockquote>
           </div>
         </div>
-        <blockquote>
-          <p>Done is better than perfect.</p>
-        </blockquote>
+        ```
       </div>
-    </div>
-    ```
+    </Tabs>
   </div>
-</Tabs>
-
-{/* prettier-ignore */}
-> [!caution]
-> `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
+</TwoCols>
 
 Callouts can also be nested recursively.
 
-```md
-> [!note]
-> Nested callout
->
-> > [!info]
-> > Further nested callout
-> >
-> > > [!warning]
-> > > Even further nested callout
-```
-
-yields:
-
 {/* prettier-ignore */}
-<Tabs defaultValue="Preview" client:visible>
-  <div slot="Preview">
+<TwoCols>
+  <div slot="left">
+    ```md
     > [!note]
     > Nested callout
     >
-    > > [!important]
+    > > [!info]
     > > Further nested callout
     > >
-    > > > [!caution]
-    > > > Even further
-    nested callout
+    > > > [!warning]
+    > > > Even further nested callout
+    ```
   </div>
-  <div slot="Code">
-    ```html
-    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
-      <div data-callout-title></div>
-      <div data-callout-body>
-        <p>Nested callout</p>
-        <div data-callout data-callout-type="important" data-callout-is-foldable="false">
+  <div slot="right">
+    <Tabs defaultValue="Preview" client:visible>
+      <div slot="Preview">
+        > [!note]
+        > Nested callout
+        >
+        > > [!important]
+        > > Further nested callout
+        > >
+        > > > [!caution]
+        > > > Even further
+        nested callout
+      </div>
+      <div slot="Code">
+        ```html
+        <div data-callout data-callout-type="note" data-callout-is-foldable="false">
           <div data-callout-title></div>
           <div data-callout-body>
-            <p>Further nested callout</p>
-            <div data-callout data-callout-type="caution" data-callout-is-foldable="false">
+            <p>Nested callout</p>
+            <div data-callout data-callout-type="important" data-callout-is-foldable="false">
               <div data-callout-title></div>
               <div data-callout-body>
-                <p>Even further nested callout</p>
+                <p>Further nested callout</p>
+                <div data-callout data-callout-type="caution" data-callout-is-foldable="false">
+                  <div data-callout-title></div>
+                  <div data-callout-body>
+                    <p>Even further nested callout</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        ```
       </div>
-    </div>
-    ```
+    </Tabs>
   </div>
-</Tabs>
+</TwoCols>
 
 ### Foldable Callouts
 
@@ -245,27 +253,30 @@ You can make a callout foldable by adding a plus (+) or a minus (-) directly aft
 
 A plus sign expands the callout by default, and a minus sign collapses it instead.
 
-```md
-> [!note]- title here
-> body here
-```
-
-yields:
-
 {/* prettier-ignore */}
-<Tabs defaultValue="Preview" client:visible>
-  <div slot="Preview">
+<TwoCols>
+  <div slot="left" class="*:first:mt-0">
+    ```md
     > [!note]- title here
     > body here
-  </div>
-  <div slot="Code">
-    ```html
-    <div data-callout data-callout-type="note" data-callout-is-foldable="true" data-callout-default-folded="true">
-      <div data-callout-title>title here</div>
-      <div data-callout-body>
-        <p>body here</p>
-      </div>
-    </div>
     ```
   </div>
-</Tabs>
+  <div slot="right">
+    <Tabs defaultValue="Preview" client:visible>
+      <div slot="Preview">
+        > [!note]- title here
+        > body here
+      </div>
+      <div slot="Code">
+        ```html
+        <div data-callout data-callout-type="note" data-callout-is-foldable="true" data-callout-default-folded="true">
+          <div data-callout-title>title here</div>
+          <div data-callout-body>
+            <p>body here</p>
+          </div>
+        </div>
+        ```
+      </div>
+    </Tabs>
+  </div>
+</TwoCols>
