@@ -31,7 +31,6 @@ export default defineConfig({
         remarkCallout,
         {
           root: (callout) => {
-            console.log(callout)
             return {
               tagName: "callout-root",
               properties: {

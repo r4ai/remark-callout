@@ -7,11 +7,28 @@ import meta from "@/lib/metadata"
 
 ## Installation
 
+{/* prettier-ignore */}
 <Tabs defaultValue="npm" client:visible>
-  <div slot="npm">```sh npm install @r4ai/remark-callout ```</div>
-  <div slot="yarn">```sh yarn add @r4ai/remark-callout ```</div>
-  <div slot="pnpm">```sh pnpm add @r4ai/remark-callout ```</div>
-  <div slot="bun">```sh bun add @r4ai/remark-callout ```</div>
+  <div slot="npm">
+    ```sh
+    npm install @r4ai/remark-callout
+    ```
+  </div>
+  <div slot="yarn">
+    ```sh
+    yarn add @r4ai/remark-callout
+    ```
+  </div>
+  <div slot="pnpm">
+    ```sh
+    pnpm add @r4ai/remark-callout
+    ```
+  </div>
+  <div slot="bun">
+    ```sh
+    bun add @r4ai/remark-callout
+    ```
+  </div>
 </Tabs>
 
 ## Usage
@@ -41,8 +58,12 @@ console.log(html)
 
 yields:
 
+{/* prettier-ignore */}
 <Tabs defaultValue="Preview" client:visible>
-  <div slot="Preview">> [!note] title here > body here</div>
+  <div slot="Preview">
+    > [!note] title here
+    > body here
+  </div>
   <div slot="Code">
     ```html
     <div data-callout data-callout-type="note" data-callout-is-foldable="false">
@@ -68,8 +89,12 @@ Callout title can include any inline element.
 
 yields:
 
+{/* prettier-ignore */}
 <Tabs defaultValue="Preview" client:visible>
-  <div slot="Preview">> [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$. > body here</div>
+  <div slot="Preview">
+    > [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$.
+    > body here
+  </div>
   <div slot="Code">
     ```html
     <div data-callout data-callout-type="note" data-callout-is-foldable="false">
@@ -85,7 +110,9 @@ yields:
   </div>
 </Tabs>
 
-> [!caution] > `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
+{/* prettier-ignore */}
+> [!caution]
+> `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
 
 ### Callout Body
 
@@ -111,6 +138,7 @@ Callout body can include any block element.
 
 yields:
 
+{/* prettier-ignore */}
 <Tabs defaultValue="Preview" client:visible>
   <div slot="Preview">
     > [!note] title here
@@ -155,7 +183,9 @@ yields:
   </div>
 </Tabs>
 
-> [!caution] > `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
+{/* prettier-ignore */}
+> [!caution]
+> `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
 
 Callouts can also be nested recursively.
 
@@ -172,9 +202,17 @@ Callouts can also be nested recursively.
 
 yields:
 
+{/* prettier-ignore */}
 <Tabs defaultValue="Preview" client:visible>
   <div slot="Preview">
-    > [!note] > Nested callout > > > [!important] > > Further nested callout > > > > > [!caution] > > > Even further
+    > [!note]
+    > Nested callout
+    >
+    > > [!important]
+    > > Further nested callout
+    > >
+    > > > [!caution]
+    > > > Even further
     nested callout
   </div>
   <div slot="Code">
@@ -214,8 +252,12 @@ A plus sign expands the callout by default, and a minus sign collapses it instea
 
 yields:
 
+{/* prettier-ignore */}
 <Tabs defaultValue="Preview" client:visible>
-  <div slot="Preview">> [!abstract]- title here > body here</div>
+  <div slot="Preview">
+    > [!note]- title here
+    > body here
+  </div>
   <div slot="Code">
     ```html
     <div data-callout data-callout-type="note" data-callout-is-foldable="true" data-callout-default-folded="true">

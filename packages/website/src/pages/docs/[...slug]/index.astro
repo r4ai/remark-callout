@@ -5,6 +5,7 @@ import meta from "@/lib/metadata"
 import { getCollection } from "astro:content"
 import type { CollectionEntry } from "astro:content"
 import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout"
+import CodeBlock from "@/components/CodeBlock.astro"
 
 export const getStaticPaths = (async () => {
   const docs = await getCollection("docs")
@@ -34,6 +35,7 @@ const { Content } = await entry.render()
         "callout-root": CalloutRoot,
         "callout-title": CalloutTitle,
         "callout-body": CalloutBody,
+        pre: CodeBlock,
       }}
     />
   </div>

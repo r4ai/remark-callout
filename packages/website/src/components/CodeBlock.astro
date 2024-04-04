@@ -3,27 +3,31 @@ import "@/styles/codeblock.css"
 
 import { codeToHtml, type CodeToHastOptions } from "shiki"
 import { cn } from "@/lib/utils"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 type Props = {
   className?: string
-  code: string
+  code?: string
   lang: CodeToHastOptions["lang"]
 }
 const { className, code, lang } = Astro.props
 
-const html = await codeToHtml(code, {
-  lang: lang,
-  themes: {
-    light: "github-light",
-    dark: "one-dark-pro",
-  },
-})
+const html = code
+  ? await codeToHtml(code, {
+      lang: lang,
+      themes: {
+        light: "github-light",
+        dark: "one-dark-pro",
+      },
+    })
+  : undefined
 ---
 
-<div class={cn("bg-zinc-50 dark:bg-zinc-900/75 border rounded-lg", className)}>
-  <pre
-    set:html={html}
-    class="scrollbar-thumb-rounded-full scrollbar-track-rounded-full overflow-auto py-4 outline-none scrollbar-thin scrollbar-track-transparent scrollbar-thumb-zinc-200 hover:scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-800 hover:dark:scrollbar-thumb-zinc-700/60"
-  />
+<div
+  class={cn(
+    "bg-zinc-50 dark:bg-zinc-900/75 border rounded-lg scrollbar-thumb-rounded-full scrollbar-track-rounded-full overflow-auto py-4 outline-none scrollbar-thin scrollbar-track-transparent scrollbar-thumb-zinc-200 hover:scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-800 hover:dark:scrollbar-thumb-zinc-700/60 not-prose my-6",
+    className,
+  )}
+  set:html={html}
+>
+  <pre class="shiki"><slot /></pre>
 </div>
