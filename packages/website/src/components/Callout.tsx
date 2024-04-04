@@ -91,15 +91,17 @@ export type CalloutProps = {
 
 export const Callout: FC<CalloutProps> = ({ type, isFoldable, defaultFolded, title, children, className }) => {
   const callout = getCallout(type)
+  const isFoldableString = isFoldable.toString() as "true" | "false"
+  const defaultFoldedString = defaultFolded?.toString() as "true" | "false" | undefined
 
   return (
     <CalloutRoot
       className={cn(className, callout.className.root)}
       type={type}
-      isFoldable={isFoldable}
-      defaultFolded={defaultFolded}
+      isFoldable={isFoldableString}
+      defaultFolded={defaultFoldedString}
     >
-      <CalloutTitle className={callout.className.title} type={type} isFoldable={isFoldable}>
+      <CalloutTitle className={callout.className.title} type={type} isFoldable={isFoldableString}>
         {title}
       </CalloutTitle>
       <CalloutBody>{children}</CalloutBody>
@@ -136,8 +138,8 @@ const Summary: FC<SummaryProps> = ({ isFoldable, children, ...props }) => {
 
 export type CalloutRootProps = {
   type: keyof typeof callouts
-  isFoldable: boolean
-  defaultFolded?: boolean
+  isFoldable: "true" | "false"
+  defaultFolded?: "true" | "false"
   className?: string
   children: ReactNode
 }
@@ -146,18 +148,18 @@ export const CalloutRoot: FC<CalloutRootProps> = ({
   children,
   className,
   type,
-  isFoldable,
-  defaultFolded,
-  ...props
+  isFoldable: isFoldableString,
+  defaultFolded: defaultFoldedString,
 }) => {
   const callout = getCallout(type)
-  console.log(type, isFoldable !== undefined, defaultFolded !== undefined, defaultFolded, props)
+  const isFoldable = isFoldableString === "true"
+  const defaultFolded = defaultFoldedString === "true"
 
   return (
     <Details
-      isFoldable={isFoldable !== undefined}
-      defaultFolded={defaultFolded !== undefined}
-      className={cn("my-6 flex flex-col gap-3 rounded-lg border bg-card p-4", callout.className.root, className)}
+      isFoldable={isFoldable}
+      defaultFolded={defaultFolded}
+      className={cn("group/root my-6 space-y-2 rounded-lg border bg-card p-4", callout.className.root, className)}
     >
       {children}
     </Details>
@@ -168,22 +170,21 @@ export type CalloutTitleProps = {
   type: keyof typeof callouts
   className?: string
   children?: ReactNode
-  isFoldable: boolean
+  isFoldable: "true" | "false"
 }
 
-export const CalloutTitle: FC<CalloutTitleProps> = ({ type, isFoldable, children, ...props }) => {
+export const CalloutTitle: FC<CalloutTitleProps> = ({ type, isFoldable: isFoldableString, children }) => {
   const callout = getCallout(type)
+  const isFoldable = isFoldableString === "true"
 
   return (
     <Summary
-      isFoldable={isFoldable !== undefined}
-      className={cn("group flex flex-row items-center gap-2 text-lg font-bold", callout.className.title)}
+      isFoldable={isFoldable}
+      className={cn("flex flex-row items-center gap-2 font-bold", callout.className.title)}
     >
       {callout.icon}
       <div>{children ?? callout.label}</div>
-      {isFoldable && (
-        <ChevronRightIcon className="ml-auto size-5 shrink-0 transition-transform group-data-[state=open]:rotate-90" />
-      )}
+      {isFoldable && <ChevronRightIcon className="size-5 shrink-0 transition-transform group-open/root:rotate-90" />}
     </Summary>
   )
 }

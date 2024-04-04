@@ -29,9 +29,9 @@ const { route, title } = Astro.props
       }
     </script>
   </head>
-  <body class="flex h-full flex-col bg-background">
+  <body class="flex min-h-full flex-col bg-background">
     <Header route={route} client:load />
-    <div class="flex-1">
+    <div class="flex flex-1 flex-col">
       <slot />
     </div>
     <Footer />

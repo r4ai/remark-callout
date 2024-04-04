@@ -107,7 +107,7 @@ const NavDrawer: FC = () => {
             <DrawerDescription>{meta.description}</DrawerDescription>
           </DrawerHeader>
           <nav>
-            <ul className="mx-24 flex flex-col">
+            <ul className="mx-auto flex max-w-sm flex-col px-8">
               {Object.values(routes).map((route, i) => (
                 <li key={route.href}>
                   {i > 0 && <div className="h-[1px] w-full bg-border" />}

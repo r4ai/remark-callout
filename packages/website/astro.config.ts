@@ -35,8 +35,8 @@ export default defineConfig({
               tagName: "callout-root",
               properties: {
                 type: callout.type,
-                isFoldable: callout.isFoldable,
-                defaultFolded: callout.defaultFolded,
+                isFoldable: callout.isFoldable.toString(),
+                defaultFolded: callout.defaultFolded?.toString(),
               },
             }
           },
@@ -44,8 +44,7 @@ export default defineConfig({
             tagName: "callout-title",
             properties: {
               type: callout.type,
-              isFoldable: callout.isFoldable,
-              defaultFolded: callout.defaultFolded,
+              isFoldable: callout.isFoldable.toString(),
             },
           }),
           body: (callout) => ({
