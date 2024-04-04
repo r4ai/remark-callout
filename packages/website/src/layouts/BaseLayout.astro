@@ -18,6 +18,16 @@ const { route, title } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <script is:inline>
+      const savedTheme = localStorage.getItem("theme")
+      if (savedTheme) {
+        document.documentElement.classList.add(savedTheme)
+      } else {
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+        document.documentElement.classList.add(systemTheme)
+        localStorage.setItem("theme", systemTheme)
+      }
+    </script>
   </head>
   <body class="flex h-full flex-col bg-background">
     <Header route={route} client:load />

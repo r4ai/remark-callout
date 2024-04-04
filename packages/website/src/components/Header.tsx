@@ -150,7 +150,7 @@ const IconButton: FC<ButtonProps & { tooltip?: ReactNode }> = ({ children, toolt
 }
 
 const ToggleThemeButton: FC = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("light")
+  const [theme, setTheme] = useState<"light" | "dark" | undefined>(undefined)
 
   const getSavedTheme = () => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark"
@@ -164,7 +164,6 @@ const ToggleThemeButton: FC = () => {
     }
   }
 
-  // TODO: do this before rendering html to avoid flicker (priority: high)
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const savedTheme = getSavedTheme()
@@ -175,6 +174,7 @@ const ToggleThemeButton: FC = () => {
   }, [])
 
   useEffect(() => {
+    if (theme == null) return
     localStorage.setItem("theme", theme)
     document.documentElement.classList.remove(theme === "light" ? "dark" : "light")
     document.documentElement.classList.add(theme)
