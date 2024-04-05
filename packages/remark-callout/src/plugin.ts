@@ -13,10 +13,11 @@ export type OptionsBuilder<N> = {
    *
    * @default
    * (callout) => ({
-   *   tagName: "div",
+   *   tagName: callout.isFoldable ? "details" : "div",
    *   properties: {
-   *     "data-callout-type": callout.type,
-   *     "data-callout-is-foldable": String(callout.isFoldable),
+   *     dataCallout: true,
+   *     dataCalloutType: callout.type,
+   *     open: callout.defaultFolded === undefined ? false : !callout.defaultFolded,
    *   },
    * })
    */
@@ -26,12 +27,12 @@ export type OptionsBuilder<N> = {
    * The title node of the callout.
    *
    * @default
-   * {
-   *   tagName: "div",
+   * (callout) => ({
+   *   tagName: callout.isFoldable ? "summary" : "div",
    *   properties: {
    *     dataCalloutTitle: true,
    *   },
-   * }
+   * })
    */
   title?: N;
 
@@ -39,12 +40,12 @@ export type OptionsBuilder<N> = {
    * The body node of the callout.
    *
    * @default
-   * {
+   * () => ({
    *   tagName: "div",
    *   properties: {
    *     dataCalloutBody: true,
    *   },
-   * }
+   * })
    */
   body?: N;
 
@@ -88,19 +89,16 @@ export type NodeOptionsFunction = (callout: Callout) => NodeOptions;
 
 export const defaultOptions: Required<Options> = {
   root: (callout) => ({
-    tagName: "div",
+    tagName: callout.isFoldable ? "details" : "div",
     properties: {
       dataCallout: true,
       dataCalloutType: callout.type,
-      dataCalloutIsFoldable: String(callout.isFoldable),
-      dataCalloutDefaultFolded:
-        callout.defaultFolded == null
-          ? undefined
-          : String(callout.defaultFolded),
+      open:
+        callout.defaultFolded === undefined ? false : !callout.defaultFolded,
     },
   }),
-  title: () => ({
-    tagName: "div",
+  title: (callout) => ({
+    tagName: callout.isFoldable ? "summary" : "div",
     properties: {
       dataCalloutTitle: true,
     },

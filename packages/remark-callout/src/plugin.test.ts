@@ -147,8 +147,8 @@ describe("remarkCallout", () => {
     const callout = doc.querySelector("[data-callout]");
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("data-callout-type")).toBe("note");
-    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("false");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.textContent).toBe("title here");
@@ -169,8 +169,8 @@ describe("remarkCallout", () => {
     const callout = doc.querySelector("[data-callout]");
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("data-callout-type")).toBe("note");
-    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("false");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe(
@@ -201,8 +201,8 @@ describe("remarkCallout", () => {
     const callout = doc.querySelector("[data-callout]");
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("data-callout-type")).toBe("warn");
-    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("false");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
@@ -243,8 +243,8 @@ describe("remarkCallout", () => {
     const callout = doc.querySelector("[data-callout]");
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("data-callout-type")).toBe("warn");
-    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("true");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe("true");
+    expect(callout?.tagName.toLowerCase()).toBe("details");
+    expect(callout?.getAttribute("open")).toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
@@ -285,8 +285,8 @@ describe("remarkCallout", () => {
     const callout = doc.querySelector("[data-callout]");
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("data-callout-type")).toBe("warn");
-    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("true");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe("false");
+    expect(callout?.tagName.toLowerCase()).toBe("details");
+    expect(callout?.getAttribute("open")).not.toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.innerHTML).toBe("title here <code>inline code</code>");
@@ -320,8 +320,8 @@ describe("remarkCallout", () => {
     const callout = doc.querySelector("[data-callout]");
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("data-callout-type")).toBe("warn");
-    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("false");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
     expect(
       callout?.querySelector("[data-callout-body]")?.children[0].innerHTML,
     ).toBe("body <strong>first</strong> <em>line</em> <code>code</code> here");
@@ -349,7 +349,7 @@ describe("remarkCallout", () => {
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("calloutType")).toBe("warn");
     expect(callout?.getAttribute("isFoldable")).toBe("false");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
+    expect(callout?.getAttribute("open")).toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.textContent).toBe("title here");
@@ -401,12 +401,8 @@ describe("remarkCallout", () => {
           const callout = doc.querySelector("[data-callout]");
           expect(callout).not.toBe(null);
           expect(callout?.getAttribute("data-callout-type")).toBe(calloutType);
-          expect(callout?.getAttribute("data-callout-is-foldable")).toBe(
-            "false",
-          );
-          expect(callout?.getAttribute("data-callout-default-folded")).toBe(
-            null,
-          );
+          expect(callout?.tagName.toLowerCase()).toBe("div");
+          expect(callout?.getAttribute("open")).toBe(null);
 
           const calloutTitle = callout?.querySelector("[data-callout-title]");
           expect(calloutTitle?.textContent).toBe("title here");
@@ -447,8 +443,8 @@ describe("remarkCallout", () => {
     const callout = doc.querySelector("[data-callout]");
     expect(callout).not.toBe(null);
     expect(callout?.getAttribute("data-callout-type")).toBe("info");
-    expect(callout?.getAttribute("data-callout-is-foldable")).toBe("false");
-    expect(callout?.getAttribute("data-callout-default-folded")).toBe(null);
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
 
     const calloutTitle = callout?.querySelector("[data-callout-title]");
     expect(calloutTitle?.textContent).toBe("title here");

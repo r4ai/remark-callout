@@ -64,7 +64,7 @@ console.log(html);
 yields:
 
 ```html
-<div data-callout data-callout-type="note" data-callout-is-foldable="false">
+<div data-callout data-callout-type="note">
   <div data-callout-title>title here</div>
   <div data-callout-body>
     <p>body here</p>
@@ -139,20 +139,6 @@ yields:
          content: "Note";
        }
 
-       &[data-is-foldable="true"] {
-         & {
-           @apply cursor-pointer;
-         }
-
-         &::after {
-           @apply w-full bg-contain bg-right bg-no-repeat;
-           content: "Note";
-
-           /* lucide:chevron-right */
-           background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODg4OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im05IDE4bDYtNmwtNi02Ii8+PC9zdmc+");
-         }
-       }
-
        &::before {
          @apply mt-1 block h-5 w-5 bg-current content-[""];
          mask-repeat: no-repeat;
@@ -174,7 +160,21 @@ yields:
      }
    }
 
-   [data-callout][open] > [data-callout-title]::after {
+   details[data-callout] > summary[data-callout-title] {
+     & {
+       @apply cursor-pointer;
+     }
+
+     &::after {
+       @apply w-full bg-contain bg-right bg-no-repeat;
+       content: "Note";
+
+       /* lucide:chevron-right */
+       background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODg4OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im05IDE4bDYtNmwtNi02Ii8+PC9zdmc+");
+     }
+   }
+
+   details[data-callout][open] > summary[data-callout-title]::after {
      /* lucide:chevron-down */
      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODg4OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im02IDlsNiA2bDYtNiIvPjwvc3ZnPg==");
    }
@@ -297,10 +297,11 @@ export type Options = {
    *
    * @default
    * (callout) => ({
-   *   tagName: "div",
+   *   tagName: callout.isFoldable ? "details" : "div",
    *   properties: {
-   *     "data-callout-type": callout.type,
-   *     "data-callout-is-foldable": String(callout.isFoldable),
+   *     dataCallout: true,
+   *     dataCalloutType: callout.type,
+   *     open: callout.defaultFolded === undefined ? false : !callout.defaultFolded,
    *   },
    * })
    */
@@ -310,12 +311,12 @@ export type Options = {
    * The title node of the callout.
    *
    * @default
-   * {
-   *   tagName: "div",
+   * (callout) => ({
+   *   tagName: callout.isFoldable ? "summary" : "div",
    *   properties: {
    *     dataCalloutTitle: true,
    *   },
-   * }
+   * })
    */
   title?: NodeOptions | NodeOptionsFunction;
 
@@ -323,12 +324,12 @@ export type Options = {
    * The body node of the callout.
    *
    * @default
-   * {
+   * () => ({
    *   tagName: "div",
    *   properties: {
    *     dataCalloutBody: true,
    *   },
-   * }
+   * })
    */
   body?: NodeOptions | NodeOptionsFunction;
 
@@ -398,19 +399,16 @@ Default options:
 ```ts
 export const defaultOptions: Required<Options> = {
   root: (callout) => ({
-    tagName: "div",
+    tagName: callout.isFoldable ? "details" : "div",
     properties: {
       dataCallout: true,
       dataCalloutType: callout.type,
-      dataCalloutIsFoldable: String(callout.isFoldable),
-      dataCalloutDefaultFolded:
-        callout.defaultFolded == null
-          ? undefined
-          : String(callout.defaultFolded),
+      open:
+        callout.defaultFolded === undefined ? false : !callout.defaultFolded,
     },
   }),
-  title: () => ({
-    tagName: "div",
+  title: (callout) => ({
+    tagName: callout.isFoldable ? "summary" : "div",
     properties: {
       dataCalloutTitle: true,
     },
