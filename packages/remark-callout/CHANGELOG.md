@@ -1,5 +1,12 @@
 # @r4ai/remark-callout
 
+## 0.3.1
+
+### Patch Changes
+
+- 93e078b: chore(deps): update dependency node to v21.7.2
+- ca618dd: chore(deps): update dependency bun to v1.1.1
+
 ## 0.3.0
 
 ### Minor Changes

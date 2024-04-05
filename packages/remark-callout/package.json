@@ -1,6 +1,6 @@
 {
   "name": "@r4ai/remark-callout",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A remark plugin to add obsidian style callouts to markdown",
   "author": "rai",
   "keywords": [
