@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import meta from "@/lib/metadata"
+import { Playground } from "./_Playground"
+import { codeToHtml } from "shiki"
+import style from "./_callout.css?raw"
+
+const highlightedCss = await codeToHtml(style, {
+  lang: "css",
+  themes: {
+    light: "github-light",
+    dark: "one-dark-pro",
+  },
+})
+---
+
+<BaseLayout route="/playground" title={`Playground | ${meta.name}`}>
+  <Playground highlightedCss={highlightedCss} client:only="react" />
+</BaseLayout>

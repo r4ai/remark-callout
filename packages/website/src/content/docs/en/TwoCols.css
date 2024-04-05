@@ -1,0 +1,9 @@
+[data-two-cols] > div > div {
+  &:first-child {
+    @apply mt-0;
+  }
+
+  &:last-child {
+    @apply mb-0;
+  }
+}
