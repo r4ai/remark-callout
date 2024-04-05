@@ -67,7 +67,7 @@ yields:
   </div>
   <div slot="Code">
     ```html
-    <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+    <div data-callout data-callout-type="note" >
       <div data-callout-title>title here</div>
       <div data-callout-body>
         <p>body here</p>
@@ -99,7 +99,7 @@ Callout title can include any inline element.
       </div>
       <div slot="Code">
         ```html
-        <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+        <div data-callout data-callout-type="note">
           <div data-callout-title>
             The <strong>reason</strong> for why <em>this</em> <del>is</del>
             <code>true</code> when <code class="language-math math-inline">a=1</code>.
@@ -166,7 +166,7 @@ Callout body can include any block element.
       </div>
       <div slot="Code">
         ```html
-        <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+        <div data-callout data-callout-type="note">
           <div data-callout-title>title here</div>
           <div data-callout-body>
             <p>The <strong>reason</strong> for why <em>this</em> <del>is</del>
@@ -223,15 +223,15 @@ Callouts can also be nested recursively.
       </div>
       <div slot="Code">
         ```html
-        <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+        <div data-callout data-callout-type="note">
           <div data-callout-title></div>
           <div data-callout-body>
             <p>Nested callout</p>
-            <div data-callout data-callout-type="important" data-callout-is-foldable="false">
+            <div data-callout data-callout-type="important">
               <div data-callout-title></div>
               <div data-callout-body>
                 <p>Further nested callout</p>
-                <div data-callout data-callout-type="caution" data-callout-is-foldable="false">
+                <div data-callout data-callout-type="caution">
                   <div data-callout-title></div>
                   <div data-callout-body>
                     <p>Even further nested callout</p>
@@ -269,12 +269,12 @@ A plus sign expands the callout by default, and a minus sign collapses it instea
       </div>
       <div slot="Code">
         ```html
-        <div data-callout data-callout-type="note" data-callout-is-foldable="true" data-callout-default-folded="true">
-          <div data-callout-title>title here</div>
+        <details data-callout data-callout-type="note">
+          <summary data-callout-title>title here</summary>
           <div data-callout-body>
             <p>body here</p>
           </div>
-        </div>
+        </details>
         ```
       </div>
     </Tabs>
