@@ -27,7 +27,7 @@ const { entry } = Astro.props
 const { Content } = await entry.render()
 ---
 
-<BaseLayout route="/docs" title={`Docs | ${meta.name}`}>
+<BaseLayout route="/remark-callout/docs/en" title={`Docs | ${meta.name}`}>
   <div class="prose mx-auto w-full max-w-full px-5 dark:prose-invert *:mx-auto *:max-w-screen-md">
     <h1 class="mt-2">Docs</h1>
     <Content

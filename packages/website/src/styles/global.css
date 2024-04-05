@@ -70,8 +70,8 @@
     font-family: "Mona Sans";
     /* prettier-ignore */
     src:
-      url("/fonts/Mona-Sans/Mona-Sans.woff2") format("woff2 supports variations"),
-      url("/fonts/Mona-Sans/Mona-Sans.woff2") format("woff2-variations");
+      url("/remark-callout/fonts/Mona-Sans/Mona-Sans.woff2") format("woff2 supports variations"),
+      url("/remark-callout/fonts/Mona-Sans/Mona-Sans.woff2") format("woff2-variations");
     font-weight: 200 900;
     font-stretch: 75% 125%;
   }

@@ -4,21 +4,19 @@ import { defineConfig } from "astro/config"
 import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
 import { remarkCallout, type Options as RemarkCalloutOptions } from "@r4ai/remark-callout"
-
+import metadata from "./src/lib/metadata"
 import mdx from "@astrojs/mdx"
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://r4ai.github.io",
-  base: "/remark-callout",
+  site: metadata.site,
+  base: metadata.base,
   vite: {
     ssr: {
       noExternal: ["@r4ai/remark-callout"],
     },
   },
-  redirects: {
-    "/docs": "/docs/en",
-  },
+  redirects: {},
   integrations: [
     tailwind({
       applyBaseStyles: false,

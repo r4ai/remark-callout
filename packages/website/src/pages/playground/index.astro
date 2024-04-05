@@ -14,6 +14,6 @@ const highlightedCss = await codeToHtml(style, {
 })
 ---
 
-<BaseLayout route="/playground" title={`Playground | ${meta.name}`}>
+<BaseLayout route="/remark-callout/playground" title={`Playground | ${meta.name}`}>
   <Playground highlightedCss={highlightedCss} client:only="react" />
 </BaseLayout>

@@ -22,15 +22,15 @@ type Route = {
 export const routes = {
   index: {
     label: "Home",
-    href: "/",
+    href: `${meta.base}/`,
   },
   docs: {
     label: "Docs",
-    href: "/docs",
+    href: `${meta.base}/docs/en`,
   },
   playground: {
     label: "Playground",
-    href: "/playground",
+    href: `${meta.base}/playground`,
   },
 } as const satisfies Record<string, Route>
 
@@ -56,7 +56,7 @@ export const Header: FC<HeaderProps> = ({ route }) => {
                   href={routes.docs.href}
                   className={cn(
                     "text-muted-foreground transition hover:text-foreground",
-                    route === "/docs" && "font-medium text-foreground",
+                    route === "/remark-callout/docs/en" && "font-medium text-foreground",
                   )}
                 >
                   {routes.docs.label}
@@ -67,7 +67,7 @@ export const Header: FC<HeaderProps> = ({ route }) => {
                   href={routes.playground.href}
                   className={cn(
                     "text-muted-foreground transition hover:text-foreground",
-                    route === "/playground" && "font-medium text-foreground",
+                    route === "/remark-callout/playground" && "font-medium text-foreground",
                   )}
                 >
                   {routes.playground.label}
