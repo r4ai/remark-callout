@@ -1,5 +1,15 @@
 # remark-callout
 
+[![npm version](https://badge.fury.io/js/@r4ai%2Fremark-callout.svg)](https://badge.fury.io/js/@r4ai%2Fremark-callout)
+[![CI](https://github.com/r4ai/remark-callout/actions/workflows/ci.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/ci.yml)
+[![Release](https://github.com/r4ai/remark-callout/actions/workflows/cd.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/cd.yml)
+[![CodeQL](https://github.com/r4ai/remark-callout/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/github-code-scanning/codeql)
+
+[![NPM](https://nodei.co/npm/@r4ai/remark-callout.png)](https://nodei.co/npm/@r4ai/remark-callout/)
+
+> [!important]
+> Website: [https://r4ai.github.io/remark-callout](https://r4ai.github.io/remark-callout)
+
 A remark plugin to add obsidian style callouts to markdown.
 
 ```md
@@ -22,183 +32,7 @@ bun add @r4ai/remark-callout
 
 ## Usage
 
-```ts
-import remarkParse from "remark-parse";
-import { unified } from "unified";
-import remarkCallout from "@r4ai/remark-callout";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
-
-const md = `
-  > [!note] title here
-  > body here
-`;
-
-const html = unified()
-  .use(remarkParse)
-  .use(remarkCallout)
-  .use(remarkRehype)
-  .use(rehypeStringify)
-  .processSync(md)
-  .toString();
-
-console.log(html);
-```
-
-yields:
-
-```html
-<div data-callout data-callout-type="note" data-callout-is-foldable="false">
-  <div data-callout-title>title here</div>
-  <div data-callout-body>
-    <p>body here</p>
-  </div>
-</div>
-```
-
-### Callout title
-
-Callout title can include any inline element.
-
-```md
-> [!note] The **reason** for why _this_ ~~is~~ `true` when $a=1$.
-> body here
-```
-
-yields:
-
-```html
-<div data-callout data-callout-type="note" data-callout-is-foldable="false">
-  <div data-callout-title>
-    The <strong>reason</strong> for why <em>this</em> <del>is</del>
-    <code>true</code> when <code class="language-math math-inline">a=1</code>.
-  </div>
-  <div data-callout-body>
-    <p>body here</p>
-  </div>
-</div>
-```
-
-<!-- prettier-ignore -->
-> [!WARNING]
-> `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
-
-### Callout body
-
-Callout body can include any block element.
-
-````md
-> [!note] title here
-> The **reason** for why _this_ ~~is~~ `true` when $a=1$.
->
-> - item 1
-> - item 2
->
-> ```js
-> console.log("Hello, World!");
-> ```
->
-> $$
-> \forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| < \delta \Rightarrow |f(x) - b| < \epsilon
-> $$
->
-> > Done is better than perfect.
-````
-
-yields:
-
-```html
-<div data-callout data-callout-type="note" data-callout-is-foldable="false">
-  <div data-callout-title>title here</div>
-  <div data-callout-body>
-    <p>
-      The <strong>reason</strong> for why <em>this</em> <del>is</del>
-      <code>true</code> when <code class="language-math math-inline">a=1</code>.
-    </p>
-    <ul>
-      <li>item 1</li>
-      <li>item 2</li>
-    </ul>
-    <pre><code class="language-js">console.log("Hello, World!");
-</code></pre>
-    <pre><code class="language-math math-display">\forall \epsilon > 0, \exists \delta > 0 \text{ s.t. } |x - a| &#x3C; \delta \Rightarrow |f(x) - b| &#x3C; \epsilon</code></pre>
-    <blockquote>
-      <p>Done is better than perfect.</p>
-    </blockquote>
-  </div>
-</div>
-```
-
-<!-- prettier-ignore -->
-> [!WARNING]
-> `remark-gfm` and `remark-math` are required to use strike-through lines and math formulas
-
-Callouts can also be nested recursively.
-
-```md
-> [!note]
-> Nested callout
->
-> > [!info]
-> > Further nested callout
-> >
-> > > [!warning]
-> > > Even further nested callout
-```
-
-yields:
-
-```html
-<div data-callout data-callout-type="note" data-callout-is-foldable="false">
-  <div data-callout-title></div>
-  <div data-callout-body>
-    <p>Nested callout</p>
-    <div data-callout data-callout-type="info" data-callout-is-foldable="false">
-      <div data-callout-title></div>
-      <div data-callout-body>
-        <p>Further nested callout</p>
-        <div
-          data-callout
-          data-callout-type="warning"
-          data-callout-is-foldable="false"
-        >
-          <div data-callout-title></div>
-          <div data-callout-body>
-            <p>Even further nested callout</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-```
-
-### Foldable callouts
-
-You can make a callout foldable by adding a plus (+) or a minus (-) directly after the type identifier.
-
-A plus sign expands the callout by default, and a minus sign collapses it instead.
-
-```md
-> [!note]- title here
-> body here
-```
-
-yields:
-
-```html
-<div
-  data-callout
-  data-callout-type="note"
-  data-callout-is-foldable="true"
-  data-callout-default-folded="true"
->
-  <div data-callout-title>title here</div>
-  <div data-callout-body>
-    <p>body here</p>
-  </div>
-</div>
-```
+See [Usage](https://r4ai.github.io/remark-callout/docs/en/#usage).
 
 ## Quick Start
 
@@ -287,14 +121,14 @@ yields:
    Now you can style the callouts using CSS. Following is an example of how you can style the callouts using Tailwind CSS:
 
    ```css
-   div[data-callout] {
+   [data-callout] {
      & {
-       @apply my-6 rounded-lg border p-4 pb-5;
+       @apply my-6 space-y-2 rounded-lg border border-blue-600/20 bg-blue-400/20 p-4 pb-5 dark:border-blue-800/20 dark:bg-blue-600/10;
      }
 
-     & > div[data-callout-title] {
+     & > [data-callout-title] {
        & {
-         @apply flex flex-row items-start gap-1 p-0 font-bold;
+         @apply flex flex-row items-start gap-2 p-0 font-bold text-blue-500;
        }
 
        &:not:only-child {
@@ -305,25 +139,58 @@ yields:
          content: "Note";
        }
 
+       &[data-is-foldable="true"] {
+         & {
+           @apply cursor-pointer;
+         }
+
+         &::after {
+           @apply w-full bg-contain bg-right bg-no-repeat;
+           content: "Note";
+
+           /* lucide:chevron-right */
+           background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODg4OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im05IDE4bDYtNmwtNi02Ii8+PC9zdmc+");
+         }
+       }
+
        &::before {
          @apply mt-1 block h-5 w-5 bg-current content-[""];
          mask-repeat: no-repeat;
          mask-size: cover;
 
-         /* radix-icons:pencil-1 */
-         mask-image: url("data:image/svg+xml,%3Csvg width='15' height='15' viewBox='0 0 15 15' fill='none'  xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.8536 1.14645C11.6583 0.951184 11.3417 0.951184 11. 1465 1.14645L3.71455 8.57836C3.62459 8.66832 3.55263 8.77461 3.50251 8.89155L2.04044 12.303C1.9599 12. 491 2.00189 12.709 2.14646 12.8536C2.29103 12.9981 2.50905 13.0401 2.69697 12.9596L6.10847 11.4975C6. 2254 11.4474 6.3317 11.3754 6.42166 11.2855L13.8536 3.85355C14.0488 3.65829 14.0488 3.34171 13.8536 3. 14645L11.8536 1.14645ZM4.42166 9.28547L11.5 2.20711L12.7929 3.5L5.71455 10.5784L4.21924 11.2192L3.78081  10.7808L4.42166 9.28547Z' fill='currentColor' fill-rule='evenodd' clip-rule='evenodd'%3E%3C/path%3E%3C/ svg%3E");
+         /* lucide-pencil */
+         mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE3IDNhMi44NSAyLjgzIDAgMSAxIDQgNEw3LjUgMjAuNUwyIDIybDEuNS01LjVabS0yIDJsNCA0Ii8+PC9zdmc+");
+       }
+     }
+
+     & > [data-callout-body] {
+       & {
+         @apply space-y-2;
+       }
+
+       & > * {
+         @apply m-0;
        }
      }
    }
 
-   div[data-callout][data-callout-type="info"] {
+   [data-callout][open] > [data-callout-title]::after {
+     /* lucide:chevron-down */
+     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODg4OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im02IDlsNiA2bDYtNiIvPjwvc3ZnPg==");
+   }
+
+   [data-callout][data-callout-type="info"] {
      & {
-       @apply border-blue-600/20 bg-blue-500/20 dark:border-blue-800/20;
+       @apply border-blue-600/20 bg-blue-400/20 dark:border-blue-800/20 dark:bg-blue-600/10;
      }
 
-     & > div[data-callout-title] {
+     & > [data-callout-title] {
        & {
          @apply text-blue-500;
+       }
+
+       &:empty::after {
+         content: "Info";
        }
 
        &::before {
