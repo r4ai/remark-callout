@@ -2,7 +2,7 @@ import { useState, type FC, useMemo, type ReactNode, useEffect } from "react"
 import Editor from "@monaco-editor/react"
 import { unified } from "unified"
 import remarkParse from "remark-parse"
-import remarkCallout from "@r4ai/remark-callout"
+import remarkCallout, { defaultOptions } from "@r4ai/remark-callout"
 import remarkRehype from "remark-rehype"
 import rehypeStringify from "rehype-stringify"
 import rehypeKatex from "rehype-katex"
@@ -134,7 +134,23 @@ const render = (html: string) =>
   unified()
     .use(remarkParse)
     .use(remarkMath)
-    .use(remarkCallout)
+    .use(remarkCallout, {
+      root: (callout) => ({
+        tagName: callout.isFoldable ? "details" : "div",
+        properties: {
+          "data-callout": true,
+          "data-callout-type": callout.type,
+          open: callout.defaultFolded === undefined ? undefined : !callout.defaultFolded,
+        },
+      }),
+      title: (callout) => ({
+        tagName: callout.isFoldable ? "summary" : "div",
+        properties: {
+          "data-callout-title": true,
+          "data-is-foldable": String(callout.isFoldable),
+        },
+      }),
+    })
     .use(remarkRehype)
     .use(rehypeKatex)
     .use(rehypeStringify)

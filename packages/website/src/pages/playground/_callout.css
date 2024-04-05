@@ -16,6 +16,20 @@
       content: "Note";
     }
 
+    &[data-is-foldable="true"] {
+      & {
+        @apply cursor-pointer;
+      }
+
+      &::after {
+        @apply w-full bg-contain bg-right bg-no-repeat;
+        content: "Note";
+
+        /* lucide:chevron-right */
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODg4OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im05IDE4bDYtNmwtNi02Ii8+PC9zdmc+");
+      }
+    }
+
     &::before {
       @apply mt-1 block h-5 w-5 bg-current content-[""];
       mask-repeat: no-repeat;
@@ -35,6 +49,11 @@
       @apply m-0;
     }
   }
+}
+
+[data-callout][open] > [data-callout-title]::after {
+  /* lucide:chevron-down */
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzg4ODg4OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjIiIGQ9Im02IDlsNiA2bDYtNiIvPjwvc3ZnPg==");
 }
 
 [data-callout][data-callout-type="info"] {
