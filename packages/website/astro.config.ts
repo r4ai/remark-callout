@@ -9,6 +9,7 @@ import mdx from "@astrojs/mdx"
 
 // https://astro.build/config
 export default defineConfig({
+  base: "/remark-callout",
   vite: {
     ssr: {
       noExternal: ["@r4ai/remark-callout"],
