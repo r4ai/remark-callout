@@ -134,23 +134,7 @@ const render = (html: string) =>
   unified()
     .use(remarkParse)
     .use(remarkMath)
-    .use(remarkCallout, {
-      root: (callout) => ({
-        tagName: callout.isFoldable ? "details" : "div",
-        properties: {
-          "data-callout": true,
-          "data-callout-type": callout.type,
-          open: callout.defaultFolded === undefined ? undefined : !callout.defaultFolded,
-        },
-      }),
-      title: (callout) => ({
-        tagName: callout.isFoldable ? "summary" : "div",
-        properties: {
-          "data-callout-title": true,
-          "data-is-foldable": String(callout.isFoldable),
-        },
-      }),
-    })
+    .use(remarkCallout)
     .use(remarkRehype)
     .use(rehypeKatex)
     .use(rehypeStringify)
