@@ -110,7 +110,7 @@ yields:
    yields:
 
    ```html
-   <div data-callout data-callout-type="note" data-callout-is-foldable="false">
+   <div data-callout data-callout-type="note">
      <div data-callout-title>title here</div>
      <div data-callout-body>
        <p>body here</p>
