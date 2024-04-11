@@ -1,5 +1,11 @@
 # @r4ai/remark-callout
 
+## 0.3.2
+
+### Patch Changes
+
+- 4d3be99: Update README
+
 ## 0.3.1
 
 ### Patch Changes
