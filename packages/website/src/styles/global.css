@@ -85,4 +85,8 @@
   html {
     @apply h-full;
   }
+
+  .katex {
+    @apply overflow-auto;
+  }
 }
