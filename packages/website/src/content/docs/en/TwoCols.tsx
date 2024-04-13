@@ -10,7 +10,10 @@ type TwoColsProps = {
 
 export const TwoCols: FC<TwoColsProps> = ({ className, left, right }) => {
   return (
-    <div className={cn("my-6 grid !max-w-screen-lg grid-cols-2 items-start gap-6", className)} data-two-cols>
+    <div
+      className={cn("my-6 grid !max-w-screen-lg grid-cols-1 items-start gap-6 sm:grid-cols-2", className)}
+      data-two-cols
+    >
       {left}
       {right}
     </div>
