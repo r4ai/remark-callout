@@ -102,7 +102,7 @@ const Tab: FC<TabProps> = ({ tabs, defaultTab }) => {
   const [tab, setTab] = useState<keyof typeof tabs>(defaultTab)
 
   return (
-    <div className="flex h-0 min-h-full flex-col">
+    <div className="flex h-0 min-h-full flex-col overflow-auto">
       <div className="mx-6 flex h-10 flex-row items-center gap-6">
         {Object.keys(tabs).map((key) => (
           <div
