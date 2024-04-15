@@ -1,5 +1,11 @@
 # @r4ai/remark-callout
 
+## 0.3.3
+
+### Patch Changes
+
+- a9ab147: chore: add exports field to package.json
+
 ## 0.3.2
 
 ### Patch Changes
