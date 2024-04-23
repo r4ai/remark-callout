@@ -22,9 +22,12 @@
     "url": "https://github.com/r4ai/remark-callout/issues"
   },
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
   "files": [
     "src",
     "dist",
@@ -34,6 +37,9 @@
     "README.md",
     "LICENSE"
   ],
+  "engines": {
+    "node": ">=16"
+  },
   "publishConfig": {
     "access": "public"
   },
