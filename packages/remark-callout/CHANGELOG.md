@@ -1,5 +1,11 @@
 # @r4ai/remark-callout
 
+## 0.3.4
+
+### Patch Changes
+
+- 6580da7: Fix tsconfig to generate ESM output
+
 ## 0.3.3
 
 ### Patch Changes
