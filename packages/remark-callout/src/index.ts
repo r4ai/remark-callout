@@ -4,4 +4,4 @@ export {
   defaultOptions,
   remarkCallout,
   remarkCallout as default,
-} from "./plugin";
+} from "./plugin.js";

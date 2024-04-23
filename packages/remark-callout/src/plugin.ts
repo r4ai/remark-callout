@@ -1,4 +1,4 @@
-import defu from "defu";
+import { defu } from "defu";
 import type { Properties } from "hast";
 import type * as mdast from "mdast";
 import type { Plugin } from "unified";
