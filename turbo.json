@@ -6,12 +6,16 @@
       "dependsOn": ["^build"]
     },
     "test": {
-      "cache": false,
-      "dependsOn": ["build"]
+      "cache": false
     },
     "test:ci": {
-      "cache": false,
-      "dependsOn": ["build"]
+      "cache": false
+    },
+    "test:coverage": {
+      "cache": false
+    },
+    "test:coverage:ci": {
+      "cache": false
     }
   }
 }

@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     coverage: {
       enabled: true,
-      provider: "v8",
+      provider: "istanbul",
     },
   },
 });

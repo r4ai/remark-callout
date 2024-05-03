@@ -11,4 +11,8 @@ jobs:
       - uses: jdx/mise-action@v2
       - run: bun install --frozen-lockfile
       - run: bun run build
-      - run: bun test
+      - run: bun run test:coverage:ci
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

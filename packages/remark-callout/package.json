@@ -46,6 +46,8 @@
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest run",
+    "test:coverage": "vitest --coverage",
+    "test:coverage:ci": "vitest run --coverage",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "prepublishOnly": "bun run build",
     "check": "bunx @biomejs/biome check --apply .",
