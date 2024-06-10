@@ -11,6 +11,10 @@
     {
       "name": "website",
       "path": "packages/website"
+    },
+    {
+      "name": "examples/nextjs",
+      "path": "examples/nextjs"
     }
   ],
   "settings": {

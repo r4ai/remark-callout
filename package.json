@@ -12,7 +12,7 @@
     "url": "https://github.com/r4ai/remark-callout/issues"
   },
   "type": "module",
-  "workspaces": ["packages/*"],
+  "workspaces": ["packages/*", "examples/*"],
   "scripts": {
     "test": "turbo test",
     "test:ci": "turbo test:ci",
