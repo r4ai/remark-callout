@@ -135,6 +135,18 @@ describe("remarkCallout", () => {
     parser = new jsdom.window.DOMParser();
   });
 
+  test("empty blockquote", async () => {
+    const md = dedent`
+      >
+    `;
+
+    const { html } = await process(md);
+    const doc = parser.parseFromString(html, "text/html");
+
+    const blockquote = doc.querySelector("blockquote");
+    expect(blockquote).not.toBe(null);
+  });
+
   test("callout with title and body", async () => {
     const md = dedent`
       > [!note] title here
