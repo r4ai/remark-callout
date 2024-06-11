@@ -1,5 +1,11 @@
 # @r4ai/remark-callout
 
+## 0.4.0
+
+### Minor Changes
+
+- cd5d841: Fix error when encountering empty blockquote
+
 ## 0.3.4
 
 ### Patch Changes
