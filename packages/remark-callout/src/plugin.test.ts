@@ -208,6 +208,20 @@ describe("remarkCallout", () => {
     expect(calloutBody?.children[0].textContent).toBe("body here");
   });
 
+  test("callout with empty first line", async () => {
+    const md = dedent`
+      >
+      > [!info]
+      > body here
+    `;
+
+    const { html } = await process(md);
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("[data-callout]");
+    expect(callout).toBe(null);
+  });
+
   test("callout with title consisting of multiple nodes", async () => {
     const md = dedent`
       > [!note] The **reason** for why _this_ ~~is~~ \`true\` when $a=1$.

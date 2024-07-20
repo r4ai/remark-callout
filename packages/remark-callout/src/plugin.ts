@@ -140,6 +140,11 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       const paragraphNode = node.children.at(0);
       if (paragraphNode == null || paragraphNode.type !== "paragraph") return;
 
+      // Skip if the first line is empty
+      if (node.position?.start.line !== paragraphNode.position?.start.line) {
+        return;
+      }
+
       const calloutTypeTextNode = paragraphNode.children.at(0);
       if (calloutTypeTextNode == null || calloutTypeTextNode.type !== "text")
         return;
