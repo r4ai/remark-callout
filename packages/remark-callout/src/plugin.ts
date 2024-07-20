@@ -52,7 +52,29 @@ export type OptionsBuilder<N> = {
   /**
    * The icon node of the callout.
    *
+   * The icon node is added in the title node before the title text.
+   *
+   * - If `undefined`, no icon is added.
+   * - If a `string`, the string is added as HTML in the title node before the title text.
+   * - If a `object`, the object is added as a node before the title text.
+   *
+   * @example
+   * () => '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>' // lucide:pencil
+   *
+   * @example
+   * (callout) => ({
+   *   tagName: "div",
+   *   properties: {
+   *     className: "callout-icon",
+   *   },
+   *   children:
+   *     callout.type === "warn"
+   *       ? '<svg class="lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>' // lucide:circle-alert
+   *       : '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>', // lucide:pencil
+   * })
+   *
    * @default
+   * () => undefined
    */
   icon?: Optional<WithChildren<N>>;
 
