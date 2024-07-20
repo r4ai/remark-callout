@@ -9,7 +9,12 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 import { beforeAll, describe, expect, test } from "vitest";
-import { type Options, parseCallout, remarkCallout } from "./plugin.js";
+import {
+  type Callout,
+  type Options,
+  parseCallout,
+  remarkCallout,
+} from "./plugin.js";
 
 const process = async (md: string, options?: Options) => {
   let hast: hast.Node;
@@ -285,6 +290,41 @@ describe("remarkCallout", () => {
         "</code></pre>",
         "",
       ].join("\n"),
+    );
+  });
+
+  test("callout with type with spaces and special characters", async () => {
+    const md = dedent`
+      > [!type with spaces and special characters + - _ : ! & " ' ...]
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      callouts: ["info"],
+      onUnknownCallout: (callout) => {
+        const unknownCallout: Callout = {
+          type: callout.type,
+          isFoldable: callout.isFoldable,
+        };
+
+        if (callout.title != null) {
+          unknownCallout.title = callout.title;
+        }
+
+        return unknownCallout;
+      },
+    });
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("[data-callout]");
+    expect(callout).not.toBe(null);
+    expect(callout?.getAttribute("data-callout-type")).toBe(
+      `type-with-spaces-and-special-characters-+---_-:-!-&-"-'-...`,
+    );
+
+    const calloutTitle = callout?.querySelector("[data-callout-title]");
+    expect(calloutTitle?.textContent).toBe(
+      `Type with spaces and special characters + - _ : ! & " ' ...`,
     );
   });
 

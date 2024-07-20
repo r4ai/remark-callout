@@ -92,7 +92,7 @@ export const defaultOptions: Required<Options> = {
     tagName: callout.isFoldable ? "details" : "div",
     properties: {
       dataCallout: true,
-      dataCalloutType: callout.type,
+      dataCalloutType: formatForAttribute(callout.type),
       open:
         callout.defaultFolded === undefined ? false : !callout.defaultFolded,
     },
@@ -327,4 +327,8 @@ function capitalize(word: string): string {
     return word;
   }
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+
+export function formatForAttribute(rawString: string) {
+  return rawString.replace(/\s+/g, "-").toLowerCase();
 }
