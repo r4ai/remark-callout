@@ -132,7 +132,7 @@ export type NodeOptions = {
   tagName: string;
 
   /**
-   * The html properties of the node.
+   * The HTML properties of the node.
    *
    * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#properties
    * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
@@ -148,6 +148,32 @@ export type WithChildren<N> = N extends (...args: any) => any
   ? (...args: Parameters<N>) => WithChildren<ReturnType<N>>
   :
       | (N & {
+          /**
+           * The HTML children of the node.
+           *
+           * - If a `string`, the string is added as raw HTML in the node.
+           * - If a `object[]`, the object array is added as a hast node.
+           *
+           * @see https://github.com/syntax-tree/mdast?tab=readme-ov-file#html
+           * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
+           *
+           * @example '<span class="icon">📝</span>'
+           *
+           * @example
+           * [
+           *   {
+           *     type: "element",
+           *     tagName: "span",
+           *     properties: { className: ["icon"] },
+           *     children: [
+           *       {
+           *         type: "text",
+           *         value: "📝",
+           *       },
+           *     ],
+           *   }
+           * ]
+           */
           children: hast.ElementContent[] | string;
         })
       | string;
