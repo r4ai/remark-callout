@@ -188,7 +188,9 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
 
         calloutData.type = newCallout.type;
         calloutData.isFoldable = newCallout.isFoldable;
-        calloutData.title = newCallout.title;
+        if (newCallout.title != null) {
+          calloutData.title = newCallout.title;
+        }
       }
 
       // Generate callout root node
@@ -330,15 +332,22 @@ export const parseCallout = (
   );
   if (match?.groups?.type == null) return undefined;
 
-  return {
+  const callout: Callout = {
     type: match.groups.type,
     isFoldable: match.groups.isFoldable != null,
-    defaultFolded:
-      match.groups.isFoldable == null
-        ? undefined
-        : match.groups.isFoldable === "-",
-    title: match.groups.title,
   };
+
+  if (match.groups.isFoldable != null) {
+    callout.defaultFolded = match.groups.isFoldable === "-";
+  }
+
+  if (match.groups.title != null) {
+    callout.title = match.groups.title;
+  } else {
+    callout.title = capitalize(callout.type);
+  }
+
+  return callout;
 };
 
 export const toHtml = (
@@ -370,3 +379,10 @@ export const toHtml = (
     value: "",
   };
 };
+
+function capitalize(word: string): string {
+  if (word.length === 0) {
+    return word;
+  }
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
