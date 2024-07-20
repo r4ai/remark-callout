@@ -449,7 +449,7 @@ describe("remarkCallout", () => {
     expect(calloutTitle?.textContent).toBe("title here");
   });
 
-  test("option.icon when children is hast", async () => {
+  test("options.icon when children is hast", async () => {
     const md = dedent`
       > [!note] title here
       > body here
