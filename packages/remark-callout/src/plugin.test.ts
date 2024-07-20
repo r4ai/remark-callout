@@ -47,6 +47,24 @@ describe("parseCallout", () => {
     expect(callout?.title).toBe(undefined);
   });
 
+  test("should parse callout with uppercase type", () => {
+    const text = "[!INFO]";
+    const callout = parseCallout(text);
+    expect(callout?.type).toBe("INFO");
+    expect(callout?.isFoldable).toBe(false);
+    expect(callout?.defaultFolded).toBe(undefined);
+    expect(callout?.title).toBe(undefined);
+  });
+
+  test("should parse callout with spaces in type", () => {
+    const text = "[!type with spaces]";
+    const callout = parseCallout(text);
+    expect(callout?.type).toBe("type with spaces");
+    expect(callout?.isFoldable).toBe(false);
+    expect(callout?.defaultFolded).toBe(undefined);
+    expect(callout?.title).toBe(undefined);
+  });
+
   test("should parse callout only with foldable (-)", () => {
     const text = "[!info]-";
     const callout = parseCallout(text);
@@ -72,6 +90,24 @@ describe("parseCallout", () => {
     expect(callout?.isFoldable).toBe(false);
     expect(callout?.defaultFolded).toBe(undefined);
     expect(callout?.title).toBe("Hello, world! ");
+  });
+
+  test("should parse callout with multiple spaces between type and title", () => {
+    const text = "[!info]    Hello, world! ";
+    const callout = parseCallout(text);
+    expect(callout?.type).toBe("info");
+    expect(callout?.isFoldable).toBe(false);
+    expect(callout?.defaultFolded).toBe(undefined);
+    expect(callout?.title).toBe("   Hello, world! ");
+  });
+
+  test("should parse callout with [brackets] in title", () => {
+    const text = "[!info] Title [123]";
+    const callout = parseCallout(text);
+    expect(callout?.type).toBe("info");
+    expect(callout?.isFoldable).toBe(false);
+    expect(callout?.defaultFolded).toBe(undefined);
+    expect(callout?.title).toBe("Title [123]");
   });
 
   test("should parse callout with title and foldable (-)", () => {
@@ -116,13 +152,16 @@ describe("parseCallout", () => {
     expect(callout).toBe(undefined);
   });
 
-  test("should not parse as foldable when the format is invalid", () => {
+  test("should not parse callout with invalid foldable format", () => {
     const text = "[!warn]? Hello, world!";
     const callout = parseCallout(text);
-    expect(callout?.type).toBe("warn");
-    expect(callout?.isFoldable).toBe(false);
-    expect(callout?.defaultFolded).toBe(undefined);
-    expect(callout?.title).toBe("? Hello, world!");
+    expect(callout).toBe(undefined);
+  });
+
+  test("should not parse callout with missing space", () => {
+    const text = "[!warn]Hello, world!";
+    const callout = parseCallout(text);
+    expect(callout).toBe(undefined);
   });
 });
 
@@ -167,6 +206,20 @@ describe("remarkCallout", () => {
 
     const calloutBody = callout?.querySelector("[data-callout-body]");
     expect(calloutBody?.children[0].textContent).toBe("body here");
+  });
+
+  test("callout with empty first line", async () => {
+    const md = dedent`
+      >
+      > [!info]
+      > body here
+    `;
+
+    const { html } = await process(md);
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("[data-callout]");
+    expect(callout).toBe(null);
   });
 
   test("callout with title consisting of multiple nodes", async () => {
