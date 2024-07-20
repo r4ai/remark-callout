@@ -501,7 +501,9 @@ describe("remarkCallout", () => {
 
     const doc = parser.parseFromString(html, "text/html");
 
-    const icon = doc.querySelector(".callout-icon");
+    const title = doc.querySelector("[data-callout-title]");
+
+    const icon = title?.querySelector(".callout-icon");
     expect(icon).not.toBe(null);
 
     const iconSvg = icon?.querySelector("svg");
@@ -530,7 +532,9 @@ describe("remarkCallout", () => {
 
     const doc = parser.parseFromString(html, "text/html");
 
-    const icon = doc.querySelector(".callout-icon");
+    const title = doc.querySelector("[data-callout-title]");
+
+    const icon = title?.querySelector(".callout-icon");
     expect(icon).not.toBe(null);
 
     const iconSvg = icon?.querySelector("svg");
@@ -550,7 +554,9 @@ describe("remarkCallout", () => {
 
     const doc = parser.parseFromString(html, "text/html");
 
-    const svgIcon = doc.querySelector("svg");
+    const title = doc.querySelector("[data-callout-title]");
+
+    const svgIcon = title?.querySelector("svg");
     expect(svgIcon).not.toBe(null);
     expect(svgIcon?.getAttribute("class")).toBe("lucide-pencil");
   });
