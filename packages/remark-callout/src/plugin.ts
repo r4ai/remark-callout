@@ -1,5 +1,6 @@
 import { defu } from "defu";
-import type { Properties } from "hast";
+import type * as hast from "hast";
+import { toHtml as hastToHtml } from "hast-util-to-html";
 import type * as mdast from "mdast";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
@@ -50,6 +51,13 @@ export type OptionsBuilder<N> = {
   body?: N;
 
   /**
+   * The icon node of the callout.
+   *
+   * @default
+   */
+  icon?: Optional<WithChildren<N>>;
+
+  /**
    * A list of callout types that are supported.
    * - If `undefined`, all callout types are supported. This means that this plugin will not check if the given callout type is in `callouts` and never call `onUnknownCallout`.
    * - If a list, only the callout types in the list are supported. This means that if the given callout type is not in `callouts`, this plugin will call `onUnknownCallout`.
@@ -82,10 +90,24 @@ export type NodeOptions = {
    * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
    * @example { "className": "callout callout-info" }
    */
-  properties: Properties;
+  properties: hast.Properties;
 };
 
 export type NodeOptionsFunction = (callout: Callout) => NodeOptions;
+
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if N is a function
+export type WithChildren<N> = N extends (...args: any) => any
+  ? (...args: Parameters<N>) => WithChildren<ReturnType<N>>
+  :
+      | (N & {
+          children: hast.ElementContent[] | string;
+        })
+      | string;
+
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
+export type Optional<T> = T extends (args: any) => any
+  ? (...args: Parameters<T>) => Optional<ReturnType<T>>
+  : T | undefined;
 
 export const defaultOptions: Required<Options> = {
   root: (callout) => ({
@@ -103,6 +125,7 @@ export const defaultOptions: Required<Options> = {
       dataCalloutTitle: true,
     },
   }),
+  icon: () => undefined,
   body: () => ({
     tagName: "div",
     properties: {
@@ -119,10 +142,11 @@ const initOptions = (options?: Options) => {
   return Object.fromEntries(
     Object.entries(defaultedOptions).map(([key, value]) => {
       if (
-        ["root", "title", "body"].includes(key) &&
+        ["root", "title", "body", "icon"].includes(key) &&
         typeof value !== "function"
-      )
+      ) {
         return [key, () => value];
+      }
 
       return [key, value];
     }),
@@ -146,8 +170,9 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       }
 
       const calloutTypeTextNode = paragraphNode.children.at(0);
-      if (calloutTypeTextNode == null || calloutTypeTextNode.type !== "text")
+      if (calloutTypeTextNode == null || calloutTypeTextNode.type !== "text") {
         return;
+      }
 
       // Parse callout syntax
       // e.g. "[!note] title"
@@ -205,6 +230,10 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
         },
         children: [],
       };
+      const iconNode = options.icon(calloutData);
+      if (iconNode != null) {
+        titleNode.children.push(toHtml(iconNode));
+      }
       if (calloutData.title != null) {
         titleNode.children.push({
           type: "text",
@@ -310,5 +339,35 @@ export const parseCallout = (
         ? undefined
         : match.groups.isFoldable === "-",
     title: match.groups.title,
+  };
+};
+
+export const toHtml = (
+  from: WithChildren<NodeOptions>,
+): mdast.PhrasingContent => {
+  if (typeof from === "string") {
+    return {
+      type: "html",
+      value: from,
+    };
+  }
+  if (typeof from.children === "string") {
+    return {
+      type: "html",
+      data: {
+        hName: from.tagName,
+        hProperties: from.properties,
+      },
+      value: from.children,
+    };
+  }
+  return {
+    type: "html",
+    data: {
+      hName: from.tagName,
+      hProperties: from.properties,
+      hChildren: from.children,
+    },
+    value: "",
   };
 };
