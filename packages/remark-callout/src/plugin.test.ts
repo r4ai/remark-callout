@@ -44,7 +44,7 @@ describe("parseCallout", () => {
     expect(callout?.type).toBe("info");
     expect(callout?.isFoldable).toBe(false);
     expect(callout?.defaultFolded).toBe(undefined);
-    expect(callout?.title).toBe(undefined);
+    expect(callout?.title).toBe("Info");
   });
 
   test("should parse callout with uppercase type", () => {
@@ -53,7 +53,7 @@ describe("parseCallout", () => {
     expect(callout?.type).toBe("INFO");
     expect(callout?.isFoldable).toBe(false);
     expect(callout?.defaultFolded).toBe(undefined);
-    expect(callout?.title).toBe(undefined);
+    expect(callout?.title).toBe("Info");
   });
 
   test("should parse callout with spaces in type", () => {
@@ -62,7 +62,7 @@ describe("parseCallout", () => {
     expect(callout?.type).toBe("type with spaces");
     expect(callout?.isFoldable).toBe(false);
     expect(callout?.defaultFolded).toBe(undefined);
-    expect(callout?.title).toBe(undefined);
+    expect(callout?.title).toBe("Type with spaces");
   });
 
   test("should parse callout only with foldable (-)", () => {
@@ -71,7 +71,7 @@ describe("parseCallout", () => {
     expect(callout?.type).toBe("info");
     expect(callout?.isFoldable).toBe(true);
     expect(callout?.defaultFolded).toBe(true);
-    expect(callout?.title).toBe(undefined);
+    expect(callout?.title).toBe("Info");
   });
 
   test("should parse callout only with foldable (+)", () => {
@@ -80,7 +80,7 @@ describe("parseCallout", () => {
     expect(callout?.type).toBe("info");
     expect(callout?.isFoldable).toBe(true);
     expect(callout?.defaultFolded).toBe(false);
-    expect(callout?.title).toBe(undefined);
+    expect(callout?.title).toBe("Info");
   });
 
   test("should parse callout with title", () => {
