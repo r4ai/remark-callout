@@ -293,7 +293,7 @@ export const parseCallout = (
   if (text == null) return;
 
   const match = text.match(
-    /^\[!(?<type>.+?)\](?<isFoldable>[-+])?\s?(?<title>.+)?$/,
+    /^\[!(?<type>[^\]]+)?\](?<isFoldable>[+-])?(?: (?<title>.*))?$/,
   );
   if (match?.groups?.type == null) return undefined;
 
