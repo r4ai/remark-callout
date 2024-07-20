@@ -570,6 +570,137 @@ describe("remarkCallout", () => {
     expect(svgIcon).toBe(null);
   });
 
+  test("options.foldIcon when children is hast", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon: () => ({
+        tagName: "div",
+        properties: {
+          className: "callout-fold-icon",
+        },
+        children: [
+          {
+            type: "element",
+            tagName: "svg",
+            properties: {
+              xmlns: "http://www.w3.org/2000/svg",
+              width: "24",
+              height: "24",
+              viewBox: "0 0 24 24",
+              fill: "none",
+              stroke: "currentColor",
+              strokeWidth: "2",
+              strokeLineCap: "round",
+              strokeLineJoin: "round",
+              className: ["lucide", "lucide-chevron-right"],
+            },
+            children: [
+              {
+                type: "element",
+                tagName: "path",
+                properties: { d: "m9 18 6-6-6-6" },
+                children: [],
+                position: {
+                  start: { line: 1, column: 218, offset: 217 },
+                  end: { line: 1, column: 243, offset: 242 },
+                },
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const foldIcon = title?.querySelector(".callout-fold-icon");
+    expect(foldIcon).not.toBe(null);
+
+    const foldIconSvg = foldIcon?.querySelector("svg");
+    expect(foldIconSvg).not.toBe(null);
+    expect(foldIconSvg?.getAttribute("class")).toBe(
+      "lucide lucide-chevron-right",
+    );
+  });
+
+  test("options.foldIcon when children is string", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon: (callout) =>
+        callout.isFoldable
+          ? {
+              tagName: "div",
+              properties: {
+                className: "callout-fold-icon",
+              },
+              children:
+                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>', // lucide:chevron-right
+            }
+          : undefined,
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const foldIcon = title?.querySelector(".callout-fold-icon");
+    expect(foldIcon).not.toBe(null);
+
+    const foldIconSvg = foldIcon?.querySelector("svg");
+    expect(foldIconSvg).not.toBe(null);
+    expect(foldIconSvg?.getAttribute("class")).toBe(
+      "lucide lucide-chevron-right",
+    );
+  });
+
+  test("options.foldIcon when icon is string", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>',
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const foldIconSvg = title?.querySelector("svg");
+    expect(foldIconSvg).not.toBe(null);
+    expect(foldIconSvg?.getAttribute("class")).toBe(
+      "lucide lucide-chevron-right",
+    );
+  });
+
+  test("options.foldIcon when icon is undefined", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon: () => undefined,
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const foldIconSvg = doc.querySelector("svg");
+    expect(foldIconSvg).toBe(null);
+  });
+
   test("options.callouts", async () => {
     for (const calloutType of ["info", "warn", "error"]) {
       const md = dedent`

@@ -78,6 +78,8 @@ export type OptionsBuilder<N> = {
    */
   icon?: Optional<WithChildren<N>>;
 
+  foldIcon?: Optional<WithChildren<N>>;
+
   /**
    * A list of callout types that are supported.
    * - If `undefined`, all callout types are supported. This means that this plugin will not check if the given callout type is in `callouts` and never call `onUnknownCallout`.
@@ -147,6 +149,7 @@ export const defaultOptions: Required<Options> = {
     },
   }),
   icon: () => undefined,
+  foldIcon: () => undefined,
   body: () => ({
     tagName: "div",
     properties: {
@@ -163,7 +166,7 @@ const initOptions = (options?: Options) => {
   return Object.fromEntries(
     Object.entries(defaultedOptions).map(([key, value]) => {
       if (
-        ["root", "title", "body", "icon"].includes(key) &&
+        ["root", "title", "body", "icon", "foldIcon"].includes(key) &&
         typeof value !== "function"
       ) {
         return [key, () => value];
@@ -255,6 +258,7 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       };
       const iconNode = options.icon(calloutData);
       if (iconNode != null) {
+        // Add icon node before the title text
         titleNode.children.push(toHtml(iconNode));
       }
       if (calloutData.title != null) {
@@ -295,6 +299,12 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       } else {
         // Add all nodes after the current node as callout body
         bodyNode[0].children.push(...paragraphNode.children.slice(1));
+      }
+
+      const foldIconNode = options.foldIcon(calloutData);
+      if (foldIconNode != null) {
+        // Add fold icon node after the title text
+        titleNode.children.push(toHtml(foldIconNode));
       }
 
       // Add body and title to callout root node children
