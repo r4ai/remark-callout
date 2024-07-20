@@ -1,6 +1,5 @@
 import { defu } from "defu";
 import type * as hast from "hast";
-import { toHtml as hastToHtml } from "hast-util-to-html";
 import type * as mdast from "mdast";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
