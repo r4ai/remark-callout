@@ -1,5 +1,21 @@
 # @r4ai/remark-callout
 
+## 0.5.0
+
+### Minor Changes
+
+- [#127](https://github.com/r4ai/remark-callout/pull/127) [`d3aca4c`](https://github.com/r4ai/remark-callout/commit/d3aca4c6e0096ea7dcdd8f4f40b84f8939f1bfa2) Thanks [@eikowagenknecht](https://github.com/eikowagenknecht)! - Format attributes with spaces like Obsidian does it #113
+
+- [#128](https://github.com/r4ai/remark-callout/pull/128) [`2835def`](https://github.com/r4ai/remark-callout/commit/2835def3e0fd7367a465cd7040c88b6754aa4a1a) Thanks [@r4ai](https://github.com/r4ai)! - Add options to add icon and foldIcon
+
+- [#123](https://github.com/r4ai/remark-callout/pull/123) [`f8f2eac`](https://github.com/r4ai/remark-callout/commit/f8f2eac41b1382e460cf8183344b50f563170cf0) Thanks [@eikowagenknecht](https://github.com/eikowagenknecht)! - Fix regular expressions accepting invalid syntax #115
+
+- [`d40d5b9`](https://github.com/r4ai/remark-callout/commit/d40d5b95dfbcc37c6c8df18c888a3660b38771c1) Thanks [@eikowagenknecht](https://github.com/eikowagenknecht)! - Handle titles like obsidian
+
+### Patch Changes
+
+- [#104](https://github.com/r4ai/remark-callout/pull/104) [`a1be19e`](https://github.com/r4ai/remark-callout/commit/a1be19e89d6651612904b6a4a55484c4e64a9f46) Thanks [@renovate](https://github.com/apps/renovate)! - Update dependency rimraf to v6
+
 ## 0.4.0
 
 ### Minor Changes
