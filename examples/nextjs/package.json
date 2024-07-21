@@ -18,7 +18,7 @@
     "@mdx-js/loader": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@next/mdx": "^14.2.3",
-    "@r4ai/remark-callout": "^0.4.0",
+    "@r4ai/remark-callout": "^0.5.0",
     "@tailwindcss/typography": "^0.5.13",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20",
