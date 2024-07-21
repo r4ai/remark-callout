@@ -44,6 +44,7 @@ import remarkParse from "remark-parse";
 import { unified } from "unified";
 import remarkCallout from "@r4ai/remark-callout";
 import remarkRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
 import rehypeStringify from "rehype-stringify";
 
 const md = `
@@ -54,7 +55,8 @@ const md = `
 const html = unified()
   .use(remarkParse)
   .use(remarkCallout)
-  .use(remarkRehype)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
   .use(rehypeStringify)
   .processSync(md)
   .toString();
@@ -72,6 +74,9 @@ yields:
   </div>
 </div>
 ```
+
+> [!WARNING]
+> To display the callout icon as HTML using `options.icon` or `options.foldIcon`, you need to set the `allowDangerousHtml` option to `true` in `remark-rehype` and add `rehype-raw` as a plugin.
 
 ### Astro
 
@@ -121,7 +126,7 @@ yields:
 
    Now you can style the callouts using CSS. Following is an example of how you can style the callouts using Tailwind CSS:
 
-   https://github.com/r4ai/remark-callout/blob/40d857e9885d335ca0c688d6eb2755e54dd2567b/packages/website/src/pages/playground/_callout.css#L1-L384
+   <https://github.com/r4ai/remark-callout/blob/40d857e9885d335ca0c688d6eb2755e54dd2567b/packages/website/src/pages/playground/_callout.css#L1-L384>
 
    Or if you are using MDX, you can use custom components to style the callouts:
 
@@ -213,7 +218,9 @@ yields:
 Options type:
 
 ```ts
-export type Options = {
+export type Options = OptionsBuilder<NodeOptions | NodeOptionsFunction>;
+
+export type OptionsBuilder<N> = {
   /**
    * The root node of the callout.
    *
@@ -227,7 +234,7 @@ export type Options = {
    *   },
    * })
    */
-  root?: NodeOptions | NodeOptionsFunction;
+  root?: N;
 
   /**
    * The title node of the callout.
@@ -240,7 +247,7 @@ export type Options = {
    *   },
    * })
    */
-  title?: NodeOptions | NodeOptionsFunction;
+  title?: N;
 
   /**
    * The body node of the callout.
@@ -253,7 +260,63 @@ export type Options = {
    *   },
    * })
    */
-  body?: NodeOptions | NodeOptionsFunction;
+  body?: N;
+
+  /**
+   * The icon node of the callout.
+   *
+   * The icon node is added in the title node before the title text.
+   *
+   * - If `undefined`, no icon is added.
+   * - If a `string`, the string is added as HTML in the title node before the title text.
+   * - If a `object`, the object is added as a node before the title text.
+   *
+   * @example
+   * () => '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>' // lucide:pencil
+   *
+   * @example
+   * (callout) => ({
+   *   tagName: "div",
+   *   properties: {
+   *     className: "callout-icon",
+   *   },
+   *   children:
+   *     callout.type === "warn"
+   *       ? '<svg class="lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>' // lucide:circle-alert
+   *       : '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>', // lucide:pencil
+   * })
+   *
+   * @default
+   * () => undefined
+   */
+  icon?: Optional<WithChildren<N>>;
+
+  /**
+   * The fold icon node of the callout.
+   *
+   * The fold icon node is added in the title node after the title text.
+   *
+   * - If `undefined`, no fold icon is added.
+   * - If a `string`, the string is added as HTML in the title node after the title text.
+   * - If a `object`, the object is added as a node after the title text.
+   *
+   * @example
+   * (callout) =>
+   *   callout.isFoldable
+   *     ? {
+   *         tagName: "div",
+   *         properties: {
+   *           className: "callout-fold-icon",
+   *         },
+   *         children:
+   *           '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>', // lucide:chevron-right
+   *       }
+   *     : undefined,
+   *
+   * @default
+   * () => undefined
+   */
+  foldIcon?: Optional<WithChildren<N>>;
 
   /**
    * A list of callout types that are supported.
@@ -282,38 +345,56 @@ export type NodeOptions = {
   tagName: string;
 
   /**
-   * The html properties of the node.
+   * The HTML properties of the node.
    *
    * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#properties
    * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
    * @example { "className": "callout callout-info" }
    */
-  properties: Properties;
+  properties: hast.Properties;
 };
 
 export type NodeOptionsFunction = (callout: Callout) => NodeOptions;
 
-export type Callout = {
-  /**
-   * The type of the callout.
-   */
-  type: string;
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if N is a function
+export type WithChildren<N> = N extends (...args: any) => any
+  ? (...args: Parameters<N>) => WithChildren<ReturnType<N>>
+  :
+      | (N & {
+          /**
+           * The HTML children of the node.
+           *
+           * - If a `string`, the string is added as raw HTML in the node.
+           * - If a `object[]`, the object array is added as a hast node.
+           *
+           * @see https://github.com/syntax-tree/mdast?tab=readme-ov-file#html
+           * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
+           *
+           * @example '<span class="icon">📝</span>'
+           *
+           * @example
+           * [
+           *   {
+           *     type: "element",
+           *     tagName: "span",
+           *     properties: { className: ["icon"] },
+           *     children: [
+           *       {
+           *         type: "text",
+           *         value: "📝",
+           *       },
+           *     ],
+           *   }
+           * ]
+           */
+          children: hast.ElementContent[] | string;
+        })
+      | string;
 
-  /**
-   * Whether the callout is foldable.
-   */
-  isFoldable: boolean;
-
-  /**
-   * Whether the callout is folded by default.
-   */
-  defaultFolded?: boolean;
-
-  /**
-   * The title of the callout.
-   */
-  title?: string;
-};
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
+export type Optional<T> = T extends (args: any) => any
+  ? (...args: Parameters<T>) => Optional<ReturnType<T>>
+  : T | undefined;
 ```
 
 Default options:
@@ -324,7 +405,7 @@ export const defaultOptions: Required<Options> = {
     tagName: callout.isFoldable ? "details" : "div",
     properties: {
       dataCallout: true,
-      dataCalloutType: callout.type,
+      dataCalloutType: formatForAttribute(callout.type),
       open:
         callout.defaultFolded === undefined ? false : !callout.defaultFolded,
     },
@@ -335,6 +416,8 @@ export const defaultOptions: Required<Options> = {
       dataCalloutTitle: true,
     },
   }),
+  icon: () => undefined,
+  foldIcon: () => undefined,
   body: () => ({
     tagName: "div",
     properties: {

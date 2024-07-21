@@ -39,6 +39,7 @@ import remarkParse from "remark-parse"
 import { unified } from "unified"
 import remarkCallout from "@r4ai/remark-callout"
 import remarkRehype from "remark-rehype"
+import rehypeRaw from "rehype-raw"
 import rehypeStringify from "rehype-stringify"
 
 const md = `
@@ -49,7 +50,8 @@ const md = `
 const html = unified()
   .use(remarkParse)
   .use(remarkCallout)
-  .use(remarkRehype)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
   .use(rehypeStringify)
   .processSync(md)
   .toString()

@@ -1,5 +1,5 @@
 import { defu } from "defu";
-import type { Properties } from "hast";
+import type * as hast from "hast";
 import type * as mdast from "mdast";
 import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
@@ -50,6 +50,62 @@ export type OptionsBuilder<N> = {
   body?: N;
 
   /**
+   * The icon node of the callout.
+   *
+   * The icon node is added in the title node before the title text.
+   *
+   * - If `undefined`, no icon is added.
+   * - If a `string`, the string is added as HTML in the title node before the title text.
+   * - If a `object`, the object is added as a node before the title text.
+   *
+   * @example
+   * () => '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>' // lucide:pencil
+   *
+   * @example
+   * (callout) => ({
+   *   tagName: "div",
+   *   properties: {
+   *     className: "callout-icon",
+   *   },
+   *   children:
+   *     callout.type === "warn"
+   *       ? '<svg class="lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>' // lucide:circle-alert
+   *       : '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>', // lucide:pencil
+   * })
+   *
+   * @default
+   * () => undefined
+   */
+  icon?: Optional<WithChildren<N>>;
+
+  /**
+   * The fold icon node of the callout.
+   *
+   * The fold icon node is added in the title node after the title text.
+   *
+   * - If `undefined`, no fold icon is added.
+   * - If a `string`, the string is added as HTML in the title node after the title text.
+   * - If a `object`, the object is added as a node after the title text.
+   *
+   * @example
+   * (callout) =>
+   *   callout.isFoldable
+   *     ? {
+   *         tagName: "div",
+   *         properties: {
+   *           className: "callout-fold-icon",
+   *         },
+   *         children:
+   *           '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>', // lucide:chevron-right
+   *       }
+   *     : undefined,
+   *
+   * @default
+   * () => undefined
+   */
+  foldIcon?: Optional<WithChildren<N>>;
+
+  /**
    * A list of callout types that are supported.
    * - If `undefined`, all callout types are supported. This means that this plugin will not check if the given callout type is in `callouts` and never call `onUnknownCallout`.
    * - If a list, only the callout types in the list are supported. This means that if the given callout type is not in `callouts`, this plugin will call `onUnknownCallout`.
@@ -76,16 +132,56 @@ export type NodeOptions = {
   tagName: string;
 
   /**
-   * The html properties of the node.
+   * The HTML properties of the node.
    *
    * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#properties
    * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
    * @example { "className": "callout callout-info" }
    */
-  properties: Properties;
+  properties: hast.Properties;
 };
 
 export type NodeOptionsFunction = (callout: Callout) => NodeOptions;
+
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if N is a function
+export type WithChildren<N> = N extends (...args: any) => any
+  ? (...args: Parameters<N>) => WithChildren<ReturnType<N>>
+  :
+      | (N & {
+          /**
+           * The HTML children of the node.
+           *
+           * - If a `string`, the string is added as raw HTML in the node.
+           * - If a `object[]`, the object array is added as a hast node.
+           *
+           * @see https://github.com/syntax-tree/mdast?tab=readme-ov-file#html
+           * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
+           *
+           * @example '<span class="icon">📝</span>'
+           *
+           * @example
+           * [
+           *   {
+           *     type: "element",
+           *     tagName: "span",
+           *     properties: { className: ["icon"] },
+           *     children: [
+           *       {
+           *         type: "text",
+           *         value: "📝",
+           *       },
+           *     ],
+           *   }
+           * ]
+           */
+          children: hast.ElementContent[] | string;
+        })
+      | string;
+
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
+export type Optional<T> = T extends (args: any) => any
+  ? (...args: Parameters<T>) => Optional<ReturnType<T>>
+  : T | undefined;
 
 export const defaultOptions: Required<Options> = {
   root: (callout) => ({
@@ -103,6 +199,8 @@ export const defaultOptions: Required<Options> = {
       dataCalloutTitle: true,
     },
   }),
+  icon: () => undefined,
+  foldIcon: () => undefined,
   body: () => ({
     tagName: "div",
     properties: {
@@ -119,10 +217,11 @@ const initOptions = (options?: Options) => {
   return Object.fromEntries(
     Object.entries(defaultedOptions).map(([key, value]) => {
       if (
-        ["root", "title", "body"].includes(key) &&
+        ["root", "title", "body", "icon", "foldIcon"].includes(key) &&
         typeof value !== "function"
-      )
+      ) {
         return [key, () => value];
+      }
 
       return [key, value];
     }),
@@ -146,8 +245,9 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       }
 
       const calloutTypeTextNode = paragraphNode.children.at(0);
-      if (calloutTypeTextNode == null || calloutTypeTextNode.type !== "text")
+      if (calloutTypeTextNode == null || calloutTypeTextNode.type !== "text") {
         return;
+      }
 
       // Parse callout syntax
       // e.g. "[!note] title"
@@ -207,6 +307,11 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
         },
         children: [],
       };
+      const iconNode = options.icon(calloutData);
+      if (iconNode != null) {
+        // Add icon node before the title text
+        titleNode.children.push(toHtml(iconNode));
+      }
       if (calloutData.title != null) {
         titleNode.children.push({
           type: "text",
@@ -245,6 +350,12 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       } else {
         // Add all nodes after the current node as callout body
         bodyNode[0].children.push(...paragraphNode.children.slice(1));
+      }
+
+      const foldIconNode = options.foldIcon(calloutData);
+      if (foldIconNode != null) {
+        // Add fold icon node after the title text
+        titleNode.children.push(toHtml(foldIconNode));
       }
 
       // Add body and title to callout root node children
@@ -320,6 +431,36 @@ export const parseCallout = (
   }
 
   return callout;
+};
+
+export const toHtml = (
+  from: WithChildren<NodeOptions>,
+): mdast.PhrasingContent => {
+  if (typeof from === "string") {
+    return {
+      type: "html",
+      value: from,
+    };
+  }
+  if (typeof from.children === "string") {
+    return {
+      type: "html",
+      data: {
+        hName: from.tagName,
+        hProperties: from.properties,
+      },
+      value: from.children,
+    };
+  }
+  return {
+    type: "html",
+    data: {
+      hName: from.tagName,
+      hProperties: from.properties,
+      hChildren: from.children,
+    },
+    value: "",
+  };
 };
 
 function capitalize(word: string): string {

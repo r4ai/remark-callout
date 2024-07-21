@@ -2,6 +2,7 @@ import dedent from "dedent";
 import type * as hast from "hast";
 import { JSDOM } from "jsdom";
 import type * as mdast from "mdast";
+import rehypeRaw from "rehype-raw";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -29,7 +30,8 @@ const process = async (md: string, options?: Options) => {
         mdast = tree;
         return mdast;
       })
-      .use(remarkRehype)
+      .use(remarkRehype, { allowDangerousHtml: true })
+      .use(rehypeRaw)
       .use(() => (tree: hast.Node) => {
         hast = tree;
         return hast;
@@ -485,6 +487,258 @@ describe("remarkCallout", () => {
     expect(calloutTitle).not.toBe(null);
     expect(calloutTitle?.getAttribute("calloutType")).toBe("warn");
     expect(calloutTitle?.textContent).toBe("title here");
+  });
+
+  test("options.icon when children is hast", async () => {
+    const md = dedent`
+      > [!note] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      icon: () => ({
+        tagName: "div",
+        properties: {
+          className: "callout-icon",
+        },
+        children: [
+          {
+            type: "element",
+            tagName: "svg",
+            properties: {
+              className: "lucide-pencil",
+              xmlns: "http://www.w3.org/2000/svg",
+              width: "32",
+              height: "32",
+              viewBox: "0 0 24 24",
+            },
+            children: [
+              {
+                type: "element",
+                tagName: "path",
+                properties: {
+                  fill: "none",
+                  stroke: "#888888",
+                  strokeLineCap: "round",
+                  strokeLineJoin: "round",
+                  strokeWidth: "2",
+                  d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4",
+                },
+                children: [],
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const icon = title?.querySelector(".callout-icon");
+    expect(icon).not.toBe(null);
+
+    const iconSvg = icon?.querySelector("svg");
+    expect(iconSvg).not.toBe(null);
+    expect(iconSvg?.getAttribute("class")).toBe("lucide-pencil");
+  });
+
+  test("options.icon when children is string", async () => {
+    const md = dedent`
+      > [!warn] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      icon: (callout) => ({
+        tagName: "div",
+        properties: {
+          className: "callout-icon",
+        },
+        children:
+          callout.type === "warn"
+            ? '<svg class="lucide-circle-alert" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-alert"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>' // lucide:circle-alert
+            : '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>', // lucide:pencil,
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const icon = title?.querySelector(".callout-icon");
+    expect(icon).not.toBe(null);
+
+    const iconSvg = icon?.querySelector("svg");
+    expect(iconSvg).not.toBe(null);
+    expect(iconSvg?.getAttribute("class")).toBe("lucide-circle-alert");
+  });
+
+  test("options.icon when icon is string", async () => {
+    const md = dedent`
+      > [!note] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      icon: '<svg class="lucide-pencil" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="#888888" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>',
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const svgIcon = title?.querySelector("svg");
+    expect(svgIcon).not.toBe(null);
+    expect(svgIcon?.getAttribute("class")).toBe("lucide-pencil");
+  });
+
+  test("options.icon when icon is undefined", async () => {
+    const md = dedent`
+      > [!note] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      icon: () => undefined,
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const svgIcon = doc.querySelector("svg");
+    expect(svgIcon).toBe(null);
+  });
+
+  test("options.foldIcon when children is hast", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon: () => ({
+        tagName: "div",
+        properties: {
+          className: "callout-fold-icon",
+        },
+        children: [
+          {
+            type: "element",
+            tagName: "svg",
+            properties: {
+              xmlns: "http://www.w3.org/2000/svg",
+              width: "24",
+              height: "24",
+              viewBox: "0 0 24 24",
+              fill: "none",
+              stroke: "currentColor",
+              strokeWidth: "2",
+              strokeLineCap: "round",
+              strokeLineJoin: "round",
+              className: ["lucide", "lucide-chevron-right"],
+            },
+            children: [
+              {
+                type: "element",
+                tagName: "path",
+                properties: { d: "m9 18 6-6-6-6" },
+                children: [],
+                position: {
+                  start: { line: 1, column: 218, offset: 217 },
+                  end: { line: 1, column: 243, offset: 242 },
+                },
+              },
+            ],
+          },
+        ],
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const foldIcon = title?.querySelector(".callout-fold-icon");
+    expect(foldIcon).not.toBe(null);
+
+    const foldIconSvg = foldIcon?.querySelector("svg");
+    expect(foldIconSvg).not.toBe(null);
+    expect(foldIconSvg?.getAttribute("class")).toBe(
+      "lucide lucide-chevron-right",
+    );
+  });
+
+  test("options.foldIcon when children is string", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon: (callout) =>
+        callout.isFoldable
+          ? {
+              tagName: "div",
+              properties: {
+                className: "callout-fold-icon",
+              },
+              children:
+                '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>', // lucide:chevron-right
+            }
+          : undefined,
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const foldIcon = title?.querySelector(".callout-fold-icon");
+    expect(foldIcon).not.toBe(null);
+
+    const foldIconSvg = foldIcon?.querySelector("svg");
+    expect(foldIconSvg).not.toBe(null);
+    expect(foldIconSvg?.getAttribute("class")).toBe(
+      "lucide lucide-chevron-right",
+    );
+  });
+
+  test("options.foldIcon when icon is string", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon:
+        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>',
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+
+    const foldIconSvg = title?.querySelector("svg");
+    expect(foldIconSvg).not.toBe(null);
+    expect(foldIconSvg?.getAttribute("class")).toBe(
+      "lucide lucide-chevron-right",
+    );
+  });
+
+  test("options.foldIcon when icon is undefined", async () => {
+    const md = dedent`
+      > [!note]- title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      foldIcon: () => undefined,
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const foldIconSvg = doc.querySelector("svg");
+    expect(foldIconSvg).toBe(null);
   });
 
   test("options.callouts", async () => {
