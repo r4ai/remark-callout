@@ -79,7 +79,7 @@
     "remark-math": "^6.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
-    "rimraf": "^5.0.5",
+    "rimraf": "^6.0.0",
     "typescript": "^5.0.0",
     "unified": "^11.0.4",
     "vfile": "^6.0.1",
