@@ -369,7 +369,10 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
               ...options.body(calloutData).properties,
             },
           },
-          children: bodyNode,
+          children:
+            bodyNode.length > 1 || bodyNode[0].children.length > 0
+              ? bodyNode
+              : [],
         },
       ];
     });
