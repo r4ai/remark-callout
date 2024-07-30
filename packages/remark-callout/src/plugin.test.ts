@@ -229,6 +229,56 @@ describe("remarkCallout", () => {
     expect(callout).toBe(null);
   });
 
+  test("callout with title and without body", async () => {
+    const md = dedent`
+      > [!note] title here
+    `;
+
+    const { html } = await process(md);
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("[data-callout]");
+    expect(callout).not.toBe(null);
+    expect(callout?.getAttribute("data-callout-type")).toBe("note");
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
+    expect(callout?.children.length).toBe(2);
+
+    const calloutTitle = callout?.querySelector("[data-callout-title]");
+    expect(calloutTitle).not.toBe(null);
+    expect(calloutTitle?.textContent).toBe("title here");
+
+    const calloutBody = callout?.querySelector("[data-callout-body]");
+    expect(calloutBody).not.toBe(null);
+    expect(calloutBody?.textContent?.trim()).toBe("");
+    expect(calloutBody?.children.length).toBe(0);
+  });
+
+  test("callout without title and body", async () => {
+    const md = dedent`
+      > [!note]
+    `;
+
+    const { html } = await process(md);
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("[data-callout]");
+    expect(callout).not.toBe(null);
+    expect(callout?.getAttribute("data-callout-type")).toBe("note");
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
+    expect(callout?.children.length).toBe(2);
+
+    const calloutTitle = callout?.querySelector("[data-callout-title]");
+    expect(calloutTitle).not.toBe(null);
+    expect(calloutTitle?.textContent).toBe("Note");
+
+    const calloutBody = callout?.querySelector("[data-callout-body]");
+    expect(calloutBody).not.toBe(null);
+    expect(calloutBody?.textContent?.trim()).toBe("");
+    expect(calloutBody?.children.length).toBe(0);
+  });
+
   test("callout with title consisting of multiple nodes", async () => {
     const md = dedent`
       > [!note] The **reason** for why _this_ ~~is~~ \`true\` when $a=1$.
