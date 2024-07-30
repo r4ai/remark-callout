@@ -12,7 +12,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
+    "@astrojs/check": "^0.8.0",
     "@astrojs/mdx": "^3.0.0",
     "@astrojs/react": "^3.1.0",
     "@astrojs/tailwind": "^5.1.0",
