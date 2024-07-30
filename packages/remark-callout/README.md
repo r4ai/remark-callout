@@ -431,20 +431,54 @@ export const defaultOptions: Required<Options> = {
 
 ## Development
 
-To install dependencies:
+### Commands
 
-```bash
-bun install
-```
+| Command                 | Description             |
+| ----------------------- | ----------------------- |
+| `bun install`           | Install dependencies    |
+| `bun run build`         | Build the packages      |
+| `bun run test`          | Run tests               |
+| `bun run test:coverage` | Run tests with coverage |
+| `bun run check`         | Check the code          |
+| `bun run check:write`   | Check and fix the code  |
+| `bun run changeset`     | Create a changeset      |
 
-To run tests with web ui:
+### Directory Structure
 
-```bash
-bun run test --ui
-```
+| Directory                 | Description                                  |
+| ------------------------- | -------------------------------------------- |
+| `examples/nextjs`         | Example Next.js project                      |
+| `packages/remark-callout` | The remark-callout package                   |
+| `packages/website`        | The documentation website for remark-callout |
 
-To build the project:
+### Getting Started
 
-```bash
-bun run build
-```
+1. Install dependencies:
+
+   ```bash
+   bun install
+   ```
+
+2. Build the packages:
+
+   ```bash
+   bun run build
+   ```
+
+3. Check and fix the code:
+
+   ```bash
+   bun run check:write
+   ```
+
+4. Run tests with coverage:
+
+   ```bash
+   bun run test:coverage
+   ```
+
+5. Launch the documentation website:
+
+   ```bash
+   bun run --cwd packages/website dev
+   ```
