@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lefthook.json
+pre-commit:
+  parallel: true
+  commands:
+    examples/nextjs/check:
+      root: examples/nextjs
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: bun run eslint --fix {staged_files}
+
+    packages/remark-callout/check:
+      root: packages/remark-callout
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: bun run biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+
+    packages/website/check:
+      root: packages/website
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,html,css,astro,yaml,yml}"
+      run: >
+        bun run biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} &&
+        bun run prettier --write {staged_files}
+      stage_fixed: true

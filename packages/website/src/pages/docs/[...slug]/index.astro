@@ -1,11 +1,11 @@
 ---
-import type { GetStaticPaths } from "astro"
-import BaseLayout from "@/layouts/BaseLayout.astro"
-import meta from "@/lib/metadata"
 import { getCollection } from "astro:content"
 import type { CollectionEntry } from "astro:content"
 import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout"
 import CodeBlock from "@/components/CodeBlock.astro"
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import meta from "@/lib/metadata"
+import type { GetStaticPaths } from "astro"
 
 export const getStaticPaths = (async () => {
   const docs = await getCollection("docs")

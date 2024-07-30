@@ -1,11 +1,11 @@
+import mdx from "@astrojs/mdx"
 import react from "@astrojs/react"
 import tailwind from "@astrojs/tailwind"
+import { type Options as RemarkCalloutOptions, remarkCallout } from "@r4ai/remark-callout"
 import { defineConfig } from "astro/config"
-import remarkMath from "remark-math"
 import rehypeKatex from "rehype-katex"
-import { remarkCallout, type Options as RemarkCalloutOptions } from "@r4ai/remark-callout"
+import remarkMath from "remark-math"
 import metadata from "./src/lib/metadata"
-import mdx from "@astrojs/mdx"
 
 // https://astro.build/config
 export default defineConfig({

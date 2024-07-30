@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import meta from "@/lib/metadata"
-import { Playground } from "./_Playground"
 import { codeToHtml } from "shiki"
+import { Playground } from "./_Playground"
 import style from "./_callout.css?raw"
 
 const highlightedCss = await codeToHtml(style, {
