@@ -16,9 +16,14 @@
       }
     }
   },
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
+  "files": {
+    "ignore": [
+      "**/.turbo",
+      "**/node_modules",
+      "**/dist",
+      "**/coverage",
+      "**/.astro",
+      "**/.next"
+    ]
   }
 }

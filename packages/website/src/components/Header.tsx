@@ -1,8 +1,8 @@
 import { Button, type ButtonProps } from "@/components/ui/button"
+import meta from "@/lib/metadata"
 import { cn } from "@/lib/utils"
 import { GitHubLogoIcon, HamburgerMenuIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
-import { useState, type FC, type ReactNode, useEffect } from "react"
-import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "./ui/tooltip"
+import { type FC, type ReactNode, useEffect, useState } from "react"
 import {
   Drawer,
   DrawerContent,
@@ -12,7 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer"
-import meta from "@/lib/metadata"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
 type Route = {
   label: string
