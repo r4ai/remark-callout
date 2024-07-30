@@ -359,9 +359,9 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       }
 
       // Add body and title to callout root node children
-      node.children = [
-        titleNode,
-        {
+      node.children = [titleNode];
+      if (bodyNode.length > 1 || bodyNode[0].children.length > 0) {
+        node.children.push({
           type: "blockquote",
           data: {
             hName: options.body(calloutData).tagName,
@@ -369,12 +369,9 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
               ...options.body(calloutData).properties,
             },
           },
-          children:
-            bodyNode.length > 1 || bodyNode[0].children.length > 0
-              ? bodyNode
-              : [],
-        },
-      ];
+          children: bodyNode,
+        });
+      }
     });
   };
 };
