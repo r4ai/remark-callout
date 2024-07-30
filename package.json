@@ -12,7 +12,10 @@
     "url": "https://github.com/r4ai/remark-callout/issues"
   },
   "type": "module",
-  "workspaces": ["packages/*", "examples/*"],
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
     "postinstall": "lefthook install",
     "test": "turbo test",
@@ -21,7 +24,8 @@
     "test:coverage:ci": "turbo test:coverage:ci",
     "build": "turbo build",
     "prepublishOnly": "bun run build",
-    "check": "bunx @biomejs/biome check --apply .",
+    "check": "turbo check",
+    "check:write": "turbo check:write",
     "release": "bun run test:ci && bun run build && bun run changeset publish",
     "changeset": "changeset"
   },

@@ -4,7 +4,7 @@ pre-commit:
   commands:
     examples/nextjs/check:
       root: examples/nextjs
-      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx}"
       run: bun run eslint --fix {staged_files}
 
     packages/remark-callout/check:
