@@ -258,7 +258,6 @@ describe("remarkCallout", () => {
     `;
 
     const { html } = await process(md);
-    console.log(html);
     const doc = parser.parseFromString(html, "text/html");
 
     const callout = doc.querySelector("[data-callout]");
