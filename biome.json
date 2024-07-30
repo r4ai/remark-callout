@@ -4,8 +4,7 @@
     "enabled": true
   },
   "formatter": {
-    "indentStyle": "space",
-    "ignore": ["packages/website"]
+    "indentStyle": "space"
   },
   "linter": {
     "enabled": true,

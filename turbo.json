@@ -16,6 +16,12 @@
     },
     "test:coverage:ci": {
       "cache": false
+    },
+    "check": {
+      "cache": false
+    },
+    "check:write": {
+      "cache": false
     }
   }
 }
