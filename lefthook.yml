@@ -20,3 +20,7 @@ pre-commit:
         bun run biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} &&
         bun run prettier --write {staged_files}
       stage_fixed: true
+
+    check-lockfile:
+      glob: "**/package.json"
+      run: bun install --frozen-lockfile
