@@ -535,6 +535,34 @@ describe("remarkCallout", () => {
     expect(calloutTitle?.textContent).toBe("title here");
   });
 
+  test("options.titleInner", async () => {
+    const md = dedent`
+      > [!warn] title here
+      > body here
+    `;
+
+    const { html } = await process(md, {
+      titleInner: () => ({
+        tagName: "div",
+        properties: {
+          className: "callout-title-inner",
+        },
+      }),
+    });
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const title = doc.querySelector("[data-callout-title]");
+    expect(title).not.toBe(null);
+
+    const titleInner = title?.querySelector(".callout-title-inner");
+    expect(titleInner).not.toBe(null);
+    expect(titleInner?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
+  });
+
   test("options.icon when children is hast", async () => {
     const md = dedent`
       > [!note] title here
@@ -588,6 +616,13 @@ describe("remarkCallout", () => {
     const iconSvg = icon?.querySelector("svg");
     expect(iconSvg).not.toBe(null);
     expect(iconSvg?.getAttribute("class")).toBe("lucide-pencil");
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).not.toBe(null);
+    expect(titleInner?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.icon when children is string", async () => {
@@ -619,6 +654,13 @@ describe("remarkCallout", () => {
     const iconSvg = icon?.querySelector("svg");
     expect(iconSvg).not.toBe(null);
     expect(iconSvg?.getAttribute("class")).toBe("lucide-circle-alert");
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).not.toBe(null);
+    expect(titleInner?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.icon when icon is string", async () => {
@@ -638,6 +680,13 @@ describe("remarkCallout", () => {
     const svgIcon = title?.querySelector("svg");
     expect(svgIcon).not.toBe(null);
     expect(svgIcon?.getAttribute("class")).toBe("lucide-pencil");
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).not.toBe(null);
+    expect(titleInner?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.icon when icon is undefined", async () => {
@@ -652,8 +701,17 @@ describe("remarkCallout", () => {
 
     const doc = parser.parseFromString(html, "text/html");
 
-    const svgIcon = doc.querySelector("svg");
+    const title = doc.querySelector("[data-callout-title]");
+
+    const svgIcon = title?.querySelector("svg");
     expect(svgIcon).toBe(null);
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).toBe(null);
+    expect(title?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.foldIcon when children is hast", async () => {
@@ -713,6 +771,13 @@ describe("remarkCallout", () => {
     expect(foldIconSvg?.getAttribute("class")).toBe(
       "lucide lucide-chevron-right",
     );
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).not.toBe(null);
+    expect(titleInner?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.foldIcon when children is string", async () => {
@@ -747,6 +812,13 @@ describe("remarkCallout", () => {
     expect(foldIconSvg?.getAttribute("class")).toBe(
       "lucide lucide-chevron-right",
     );
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).not.toBe(null);
+    expect(titleInner?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.foldIcon when icon is string", async () => {
@@ -769,6 +841,13 @@ describe("remarkCallout", () => {
     expect(foldIconSvg?.getAttribute("class")).toBe(
       "lucide lucide-chevron-right",
     );
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).not.toBe(null);
+    expect(titleInner?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.foldIcon when icon is undefined", async () => {
@@ -783,8 +862,17 @@ describe("remarkCallout", () => {
 
     const doc = parser.parseFromString(html, "text/html");
 
+    const title = doc.querySelector("[data-callout-title]");
+
     const foldIconSvg = doc.querySelector("svg");
     expect(foldIconSvg).toBe(null);
+
+    const titleInner = title?.querySelector("[data-callout-title-inner]");
+    expect(titleInner).toBe(null);
+    expect(title?.textContent).toBe("title here");
+
+    const body = doc.querySelector("[data-callout-body]");
+    expect(body?.children[0].textContent).toBe("body here");
   });
 
   test("options.callouts", async () => {

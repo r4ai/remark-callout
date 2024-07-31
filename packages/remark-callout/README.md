@@ -250,6 +250,60 @@ export type OptionsBuilder<N> = {
   title?: N;
 
   /**
+   * The inner title node of the callout.
+   *
+   * This node is used to wrap the text content of the title.
+   *
+   * - If `undefined`, title text is not wrapped.
+   *
+   *   Example output:
+   *
+   *   ```html
+   *   <div data-callout data-callout-type="abstract">
+   *     <div data-callout-title>
+   *       <div data-callout-icon>😎</div>
+   *       Title
+   *     </div>
+   *   </div>
+   *   ````
+   *
+   * - If a `object`, the object used as a node to wrap the title text.
+   *
+   *   Example output with options `{ tagName: "div", properties: { dataCalloutTitleInner: true } }`:
+   *
+   *   ```html
+   *   <div data-callout data-callout-type="abstract">
+   *     <div data-callout-title>
+   *       <div data-callout-icon>😎</div>
+   *       <div data-callout-title-inner>Title</div>
+   *     </div>
+   *   </div>
+   *   ```
+   *
+   * @example
+   * () => undefined  // the title text will not be wrapped
+   *
+   * @example
+   * // the title text will be wrapped in a div with the class "callout-title-inner"
+   * () => ({
+   *   tagName: "div",
+   *   properties: { className: "callout-title-inner" },
+   * })
+   *
+   * @default
+   * (callout, options) =>
+   *   options.icon(callout) == null && options.foldIcon(callout) == null
+   *     ? undefined
+   *     : {
+   *         tagName: "div",
+   *         properties: {
+   *           dataCalloutTitleInner: true,
+   *         },
+   *       },
+   */
+  titleInner?: WithOptions<Optional<N>>;
+
+  /**
    * The body node of the callout.
    *
    * @default
@@ -392,6 +446,16 @@ export type WithChildren<N> = N extends (...args: any) => any
       | string;
 
 // biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
+export type WithOptions<T> = T extends (...args: any) => any
+  ? (
+      ...args: [
+        ...Parameters<T>,
+        options: Required<OptionsBuilder<NodeOptionsFunction>>,
+      ]
+    ) => WithOptions<ReturnType<T>>
+  : T;
+
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
 export type Optional<T> = T extends (args: any) => any
   ? (...args: Parameters<T>) => Optional<ReturnType<T>>
   : T | undefined;
@@ -416,6 +480,15 @@ export const defaultOptions: Required<Options> = {
       dataCalloutTitle: true,
     },
   }),
+  titleInner: (callout, options) =>
+    options.icon(callout) == null && options.foldIcon(callout) == null
+      ? undefined
+      : {
+          tagName: "div",
+          properties: {
+            dataCalloutTitleInner: true,
+          },
+        },
   icon: () => undefined,
   foldIcon: () => undefined,
   body: () => ({
