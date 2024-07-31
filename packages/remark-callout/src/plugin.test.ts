@@ -376,6 +376,31 @@ describe("remarkCallout", () => {
     );
   });
 
+  test("callout with empty titled paragraph", async () => {
+    const md = [
+      "> [!IMPORTANT]  ",
+      "Crucial information necessary for users to succeed.",
+    ].join("\n");
+
+    const { html } = await process(md);
+
+    const doc = parser.parseFromString(html, "text/html");
+
+    const callout = doc.querySelector("[data-callout]");
+    expect(callout).not.toBe(null);
+    expect(callout?.getAttribute("data-callout-type")).toBe("important");
+    expect(callout?.tagName.toLowerCase()).toBe("div");
+    expect(callout?.getAttribute("open")).toBe(null);
+
+    const calloutTitle = callout?.querySelector("[data-callout-title]");
+    expect(calloutTitle?.innerHTML.trim()).toBe("Important<br>");
+
+    const calloutBody = callout?.querySelector("[data-callout-body]");
+    expect(calloutBody?.children[0].textContent).toBe(
+      "Crucial information necessary for users to succeed.",
+    );
+  });
+
   test("foldable callout (-)", async () => {
     const md = dedent`
       > [!warn]- title here \`inline code\`
