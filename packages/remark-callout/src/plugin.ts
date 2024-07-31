@@ -37,6 +37,22 @@ export type OptionsBuilder<N> = {
   title?: N;
 
   /**
+   * The inner title node of the callout.
+   *
+   * @default
+   * (callout, options) =>
+   *   options.icon(callout) == null && options.foldIcon(callout) == null
+   *     ? undefined
+   *     : {
+   *         tagName: "div",
+   *         properties: {
+   *           dataCalloutTitleInner: true,
+   *         },
+   *       },
+   */
+  titleInner?: WithOptions<Optional<N>>;
+
+  /**
    * The body node of the callout.
    *
    * @default
@@ -179,6 +195,16 @@ export type WithChildren<N> = N extends (...args: any) => any
       | string;
 
 // biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
+export type WithOptions<T> = T extends (...args: any) => any
+  ? (
+      ...args: [
+        ...Parameters<T>,
+        options: Required<OptionsBuilder<NodeOptionsFunction>>,
+      ]
+    ) => WithOptions<ReturnType<T>>
+  : T;
+
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
 export type Optional<T> = T extends (args: any) => any
   ? (...args: Parameters<T>) => Optional<ReturnType<T>>
   : T | undefined;
@@ -199,6 +225,15 @@ export const defaultOptions: Required<Options> = {
       dataCalloutTitle: true,
     },
   }),
+  titleInner: (callout, options) =>
+    options.icon(callout) == null && options.foldIcon(callout) == null
+      ? undefined
+      : {
+          tagName: "div",
+          properties: {
+            dataCalloutTitleInner: true,
+          },
+        },
   icon: () => undefined,
   foldIcon: () => undefined,
   body: () => ({
@@ -217,7 +252,9 @@ const initOptions = (options?: Options) => {
   return Object.fromEntries(
     Object.entries(defaultedOptions).map(([key, value]) => {
       if (
-        ["root", "title", "body", "icon", "foldIcon"].includes(key) &&
+        ["root", "title", "titleInner", "body", "icon", "foldIcon"].includes(
+          key,
+        ) &&
         typeof value !== "function"
       ) {
         return [key, () => value];
@@ -297,8 +334,11 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       }
 
       // Generate callout title node
-      const titleNode: mdast.Paragraph = {
-        type: "paragraph",
+      const titleNode: mdast.Blockquote | mdast.Paragraph = {
+        type:
+          options.titleInner(calloutData, options) == null
+            ? "paragraph"
+            : "blockquote",
         data: {
           hName: options.title(calloutData).tagName,
           hProperties: {
@@ -307,13 +347,24 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
         },
         children: [],
       };
+
+      // Add icon node before the title text
       const iconNode = options.icon(calloutData);
       if (iconNode != null) {
-        // Add icon node before the title text
         titleNode.children.push(toHtml(iconNode));
       }
+
+      // Add title text node
+      const titleInnerNode: mdast.Paragraph = {
+        type: "paragraph",
+        data: {
+          hName: options.titleInner(calloutData, options)?.tagName,
+          hProperties: options.titleInner(calloutData, options)?.properties,
+        },
+        children: [],
+      };
       if (calloutData.title != null) {
-        titleNode.children.push({
+        titleInnerNode.children.push({
           type: "text",
           value: calloutData.title,
         });
@@ -322,7 +373,7 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
         for (const [i, child] of paragraphNode.children.slice(1).entries()) {
           // All inline node before the line break is added as callout title
           if (child.type !== "text") {
-            titleNode.children.push(child);
+            titleInnerNode.children.push(child);
             continue;
           }
 
@@ -330,7 +381,7 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
           const [titleText, ...bodyTextLines] = child.value.split("\n");
           if (titleText) {
             // Add the part before the line break as callout title
-            titleNode.children.push({
+            titleInnerNode.children.push({
               type: "text",
               value: titleText,
             });
@@ -351,10 +402,13 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
         // Add all nodes after the current node as callout body
         bodyNode[0].children.push(...paragraphNode.children.slice(1));
       }
+      if (titleNode.type === "paragraph")
+        titleNode.children.push(...titleInnerNode.children);
+      else titleNode.children.push(titleInnerNode);
 
+      // Add fold icon node after the title text
       const foldIconNode = options.foldIcon(calloutData);
       if (foldIconNode != null) {
-        // Add fold icon node after the title text
         titleNode.children.push(toHtml(foldIconNode));
       }
 
@@ -433,9 +487,7 @@ export const parseCallout = (
   return callout;
 };
 
-export const toHtml = (
-  from: WithChildren<NodeOptions>,
-): mdast.PhrasingContent => {
+export const toHtml = (from: WithChildren<NodeOptions>): mdast.Html => {
   if (typeof from === "string") {
     return {
       type: "html",
