@@ -409,6 +409,15 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
       }
       if (calloutBodyText.length <= 0) {
         for (const [i, child] of paragraphNode.children.slice(1).entries()) {
+          // Add all nodes after the break as callout body
+          if (child.type === "break") {
+            titleInnerNode.children.push(child); // Add the line break as callout title
+            bodyNode[0].children.push(
+              ...paragraphNode.children.slice(i + 1 + 1),
+            ); // +1 for the callout type node, +1 for the break
+            break;
+          }
+
           // All inline node before the line break is added as callout title
           if (child.type !== "text") {
             titleInnerNode.children.push(child);
