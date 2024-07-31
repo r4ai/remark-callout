@@ -250,6 +250,22 @@ export type OptionsBuilder<N> = {
   title?: N;
 
   /**
+   * The inner title node of the callout.
+   *
+   * @default
+   * (callout, options) =>
+   *   options.icon(callout) == null && options.foldIcon(callout) == null
+   *     ? undefined
+   *     : {
+   *         tagName: "div",
+   *         properties: {
+   *           dataCalloutTitleInner: true,
+   *         },
+   *       },
+   */
+  titleInner?: WithOptions<Optional<N>>;
+
+  /**
    * The body node of the callout.
    *
    * @default
@@ -392,6 +408,16 @@ export type WithChildren<N> = N extends (...args: any) => any
       | string;
 
 // biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
+export type WithOptions<T> = T extends (...args: any) => any
+  ? (
+      ...args: [
+        ...Parameters<T>,
+        options: Required<OptionsBuilder<NodeOptionsFunction>>,
+      ]
+    ) => WithOptions<ReturnType<T>>
+  : T;
+
+// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
 export type Optional<T> = T extends (args: any) => any
   ? (...args: Parameters<T>) => Optional<ReturnType<T>>
   : T | undefined;
@@ -416,6 +442,15 @@ export const defaultOptions: Required<Options> = {
       dataCalloutTitle: true,
     },
   }),
+  titleInner: (callout, options) =>
+    options.icon(callout) == null && options.foldIcon(callout) == null
+      ? undefined
+      : {
+          tagName: "div",
+          properties: {
+            dataCalloutTitleInner: true,
+          },
+        },
   icon: () => undefined,
   foldIcon: () => undefined,
   body: () => ({
