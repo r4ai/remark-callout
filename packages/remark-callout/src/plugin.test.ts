@@ -383,7 +383,6 @@ describe("remarkCallout", () => {
     ].join("\n");
 
     const { html } = await process(md);
-    console.log(html);
 
     const doc = parser.parseFromString(html, "text/html");
 
