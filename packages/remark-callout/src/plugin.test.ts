@@ -379,10 +379,11 @@ describe("remarkCallout", () => {
   test("callout with empty titled paragraph", async () => {
     const md = [
       "> [!IMPORTANT]  ",
-      "Crucial information necessary for users to succeed.",
+      "> Crucial information necessary for users to succeed.",
     ].join("\n");
 
     const { html } = await process(md);
+    console.log(html);
 
     const doc = parser.parseFromString(html, "text/html");
 
