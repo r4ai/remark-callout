@@ -39,6 +39,44 @@ export type OptionsBuilder<N> = {
   /**
    * The inner title node of the callout.
    *
+   * This node is used to wrap the text content of the title.
+   *
+   * - If `undefined`, title text is not wrapped.
+   *
+   *   Example output:
+   *
+   *   ```html
+   *   <div data-callout data-callout-type="abstract">
+   *     <div data-callout-title>
+   *       <div data-callout-icon>😎</div>
+   *       Title
+   *     </div>
+   *   </div>
+   *   ````
+   *
+   * - If a `object`, the object used as a node to wrap the title text.
+   *
+   *   Example output with options `{ tagName: "div", properties: { dataCalloutTitleInner: true } }`:
+   *
+   *   ```html
+   *   <div data-callout data-callout-type="abstract">
+   *     <div data-callout-title>
+   *       <div data-callout-icon>😎</div>
+   *       <div data-callout-title-inner>Title</div>
+   *     </div>
+   *   </div>
+   *   ```
+   *
+   * @example
+   * () => undefined  // the title text will not be wrapped
+   *
+   * @example
+   * // the title text will be wrapped in a div with the class "callout-title-inner"
+   * () => ({
+   *   tagName: "div",
+   *   properties: { className: "callout-title-inner" },
+   * })
+   *
    * @default
    * (callout, options) =>
    *   options.icon(callout) == null && options.foldIcon(callout) == null
