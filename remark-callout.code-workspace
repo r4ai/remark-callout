@@ -2,22 +2,22 @@
   "folders": [
     {
       "name": "root",
-      "path": "."
+      "path": ".",
     },
     {
       "name": "remark-callout",
-      "path": "packages/remark-callout"
+      "path": "packages/remark-callout",
     },
     {
       "name": "website",
-      "path": "packages/website"
+      "path": "packages/website",
     },
     {
       "name": "examples/nextjs",
-      "path": "examples/nextjs"
-    }
+      "path": "examples/nextjs",
+    },
   ],
   "settings": {
-    "tailwindCSS.experimental.classRegex": ["tw`([\\s\\S]*?)`"]
-  }
+    "tailwindCSS.experimental.classRegex": ["tw`([\\s\\S]*?)`"],
+  },
 }

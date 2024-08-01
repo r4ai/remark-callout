@@ -2,13 +2,13 @@
 import "@/styles/global.css"
 
 import { Footer } from "@/components/Footer"
-import { Header, type routes } from "@/components/Header"
+import { Header } from "@/components/Header"
 
 type Props = {
-  route: (typeof routes)[keyof typeof routes]["href"]
+  activeSlug: string
   title: string
 }
-const { route, title } = Astro.props
+const { activeSlug, title } = Astro.props
 ---
 
 <html lang="en">
@@ -30,7 +30,7 @@ const { route, title } = Astro.props
     </script>
   </head>
   <body class="flex min-h-full flex-col bg-background">
-    <Header route={route} client:load />
+    <Header activeSlug={activeSlug} client:load />
     <div class="flex flex-1 flex-col">
       <slot />
     </div>
