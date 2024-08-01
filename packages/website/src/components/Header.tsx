@@ -3,6 +3,7 @@ import meta from "@/lib/metadata"
 import { cn } from "@/lib/utils"
 import { GitHubLogoIcon, HamburgerMenuIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { type FC, type ReactNode, useEffect, useState } from "react"
+import { Nodes } from "./NavSideBar"
 import {
   Drawer,
   DrawerContent,
@@ -14,70 +15,41 @@ import {
 } from "./ui/drawer"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 
-type Route = {
-  label: string
-  href: string
-}
-
-export const routes = {
-  index: {
-    label: "Home",
-    href: `${meta.base}/`,
-  },
-  docs: {
-    label: "Docs",
-    href: `${meta.base}/docs/en`,
-  },
-  playground: {
-    label: "Playground",
-    href: `${meta.base}/playground`,
-  },
-} as const satisfies Record<string, Route>
-
 type HeaderProps = {
   className?: string
-  route: (typeof routes)[keyof typeof routes]["href"]
+  activeSlug: string
 }
 
-export const Header: FC<HeaderProps> = ({ route }) => {
+export const Header: FC<HeaderProps> = ({ activeSlug }) => {
   return (
     <TooltipProvider>
       <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl flex-row items-center justify-between">
-          <nav className="hidden sm:block">
-            <ul className="flex flex-row items-center gap-4">
+          <nav className="flex flex-row gap-4">
+            <div className="md:hidden">
+              <NavDrawer activeSlug={activeSlug} />
+            </div>
+            <ul className="hidden flex-row items-center gap-4 sm:flex">
               <li>
                 <Button variant="ghost" className="font-bold" asChild>
-                  <a href={routes.index.href}>{meta.name}</a>
+                  <a href={meta.base}>{meta.name}</a>
                 </Button>
               </li>
-              <li>
-                <a
-                  href={routes.docs.href}
-                  className={cn(
-                    "text-muted-foreground transition hover:text-foreground",
-                    route === "/remark-callout/docs/en" && "font-medium text-foreground",
-                  )}
-                >
-                  {routes.docs.label}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={routes.playground.href}
-                  className={cn(
-                    "text-muted-foreground transition hover:text-foreground",
-                    route === "/remark-callout/playground" && "font-medium text-foreground",
-                  )}
-                >
-                  {routes.playground.label}
-                </a>
-              </li>
+              {meta.entries.slice(1).map((entry) => (
+                <li key={entry.slug}>
+                  <a
+                    href={`${meta.base}${entry.slug}`}
+                    className={cn(
+                      "text-muted-foreground transition hover:text-foreground",
+                      activeSlug.startsWith(entry.slug) && "font-medium text-foreground",
+                    )}
+                  >
+                    {entry.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
-          <div className="sm:hidden">
-            <NavDrawer />
-          </div>
           <div className="flex flex-row">
             <IconButton tooltip="GitHub">
               <a href={meta.repository.url.href}>
@@ -92,7 +64,11 @@ export const Header: FC<HeaderProps> = ({ route }) => {
   )
 }
 
-const NavDrawer: FC = () => {
+type NavDrawerProps = {
+  activeSlug: string
+}
+
+const NavDrawer: FC<NavDrawerProps> = ({ activeSlug }) => {
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -103,20 +79,11 @@ const NavDrawer: FC = () => {
       <DrawerContent>
         <div className="flex flex-col gap-4">
           <DrawerHeader>
-            <DrawerTitle>{meta.name}</DrawerTitle>
-            <DrawerDescription>{meta.description}</DrawerDescription>
+            <DrawerTitle className="text-center">{meta.name}</DrawerTitle>
+            <DrawerDescription className="text-center">{meta.description}</DrawerDescription>
           </DrawerHeader>
           <nav>
-            <ul className="mx-auto flex max-w-sm flex-col px-8">
-              {Object.values(routes).map((route, i) => (
-                <li key={route.href}>
-                  {i > 0 && <div className="h-[1px] w-full bg-border" />}
-                  <a href={route.href} className="block py-2.5 text-left hover:underline">
-                    {route.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <Nodes className="mx-auto max-w-sm px-8" nodes={meta.entries} activeSlug={activeSlug} nested={false} />
           </nav>
           <DrawerFooter>
             <div className="ml-auto flex flex-row">

@@ -3,9 +3,12 @@ import { getCollection } from "astro:content"
 import type { CollectionEntry } from "astro:content"
 import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout"
 import CodeBlock from "@/components/CodeBlock.astro"
+import { NavSideBar } from "@/components/NavSideBar"
+import { TOC } from "@/components/TOC"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import meta from "@/lib/metadata"
 import type { GetStaticPaths } from "astro"
+import { DocsBreadcrumb } from "./_Breadcrumb"
 
 export const getStaticPaths = (async () => {
   const docs = await getCollection("docs")
@@ -24,19 +27,24 @@ type Props = {
 }
 const { entry } = Astro.props
 
-const { Content } = await entry.render()
+const { Content, headings } = await entry.render()
 ---
 
-<BaseLayout route="/remark-callout/docs/en" title={`Docs | ${meta.name}`}>
-  <div class="prose mx-auto w-full max-w-full px-5 dark:prose-invert *:mx-auto *:max-w-screen-md">
-    <h1 class="mt-2">Docs</h1>
-    <Content
-      components={{
-        "callout-root": CalloutRoot,
-        "callout-title": CalloutTitle,
-        "callout-body": CalloutBody,
-        pre: CodeBlock,
-      }}
-    />
+<BaseLayout activeSlug={`/docs/${entry.slug}`} title={`Docs | ${meta.name}`}>
+  <div class="mx-auto flex w-full max-w-screen-2xl justify-between">
+    <NavSideBar client:load entries={meta.entries[1].children} activeSlug={`/docs/${entry.slug}`} />
+    <div class="prose mx-auto w-full max-w-full px-5 pt-4 dark:prose-invert *:mx-auto *:max-w-screen-md">
+      <DocsBreadcrumb entry={entry} />
+      <h1 class="mt-2">{entry.data.title}</h1>
+      <Content
+        components={{
+          "callout-root": CalloutRoot,
+          "callout-title": CalloutTitle,
+          "callout-body": CalloutBody,
+          pre: CodeBlock,
+        }}
+      />
+    </div>
+    <TOC client:load headings={headings} />
   </div>
 </BaseLayout>

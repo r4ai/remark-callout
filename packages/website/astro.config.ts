@@ -16,7 +16,9 @@ export default defineConfig({
       noExternal: ["@r4ai/remark-callout"],
     },
   },
-  redirects: {},
+  redirects: {
+    "/docs/en": `${metadata.base}/docs/en/getting-started`,
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,
