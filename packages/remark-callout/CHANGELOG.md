@@ -1,5 +1,17 @@
 # @r4ai/remark-callout
 
+## 0.6.0
+
+### Minor Changes
+
+- [#146](https://github.com/r4ai/remark-callout/pull/146) [`ca1e884`](https://github.com/r4ai/remark-callout/commit/ca1e884790446751e1d536e44827c3fa111eb4db) Thanks [@r4ai](https://github.com/r4ai)! - Don't render callout body when it is empty.
+
+- [#149](https://github.com/r4ai/remark-callout/pull/149) [`93b6571`](https://github.com/r4ai/remark-callout/commit/93b65711c02a2fad2ea20572f57d58f7462f7b1b) Thanks [@r4ai](https://github.com/r4ai)! - Add `options.titleInner` to specify the HTML element that wraps the text of the callout title
+
+- [#144](https://github.com/r4ai/remark-callout/pull/144) [`fe26ccb`](https://github.com/r4ai/remark-callout/commit/fe26ccb071624eec4f7dace1b0a6ab6c12759aab) Thanks [@r4ai](https://github.com/r4ai)! - Don't render an empty paragraph when the callout body is empty
+
+- [#150](https://github.com/r4ai/remark-callout/pull/150) [`156f660`](https://github.com/r4ai/remark-callout/commit/156f6602a49da26e6b163d43583abc4290f83008) Thanks [@r4ai](https://github.com/r4ai)! - Fixed an issue where the body was rendered as the title in callouts with a title consisting only of line breaks
+
 ## 0.5.0
 
 ### Minor Changes
