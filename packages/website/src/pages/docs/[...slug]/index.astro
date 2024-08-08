@@ -8,6 +8,7 @@ import { TOC } from "@/components/TOC"
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import meta from "@/lib/metadata"
 import type { GetStaticPaths } from "astro"
+import { twMerge } from "tailwind-merge"
 import { DocsBreadcrumb } from "./_Breadcrumb"
 
 export const getStaticPaths = (async () => {
@@ -33,7 +34,12 @@ const { Content, headings } = await entry.render()
 <BaseLayout activeSlug={`/docs/${entry.slug}`} title={`Docs | ${meta.name}`}>
   <div class="mx-auto flex w-full max-w-screen-2xl justify-between">
     <NavSideBar client:load entries={meta.entries[1].children} activeSlug={`/docs/${entry.slug}`} />
-    <div class="prose mx-auto w-full max-w-full px-5 pt-4 dark:prose-invert *:mx-auto *:max-w-screen-md">
+    <div
+      class={twMerge(
+        "prose prose-p:not-italic before:prose-p:content-none after:prose-p:content-none prose-code:before:content-none prose-code:after:content-none prose-code:border prose-code:px-[0.3rem] prose-code:py-0.5 prose-code:rounded-md prose-code:bg-muted/50 prose-headings:scroll-m-20",
+        "mx-auto w-full max-w-full px-5 pt-4 dark:prose-invert *:mx-auto *:max-w-screen-md",
+      )}
+    >
       <DocsBreadcrumb entry={entry} />
       <h1 class="mt-2">{entry.data.title}</h1>
       <Content

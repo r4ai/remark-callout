@@ -1,4 +1,5 @@
 import type { Node } from "@/components/NavSideBar"
+import { entry as apiReferenceEntry } from "../content/docs/en/api-reference/entries"
 
 export type Metadata = {
   name: string
@@ -40,6 +41,7 @@ export default {
             { type: "file", title: "Astro", slug: "/docs/en/examples/astro" },
           ],
         },
+        apiReferenceEntry,
       ],
     },
     {

@@ -29,11 +29,11 @@ export const TOC: FC<TOCProps> = ({ headings, className, ...props }) => {
   return (
     <div>
       <div
-        className={cn("sticky top-[calc(3.5rem+1px)] mx-8 hidden min-w-56 flex-col gap-4 xl:flex", className)}
+        className={cn("sticky top-[calc(3.5rem+1px)] mx-8 hidden min-w-56 max-w-64 flex-col gap-4 xl:flex", className)}
         {...props}
       >
         <span className="mt-6 font-bold">On this page</span>
-        <ul className="flex flex-col gap-1">
+        <ul className="flex max-h-[calc(100svh-9rem)] flex-col gap-1 overflow-y-auto">
           {headings.map((heading) => (
             <TOCItem key={heading.slug} heading={heading} />
           ))}

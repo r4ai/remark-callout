@@ -13,6 +13,12 @@ pre-commit:
       run: bun run biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
 
+    packages/remark-typedoc-astro-link/check:
+      root: packages/remark-typedoc-astro-link
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: bun run biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+
     packages/website/check:
       root: packages/website
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc,html,css,astro,yaml,yml}"

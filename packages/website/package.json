@@ -4,9 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "bun run typedoc && bun run astro dev",
+    "build": "bun run typedoc && bun run astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "biome check .",
@@ -43,19 +42,28 @@
     "remark-rehype": "^11.1.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2",
-    "unified": "^11.0.4",
+    "unified": "^11.0.5",
     "vaul": "^0.9.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "@r4ai/remark-callout": "workspace:*",
     "@tailwindcss/typography": "^0.5.12",
+    "mdast": "^3.0.0",
     "prettier-plugin-astro": "^0.14.0",
     "prettier-plugin-tailwindcss": "^0.6.0",
     "rehype-katex": "^7.0.0",
     "remark-math": "^6.0.0",
+    "remark-typedoc-astro-link": "workspace:*",
     "shiki": "^1.2.0",
     "tailwind-scrollbar": "^3.1.0",
-    "tailwind-variants": "^0.2.1"
+    "tailwind-variants": "^0.2.1",
+    "typedoc": "^0.26.5",
+    "typedoc-plugin-frontmatter": "^1.0.0",
+    "typedoc-plugin-markdown": "^4.2.3",
+    "typedoc-plugin-missing-exports": "^3.0.0",
+    "typedoc-plugin-remark": "^1.0.2",
+    "typedoc-plugin-replace-text": "^4.0.0",
+    "unist-util-visit": "^5.0.0"
   }
 }

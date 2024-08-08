@@ -1,0 +1,56 @@
+{
+  "name": "remark-typedoc-astro-link",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Remark plugin to transform typedoc links to astro compatible links",
+  "author": "rai",
+  "keywords": ["remark", "remark-plugin"],
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "dist",
+    "!**/*.test.ts",
+    "!**/*.spec.ts",
+    "!**/*.tsbuildinfo",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "test:coverage": "vitest --coverage",
+    "test:coverage:ci": "vitest run --coverage",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "prepublishOnly": "bun run build",
+    "check": "bunx @biomejs/biome check .",
+    "check:write": "bunx @biomejs/biome check --write .",
+    "release": "bun run vitest run && bun run build && bun run changeset publish"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/hast": "^3.0.4",
+    "@types/jsdom": "^21.1.7",
+    "@types/mdast": "^4.0.4",
+    "dedent": "^1.5.3",
+    "jsdom": "^24.1.1",
+    "rehype-stringify": "^10.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.0",
+    "unified": "^11.0.5",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "defu": "^6.1.4",
+    "unist-util-visit": "^5.0.0"
+  }
+}

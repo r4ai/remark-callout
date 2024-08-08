@@ -45,5 +45,5 @@ export const DocsBreadcrumb: FC<_BreadcrumbProps> = ({ entry }) => {
 const pretty = (str: string) =>
   str
     .split("-")
-    .map((s) => s[0].toUpperCase() + s.slice(1))
+    .map((s) => (s.at(0)?.toUpperCase() ?? "") + s.slice(1))
     .join(" ")
