@@ -9,6 +9,10 @@
       "path": "packages/remark-callout",
     },
     {
+      "name": "remark-typedoc-astro-link",
+      "path": "packages/remark-typedoc-astro-link",
+    },
+    {
       "name": "website",
       "path": "packages/website",
     },
