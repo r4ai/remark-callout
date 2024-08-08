@@ -17,7 +17,8 @@ export type Options = {
 
 export const defaultOptions: Required<Options> = {
   urlMatcher: (url) => url.endsWith(".mdx") || url.endsWith(".md"),
-  urlTransformer: (url) => kebabCase(url.replace(/\.mdx$/, "")),
+  urlTransformer: (url) =>
+    kebabCase(url.replace(/\.mdx$/, "").replace(/\.md$/, "")),
 };
 
 export const remarkTypedocAstroLink: Plugin<[Options?], mdast.Root> = (
