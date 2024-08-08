@@ -50,7 +50,7 @@ export type Options = {
    *       Title
    *     </div>
    *   </div>
-   *   ````
+   *   ```
    *
    * - If a `object`, the object used as a node to wrap the title text.
    *
