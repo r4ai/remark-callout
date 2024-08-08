@@ -1,5 +1,11 @@
 # @r4ai/remark-callout
 
+## 0.6.1
+
+### Patch Changes
+
+- [#157](https://github.com/r4ai/remark-callout/pull/157) [`2fad8ef`](https://github.com/r4ai/remark-callout/commit/2fad8ef1c2d3e6f07805e6920e9b52db90b76e8b) Thanks [@r4ai](https://github.com/r4ai)! - Refactor the type definitions to make it easier to automatically generate the API Reference with Typedoc
+
 ## 0.6.0
 
 ### Minor Changes
