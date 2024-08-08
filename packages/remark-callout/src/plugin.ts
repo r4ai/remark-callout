@@ -5,9 +5,7 @@ import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
 import type { VFile } from "vfile";
 
-export type Options = OptionsBuilder<NodeOptions | NodeOptionsFunction>;
-
-export type OptionsBuilder<N> = {
+export type Options = {
   /**
    * The root node of the callout.
    *
@@ -21,7 +19,7 @@ export type OptionsBuilder<N> = {
    *   },
    * })
    */
-  root?: N;
+  root?: NodeOptions | ((callout: Callout) => NodeOptions);
 
   /**
    * The title node of the callout.
@@ -34,7 +32,7 @@ export type OptionsBuilder<N> = {
    *   },
    * })
    */
-  title?: N;
+  title?: NodeOptions | ((callout: Callout) => NodeOptions);
 
   /**
    * The inner title node of the callout.
@@ -88,7 +86,13 @@ export type OptionsBuilder<N> = {
    *         },
    *       },
    */
-  titleInner?: WithOptions<Optional<N>>;
+  titleInner?:
+    | NodeOptions
+    | undefined
+    | ((
+        callout: Callout,
+        options: Required<Callable<Options>>,
+      ) => NodeOptions | undefined);
 
   /**
    * The body node of the callout.
@@ -101,7 +105,7 @@ export type OptionsBuilder<N> = {
    *   },
    * })
    */
-  body?: N;
+  body?: NodeOptions | ((callout: Callout) => NodeOptions);
 
   /**
    * The icon node of the callout.
@@ -130,7 +134,11 @@ export type OptionsBuilder<N> = {
    * @default
    * () => undefined
    */
-  icon?: Optional<WithChildren<N>>;
+  icon?:
+    | NodeOptionsWithChildren
+    | string
+    | undefined
+    | ((callout: Callout) => NodeOptionsWithChildren | string | undefined);
 
   /**
    * The fold icon node of the callout.
@@ -157,7 +165,11 @@ export type OptionsBuilder<N> = {
    * @default
    * () => undefined
    */
-  foldIcon?: Optional<WithChildren<N>>;
+  foldIcon?:
+    | NodeOptionsWithChildren
+    | string
+    | undefined
+    | ((callout: Callout) => NodeOptionsWithChildren | string | undefined);
 
   /**
    * A list of callout types that are supported.
@@ -195,57 +207,44 @@ export type NodeOptions = {
   properties: hast.Properties;
 };
 
-export type NodeOptionsFunction = (callout: Callout) => NodeOptions;
-
-// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if N is a function
-export type WithChildren<N> = N extends (...args: any) => any
-  ? (...args: Parameters<N>) => WithChildren<ReturnType<N>>
-  :
-      | (N & {
-          /**
-           * The HTML children of the node.
-           *
-           * - If a `string`, the string is added as raw HTML in the node.
-           * - If a `object[]`, the object array is added as a hast node.
-           *
-           * @see https://github.com/syntax-tree/mdast?tab=readme-ov-file#html
-           * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
-           *
-           * @example '<span class="icon">📝</span>'
-           *
-           * @example
-           * [
-           *   {
-           *     type: "element",
-           *     tagName: "span",
-           *     properties: { className: ["icon"] },
-           *     children: [
-           *       {
-           *         type: "text",
-           *         value: "📝",
-           *       },
-           *     ],
-           *   }
-           * ]
-           */
-          children: hast.ElementContent[] | string;
-        })
-      | string;
+export type NodeOptionsWithChildren = NodeOptions & {
+  /**
+   * The HTML children of the node.
+   *
+   * - If a `string`, the string is added as raw HTML in the node.
+   * - If a `object[]`, the object array is added as a hast node.
+   *
+   * @see https://github.com/syntax-tree/mdast?tab=readme-ov-file#html
+   * @see https://github.com/syntax-tree/hast?tab=readme-ov-file#element
+   *
+   * @example '<span class="icon">📝</span>'
+   *
+   * @example
+   * [
+   *   {
+   *     type: "element",
+   *     tagName: "span",
+   *     properties: { className: ["icon"] },
+   *     children: [
+   *       {
+   *         type: "text",
+   *         value: "📝",
+   *       },
+   *     ],
+   *   }
+   * ]
+   */
+  children: hast.ElementContent[] | string;
+};
 
 // biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
-export type WithOptions<T> = T extends (...args: any) => any
-  ? (
-      ...args: [
-        ...Parameters<T>,
-        options: Required<OptionsBuilder<NodeOptionsFunction>>,
-      ]
-    ) => WithOptions<ReturnType<T>>
-  : T;
+export type ExtractFunction<T> = Extract<T, (...args: any) => any>;
 
-// biome-ignore lint/suspicious/noExplicitAny: any is necessary for checking if T is a function
-export type Optional<T> = T extends (args: any) => any
-  ? (...args: Parameters<T>) => Optional<ReturnType<T>>
-  : T | undefined;
+export type Callable<T> = {
+  [P in keyof T]: ExtractFunction<T[P]> extends never
+    ? T[P]
+    : ExtractFunction<T[P]>;
+};
 
 export const defaultOptions: Required<Options> = {
   root: (callout) => ({
@@ -300,7 +299,7 @@ const initOptions = (options?: Options) => {
 
       return [key, value];
     }),
-  ) as Required<OptionsBuilder<NodeOptionsFunction>>;
+  ) as Required<Callable<Options>>;
 };
 
 /**
@@ -534,7 +533,7 @@ export const parseCallout = (
   return callout;
 };
 
-export const toHtml = (from: WithChildren<NodeOptions>): mdast.Html => {
+export const toHtml = (from: NodeOptionsWithChildren | string): mdast.Html => {
   if (typeof from === "string") {
     return {
       type: "html",
