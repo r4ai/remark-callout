@@ -21,8 +21,8 @@ export default {
     "typedoc-plugin-markdown",
     "typedoc-plugin-remark",
     "typedoc-plugin-frontmatter",
-    "./src/lib/astro-integrations/typedoc/typedoc-plugins/custom-frontmatter.js",
-    "./src/lib/astro-integrations/typedoc/typedoc-plugins/entries.js",
+    "./src/lib/typedoc-plugins/custom-frontmatter.js",
+    "./src/lib/typedoc-plugins/entries.js",
   ],
 
   // typedoc-plugin-markdown options

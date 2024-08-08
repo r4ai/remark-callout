@@ -4,9 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "bun run typedoc && bun run astro dev",
+    "build": "bun run typedoc && bun run astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "biome check .",
