@@ -26,10 +26,7 @@ export type NavSideBarProps = ComponentPropsWithoutRef<"div"> & {
 export const NavSideBar: FC<NavSideBarProps> = ({ className, entries, activeSlug, ...props }) => {
   return (
     <div>
-      <div
-        className={cn("sticky top-[calc(3.5rem+1px)] hidden min-w-56 flex-col gap-3 p-4 md:flex", className)}
-        {...props}
-      >
+      <div className={cn("sticky top-[calc(3.5rem+1px)] hidden w-56 flex-col gap-3 p-4 md:flex", className)} {...props}>
         <span className="inline-block w-full border-b pb-2 font-bold">Documentation</span>
         <nav>
           <Nodes nodes={entries} activeSlug={activeSlug} nested={false} />
@@ -71,7 +68,7 @@ const File: FC<FileProps> = ({ className, node, activeSlug, nested, ...props }) 
       href={`${metadata.base}${node.slug}`}
       data-active={node.slug === activeSlug}
       className={cn(
-        "inline-block w-full py-1.5 text-muted-foreground transition data-[active=true]:font-bold data-[active=true]:text-foreground hover:text-foreground",
+        "my-0 block w-full truncate py-1.5 text-muted-foreground transition data-[active=true]:font-bold data-[active=true]:text-foreground hover:text-foreground",
         nested && "ml-1 border-l pl-4",
         className,
       )}
@@ -89,7 +86,6 @@ type DirectoryProps = {
 }
 
 const Directory: FC<DirectoryProps> = ({ node, activeSlug, nested }) => {
-  console.log(node)
   return (
     <Accordion
       type="single"
