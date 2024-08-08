@@ -17,8 +17,11 @@ export type Options = {
 
 export const defaultOptions: Required<Options> = {
   urlMatcher: (url) => url.endsWith(".mdx") || url.endsWith(".md"),
-  urlTransformer: (url) =>
-    kebabCase(url.replace(/\.mdx$/, "").replace(/\.md$/, "")),
+  urlTransformer: (url) => {
+    const isProduction = process.env.NODE_ENV === "production";
+    const href = kebabCase(url.replace(/\.mdx$/, "").replace(/\.md$/, ""));
+    return isProduction ? `../${href}` : href;
+  },
 };
 
 export const remarkTypedocAstroLink: Plugin<[Options?], mdast.Root> = (
