@@ -17,7 +17,6 @@
     "examples/*"
   ],
   "scripts": {
-    "postinstall": "lefthook install",
     "test": "turbo test",
     "test:ci": "turbo test:ci",
     "test:coverage": "turbo test:coverage",
