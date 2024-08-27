@@ -48,7 +48,7 @@
     "astro": "4.14.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "lucide-react": "^0.424.0",
+    "lucide-react": "^0.436.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7"
   }
