@@ -43,7 +43,7 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2",
     "unified": "^11.0.5",
-    "vaul": "^0.9.0"
+    "vaul": "^1.0.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
