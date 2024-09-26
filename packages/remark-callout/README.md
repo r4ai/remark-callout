@@ -128,6 +128,26 @@ yields:
 
    <https://github.com/r4ai/remark-callout/blob/40d857e9885d335ca0c688d6eb2755e54dd2567b/packages/website/src/pages/playground/_callout.css#L1-L384>
 
+   To use the above CSS, you need to configure Astro's TailwindCSS integration to support nested syntax:
+
+   ```ts
+   // astro.config.ts
+   import { defineConfig } from 'astro/config';
+   import tailwind from '@astrojs/tailwind';
+
+   export default defineConfig({
+     integrations: [
+       tailwind({
+         // Example: Allow writing nested CSS declarations
+         // alongside Tailwind's syntax
+         nesting: true,
+       }),
+     ],
+   });
+   ```
+
+   cf. <https://docs.astro.build/en/guides/integrations-guide/tailwind/#nesting>
+
    Or if you are using MDX, you can use custom components to style the callouts:
 
    ```ts
