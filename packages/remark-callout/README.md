@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@r4ai%2Fremark-callout.svg)](https://badge.fury.io/js/@r4ai%2Fremark-callout)
 [![test coverage](https://codecov.io/gh/r4ai/remark-callout/graph/badge.svg?token=UFE88Y0Y8B)](https://codecov.io/gh/r4ai/remark-callout)
 [![CI](https://github.com/r4ai/remark-callout/actions/workflows/ci.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/ci.yml)
-[![Release](https://github.com/r4ai/remark-callout/actions/workflows/cd.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/cd.yml)
+[![Release](https://github.com/r4ai/remark-callout/actions/workflows/deploy-packages.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/deploy-packages.yml)
 [![CodeQL](https://github.com/r4ai/remark-callout/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/github-code-scanning/codeql)
 
 [![NPM](https://nodei.co/npm/@r4ai/remark-callout.png)](https://nodei.co/npm/@r4ai/remark-callout/)
@@ -127,6 +127,26 @@ yields:
    Now you can style the callouts using CSS. Following is an example of how you can style the callouts using Tailwind CSS:
 
    <https://github.com/r4ai/remark-callout/blob/40d857e9885d335ca0c688d6eb2755e54dd2567b/packages/website/src/pages/playground/_callout.css#L1-L384>
+
+   To use the above CSS, you need to configure Astro's TailwindCSS integration to support nested syntax:
+
+   ```ts
+   // astro.config.ts
+   import { defineConfig } from 'astro/config';
+   import tailwind from '@astrojs/tailwind';
+
+   export default defineConfig({
+     integrations: [
+       tailwind({
+         // Example: Allow writing nested CSS declarations
+         // alongside Tailwind's syntax
+         nesting: true,
+       }),
+     ],
+   });
+   ```
+
+   cf. <https://docs.astro.build/en/guides/integrations-guide/tailwind/#nesting>
 
    Or if you are using MDX, you can use custom components to style the callouts:
 

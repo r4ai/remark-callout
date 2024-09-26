@@ -32,8 +32,8 @@
     "test:coverage:ci": "vitest run --coverage",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "prepublishOnly": "bun run build",
-    "check": "bunx @biomejs/biome check .",
-    "check:write": "bunx @biomejs/biome check --write .",
+    "check": "biome check .",
+    "check:write": "biome check --write .",
     "release": "bun run vitest run && bun run build && bun run changeset publish"
   },
   "devDependencies": {
