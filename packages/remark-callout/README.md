@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@r4ai%2Fremark-callout.svg)](https://badge.fury.io/js/@r4ai%2Fremark-callout)
 [![test coverage](https://codecov.io/gh/r4ai/remark-callout/graph/badge.svg?token=UFE88Y0Y8B)](https://codecov.io/gh/r4ai/remark-callout)
 [![CI](https://github.com/r4ai/remark-callout/actions/workflows/ci.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/ci.yml)
-[![Release](https://github.com/r4ai/remark-callout/actions/workflows/cd.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/cd.yml)
+[![Release](https://github.com/r4ai/remark-callout/actions/workflows/deploy-packages.yml/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/deploy-packages.yml)
 [![CodeQL](https://github.com/r4ai/remark-callout/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/r4ai/remark-callout/actions/workflows/github-code-scanning/codeql)
 
 [![NPM](https://nodei.co/npm/@r4ai/remark-callout.png)](https://nodei.co/npm/@r4ai/remark-callout/)
