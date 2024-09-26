@@ -1,5 +1,13 @@
 # @r4ai/remark-callout
 
+## 0.6.2
+
+### Patch Changes
+
+- [#193](https://github.com/r4ai/remark-callout/pull/193) [`d47cda0`](https://github.com/r4ai/remark-callout/commit/d47cda060c1b5806c651c84f64a7640ae87fc2f3) Thanks [@r4ai](https://github.com/r4ai)! - Fix broken bundge link in README
+
+- [#191](https://github.com/r4ai/remark-callout/pull/191) [`bc160f2`](https://github.com/r4ai/remark-callout/commit/bc160f26ab46e1d6aa3e848644657fce7b876544) Thanks [@r4ai](https://github.com/r4ai)! - Add instruction to support nested css with Astro's TailwindCSS integration in README
+
 ## 0.6.1
 
 ### Patch Changes
