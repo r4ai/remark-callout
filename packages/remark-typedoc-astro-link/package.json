@@ -44,8 +44,8 @@
     "dedent": "^1.5.3",
     "jsdom": "^25.0.0",
     "rehype-stringify": "^10.0.0",
-    "remark-parse": "^11.0.0",
-    "remark-rehype": "^11.1.0",
+    "remark-parse": "11.0.0",
+    "remark-rehype": "11.1.1",
     "unified": "^11.0.5",
     "vitest": "^2.0.5"
   },
