@@ -50,7 +50,7 @@
     "@r4ai/remark-callout": "workspace:*",
     "@tailwindcss/typography": "0.5.15",
     "@types/mdast": "4.0.4",
-    "@types/react": "18.3.9",
+    "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
