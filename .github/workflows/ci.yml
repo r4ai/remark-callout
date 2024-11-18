@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Setup Node.js and Bun
-        uses: jdx/mise-action@a4cfebde9ceb9b49b54db1d148fa86a52e1b7fab # v2
+        uses: jdx/mise-action@63a673876c7072c1d6ecb2049c0d572976c83b22 # v2
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
