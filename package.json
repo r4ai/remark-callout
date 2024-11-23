@@ -41,6 +41,9 @@
   },
   "packageManager": "bun@1.0.30",
   "trustedDependencies": [
-    "@biomejs/biome"
+    "@biomejs/biome",
+    "esbuild",
+    "lefthook",
+    "sharp"
   ]
 }
