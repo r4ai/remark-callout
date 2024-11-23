@@ -39,5 +39,8 @@
     "turbo": "2.2.3",
     "typescript": "5.6.3"
   },
-  "packageManager": "bun@1.0.30"
+  "packageManager": "bun@1.0.30",
+  "trustedDependencies": [
+    "@biomejs/biome"
+  ]
 }
