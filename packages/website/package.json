@@ -33,7 +33,7 @@
     "astro": "^4.5.5",
     "dedent": "^1.5.1",
     "katex": "^0.16.9",
-    "lucide-react": "^0.446.0",
+    "lucide-react": "^0.460.0",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -46,7 +46,7 @@
     "vaul": "^1.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.3",
+    "@biomejs/biome": "1.9.4",
     "@r4ai/remark-callout": "workspace:*",
     "@tailwindcss/typography": "0.5.15",
     "@types/mdast": "4.0.4",
@@ -59,7 +59,7 @@
     "rehype-katex": "7.0.1",
     "remark-math": "6.0.0",
     "remark-typedoc-astro-link": "workspace:*",
-    "shiki": "1.21.1",
+    "shiki": "1.23.1",
     "tailwind-merge": "2.5.3",
     "tailwind-scrollbar": "3.1.0",
     "tailwind-variants": "0.2.1",
