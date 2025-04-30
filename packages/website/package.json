@@ -51,7 +51,7 @@
     "@tailwindcss/typography": "0.5.15",
     "@types/mdast": "4.0.4",
     "@types/react": "18.3.20",
-    "@types/react-dom": "18.3.6",
+    "@types/react-dom": "18.3.7",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.1",
     "prettier-plugin-astro": "0.14.1",
