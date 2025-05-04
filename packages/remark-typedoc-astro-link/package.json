@@ -42,7 +42,7 @@
     "@types/jsdom": "21.1.7",
     "@types/mdast": "4.0.4",
     "dedent": "1.6.0",
-    "jsdom": "25.0.1",
+    "jsdom": "26.1.0",
     "rehype-stringify": "10.0.1",
     "remark-parse": "11.0.0",
     "remark-rehype": "11.1.2",
