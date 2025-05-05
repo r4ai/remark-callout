@@ -48,7 +48,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@r4ai/remark-callout": "workspace:*",
-    "@tailwindcss/typography": "0.5.15",
+    "@tailwindcss/typography": "0.5.16",
     "@types/mdast": "4.0.4",
     "@types/react": "18.3.20",
     "@types/react-dom": "18.3.7",
