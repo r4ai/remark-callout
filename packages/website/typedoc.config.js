@@ -1,11 +1,10 @@
 // @ts-check
-import path from "node:path"
 
 /**
  * @typedef {import("typedoc").TypeDocOptions} TypeDocOptions
  * @typedef {import("typedoc-plugin-markdown").PluginOptions} MarkdownPluginOptions
- * @typedef {import("typedoc-plugin-frontmatter/dist/options/option-types").PluginOptions} FrontmatterPluginOptions
- * @typedef {import("typedoc-plugin-remark/dist/types").PluginOptions} RemarkPluginOptions
+ * @typedef {import("typedoc-plugin-frontmatter").PluginOptions} FrontmatterPluginOptions
+ * @typedef {import("typedoc-plugin-remark").PluginOptions} RemarkPluginOptions
  * @typedef {import("typedoc-plugin-replace-text").Config} ReplaceTextOptions
  *
  * @type {Partial<TypeDocOptions & MarkdownPluginOptions & FrontmatterPluginOptions & RemarkPluginOptions & ReplaceTextOptions>}
@@ -35,5 +34,8 @@ export default {
   sanitizeComments: true,
 
   // typedoc-plugin-remark options
-  remarkPlugins: ["remark-typedoc-astro-link"],
+  remarkPlugins: [
+    ["remark-mdx", {}],
+    ["remark-typedoc-astro-link", {}],
+  ],
 }
