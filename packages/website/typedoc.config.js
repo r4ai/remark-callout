@@ -34,5 +34,8 @@ export default {
   sanitizeComments: true,
 
   // typedoc-plugin-remark options
-  remarkPlugins: [["remark-typedoc-astro-link", {}]],
+  remarkPlugins: [
+    ["remark-mdx", {}],
+    ["remark-typedoc-astro-link", {}],
+  ],
 }
