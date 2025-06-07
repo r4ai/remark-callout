@@ -153,7 +153,7 @@
         "typedoc-plugin-frontmatter": "1.3.0",
         "typedoc-plugin-markdown": "4.6.4",
         "typedoc-plugin-missing-exports": "4.0.0",
-        "typedoc-plugin-remark": "2.0.0",
+        "typedoc-plugin-remark": "2.0.1",
         "typedoc-plugin-replace-text": "4.2.0",
         "unist-util-visit": "5.0.0",
       },
@@ -2104,7 +2104,7 @@
 
     "typedoc-plugin-missing-exports": ["typedoc-plugin-missing-exports@4.0.0", "", { "peerDependencies": { "typedoc": "^0.28.1" } }, "sha512-Z4ei+853xppDEhcqzyeyRs4+R0kUuKQWnMK1EtSTEd5LFkgkdW5Bdn8vfo/rsCGbYVJxOWU99fxgM1mROw5Fug=="],
 
-    "typedoc-plugin-remark": ["typedoc-plugin-remark@2.0.0", "", { "dependencies": { "remark": "^15.0.1", "remark-frontmatter": "^5.0.0", "vfile": "^6.0.3" }, "peerDependencies": { "typedoc-plugin-markdown": ">=4.6.2" } }, "sha512-4946klttXFpiTTsHwuahmxMtM368Z2Km/WAv1eVTU85Sin0D6K0Zxkill/WVsfhBKY1wrfrPXin934xKEZBNvA=="],
+    "typedoc-plugin-remark": ["typedoc-plugin-remark@2.0.1", "", { "dependencies": { "remark": "^15.0.1", "remark-frontmatter": "^5.0.0", "vfile": "^6.0.3" }, "peerDependencies": { "typedoc-plugin-markdown": ">=4.6.2" } }, "sha512-ZXIt75P2wo/8W4XC3Gs/JdYl8Of2K6MXOaYOsw14DEfery2T3hrM06MB+CpfQlTv+K+4LlI/24Ylzmv1Yo+bRg=="],
 
     "typedoc-plugin-replace-text": ["typedoc-plugin-replace-text@4.2.0", "", { "peerDependencies": { "typedoc": "0.26.x || 0.27.x || 0.28.x" } }, "sha512-vmhpFKg75l0CfHO7n3bdf/wwSWH6hQQxaZTqZ5HDe5Xd40tkk6jkVkP6SWhDhntSIflREQqwneflGJG3bCqPEA=="],
 
