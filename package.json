@@ -34,7 +34,7 @@
     "@changesets/cli": "2.29.5",
     "@tsconfig/node16": "16.1.4",
     "@types/bun": "1.2.18",
-    "lefthook": "1.12.0",
+    "lefthook": "1.12.1",
     "rimraf": "6.0.1",
     "turbo": "2.5.4",
     "typescript": "5.8.3"
