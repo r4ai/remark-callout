@@ -152,7 +152,7 @@
         "typedoc": "0.28.5",
         "typedoc-plugin-frontmatter": "1.3.0",
         "typedoc-plugin-markdown": "4.8.0",
-        "typedoc-plugin-missing-exports": "4.0.0",
+        "typedoc-plugin-missing-exports": "4.1.0",
         "typedoc-plugin-remark": "2.0.1",
         "typedoc-plugin-replace-text": "4.2.0",
         "unist-util-visit": "5.0.0",
@@ -2104,7 +2104,7 @@
 
     "typedoc-plugin-markdown": ["typedoc-plugin-markdown@4.8.0", "", { "peerDependencies": { "typedoc": "0.28.x" } }, "sha512-BQqXnT9PETe6WEFf8bcsvvGEGQHbwTo/BFyY+RUIsSB05Y0Wn56iF+fK1PY2OKJJIhV4kp4dp7osaP9Bm5a0Zw=="],
 
-    "typedoc-plugin-missing-exports": ["typedoc-plugin-missing-exports@4.0.0", "", { "peerDependencies": { "typedoc": "^0.28.1" } }, "sha512-Z4ei+853xppDEhcqzyeyRs4+R0kUuKQWnMK1EtSTEd5LFkgkdW5Bdn8vfo/rsCGbYVJxOWU99fxgM1mROw5Fug=="],
+    "typedoc-plugin-missing-exports": ["typedoc-plugin-missing-exports@4.1.0", "", { "peerDependencies": { "typedoc": "^0.28.1" } }, "sha512-p1M5jXnEbQ4qqy0erJz41BBZEDb8XDrbLjndlH4RhYEcymbdQr0xLF6yUw1GWBrhSIfkU98m3BELMAiQh+R1zA=="],
 
     "typedoc-plugin-remark": ["typedoc-plugin-remark@2.0.1", "", { "dependencies": { "remark": "^15.0.1", "remark-frontmatter": "^5.0.0", "vfile": "^6.0.3" }, "peerDependencies": { "typedoc-plugin-markdown": ">=4.6.2" } }, "sha512-ZXIt75P2wo/8W4XC3Gs/JdYl8Of2K6MXOaYOsw14DEfery2T3hrM06MB+CpfQlTv+K+4LlI/24Ylzmv1Yo+bRg=="],
 
@@ -2457,8 +2457,6 @@
     "vscode-json-languageservice/jsonc-parser": ["jsonc-parser@3.3.1", "", {}, "sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ=="],
 
     "website/tailwind-merge": ["tailwind-merge@3.3.1", "", {}, "sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g=="],
-
-    "website/typescript": ["typescript@5.8.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ=="],
 
     "whatwg-encoding/iconv-lite": ["iconv-lite@0.6.3", "", { "dependencies": { "safer-buffer": ">= 2.1.2 < 3.0.0" } }, "sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw=="],
 
