@@ -31,7 +31,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@changesets/changelog-github": "0.5.1",
-    "@changesets/cli": "2.29.5",
+    "@changesets/cli": "2.29.6",
     "@tsconfig/node16": "16.1.4",
     "@types/bun": "1.2.20",
     "lefthook": "1.12.2",
