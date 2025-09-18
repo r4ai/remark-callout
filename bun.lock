@@ -7,7 +7,7 @@
         "@biomejs/biome": "1.9.4",
         "@changesets/changelog-github": "0.5.1",
         "@changesets/cli": "2.29.7",
-        "@tsconfig/node16": "16.1.4",
+        "@tsconfig/node16": "16.1.5",
         "@types/bun": "1.2.22",
         "lefthook": "1.13.1",
         "rimraf": "6.0.1",
@@ -646,7 +646,7 @@
 
     "@tailwindcss/typography": ["@tailwindcss/typography@0.5.16", "", { "dependencies": { "lodash.castarray": "^4.4.0", "lodash.isplainobject": "^4.0.6", "lodash.merge": "^4.6.2", "postcss-selector-parser": "6.0.10" }, "peerDependencies": { "tailwindcss": ">=3.0.0 || insiders || >=4.0.0-alpha.20 || >=4.0.0-beta.1" } }, "sha512-0wDLwCVF5V3x3b1SGXPCDcdsbDHMBe+lkFzBRaHeLvNi+nrrnZ1lA18u+OTWO8iSWU2GxUOCvlXtDuqftc1oiA=="],
 
-    "@tsconfig/node16": ["@tsconfig/node16@16.1.4", "", {}, "sha512-tkWPDtk18K2qJK/DhU010f03iDlw+C8qjXvhwZ4KKpJQC4QFOG3r8tIf2q6aWD0mz9N7RcZcaD9SPlrVLKiDoQ=="],
+    "@tsconfig/node16": ["@tsconfig/node16@16.1.5", "", {}, "sha512-P4GBZdpi6i5NGB12pwLH4oAIPrxl1ZvD8gxA4E7VdUUCik34J7FerrxzoDXtT4ugbrRjLbK5WuHPOUNZJOxuaQ=="],
 
     "@tybys/wasm-util": ["@tybys/wasm-util@0.9.0", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw=="],
 
