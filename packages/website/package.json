@@ -60,7 +60,7 @@
     "rehype-katex": "7.0.1",
     "remark-math": "6.0.0",
     "remark-typedoc-astro-link": "workspace:*",
-    "shiki": "3.12.2",
+    "shiki": "3.13.0",
     "tailwind-merge": "3.3.1",
     "tailwind-scrollbar": "3.1.0",
     "tailwind-variants": "3.1.1",
