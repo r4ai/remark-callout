@@ -56,7 +56,7 @@
         "@changesets/cli": "2.29.7",
         "@types/bun": "1.2.23",
         "@types/hast": "3.0.4",
-        "@types/jsdom": "21.1.7",
+        "@types/jsdom": "27.0.0",
         "@types/mdast": "4.0.4",
         "@vitest/coverage-v8": "3.2.4",
         "@vitest/ui": "3.2.4",
@@ -85,7 +85,7 @@
       "devDependencies": {
         "@biomejs/biome": "1.9.4",
         "@types/hast": "3.0.4",
-        "@types/jsdom": "21.1.7",
+        "@types/jsdom": "27.0.0",
         "@types/mdast": "4.0.4",
         "dedent": "1.7.0",
         "jsdom": "27.0.0",
@@ -680,7 +680,7 @@
 
     "@types/hast": ["@types/hast@3.0.4", "", { "dependencies": { "@types/unist": "*" } }, "sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ=="],
 
-    "@types/jsdom": ["@types/jsdom@21.1.7", "", { "dependencies": { "@types/node": "*", "@types/tough-cookie": "*", "parse5": "^7.0.0" } }, "sha512-yOriVnggzrnQ3a9OKOCxaVuSug3w3/SbOj5i7VwXWZEyUNl3bLF9V3MfxGbZKuwqJOQyRfqXyROBB1CoZLFWzA=="],
+    "@types/jsdom": ["@types/jsdom@27.0.0", "", { "dependencies": { "@types/node": "*", "@types/tough-cookie": "*", "parse5": "^7.0.0" } }, "sha512-NZyFl/PViwKzdEkQg96gtnB8wm+1ljhdDay9ahn4hgb+SfVtPCbm3TlmDUFXTA+MGN3CijicnMhG18SI5H3rFw=="],
 
     "@types/json5": ["@types/json5@0.0.29", "", {}, "sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ=="],
 
