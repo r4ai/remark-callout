@@ -22,6 +22,7 @@
     "@mdx-js/react": "^3.0.1",
     "@next/mdx": "^14.2.3",
     "@r4ai/remark-callout": "^0.6.0",
+    "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.13",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20",
@@ -32,7 +33,7 @@
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^4.1.17",
     "typescript": "^5"
   }
 }
