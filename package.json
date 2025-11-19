@@ -12,20 +12,16 @@
     "url": "https://github.com/r4ai/remark-callout/issues"
   },
   "type": "module",
-  "workspaces": [
-    "packages/*",
-    "examples/*"
-  ],
   "scripts": {
     "test": "turbo test",
     "test:ci": "turbo test:ci",
     "test:coverage": "turbo test:coverage",
     "test:coverage:ci": "turbo test:coverage:ci",
     "build": "turbo build",
-    "prepublishOnly": "bun run build",
+    "prepublishOnly": "pnpm run build",
     "check": "turbo check",
     "check:write": "turbo check:write",
-    "release": "bun run test:ci && bun run build && bun run changeset publish",
+    "release": "pnpm run test:ci && pnpm run build && pnpm run changeset publish",
     "changeset": "changeset"
   },
   "devDependencies": {
@@ -39,11 +35,11 @@
     "turbo": "2.5.8",
     "typescript": "5.9.3"
   },
-  "packageManager": "bun@1.0.30",
   "trustedDependencies": [
     "@biomejs/biome",
     "esbuild",
     "lefthook",
     "sharp"
-  ]
+  ],
+  "packageManager": "pnpm@10.22.0"
 }

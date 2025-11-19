@@ -243,13 +243,13 @@ See [r4ai.github.io/remark-callout/docs/en/api-reference/type-aliases/options](h
 
 | Command                 | Description             |
 | ----------------------- | ----------------------- |
-| `bun install`           | Install dependencies    |
-| `bun run build`         | Build the packages      |
-| `bun run test`          | Run tests               |
-| `bun run test:coverage` | Run tests with coverage |
-| `bun run check`         | Check the code          |
-| `bun run check:write`   | Check and fix the code  |
-| `bun run changeset`     | Create a changeset      |
+| `pnpm install`           | Install dependencies    |
+| `pnpm run build`         | Build the packages      |
+| `pnpm run test`          | Run tests               |
+| `pnpm run test:coverage` | Run tests with coverage |
+| `pnpm run check`         | Check the code          |
+| `pnpm run check:write`   | Check and fix the code  |
+| `pnpm run changeset`     | Create a changeset      |
 
 ### Directory Structure
 
@@ -264,29 +264,29 @@ See [r4ai.github.io/remark-callout/docs/en/api-reference/type-aliases/options](h
 1. Install dependencies:
 
    ```bash
-   bun install
+   pnpm install
    ```
 
 2. Build the packages:
 
    ```bash
-   bun run build
+   pnpm run build
    ```
 
 3. Check and fix the code:
 
    ```bash
-   bun run check:write
+   pnpm run check:write
    ```
 
 4. Run tests with coverage:
 
    ```bash
-   bun run test:coverage
+   pnpm run test:coverage
    ```
 
 5. Launch the documentation website:
 
    ```bash
-   bun run --cwd packages/website dev
+   pnpm run --cwd packages/website dev
    ```

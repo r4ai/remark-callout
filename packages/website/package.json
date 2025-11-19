@@ -4,16 +4,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "bun run typedoc && bun run astro dev",
-    "build": "NODE_ENV=production bun run typedoc && bun run astro build",
+    "dev": "pnpm run typedoc && pnpm run astro dev",
+    "build": "NODE_ENV=production pnpm run typedoc && pnpm run astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "biome check .",
     "lint:write": "biome check --write .",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
-    "check": "bun run lint && bun run format",
-    "check:write": "bun run lint:write && bun run format:write"
+    "check": "pnpm run lint && pnpm run format",
+    "check:write": "pnpm run lint:write && pnpm run format:write"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.0",

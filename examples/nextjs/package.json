@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:write": "next lint --fix",
-    "check": "bun run lint",
-    "check:write": "bun run lint:write"
+    "check": "pnpm run lint",
+    "check:write": "pnpm run lint:write"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",

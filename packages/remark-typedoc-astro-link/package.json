@@ -31,10 +31,10 @@
     "test:coverage": "vitest --coverage",
     "test:coverage:ci": "vitest run --coverage",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
-    "prepublishOnly": "bun run build",
+    "prepublishOnly": "pnpm run build",
     "check": "biome check .",
     "check:write": "biome check --write .",
-    "release": "bun run vitest run && bun run build && bun run changeset publish"
+    "release": "pnpm run vitest run && pnpm run build && pnpm run changeset publish"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
