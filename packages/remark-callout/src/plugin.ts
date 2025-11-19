@@ -310,7 +310,7 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
 
   return (tree, file) => {
     visit(tree, "blockquote", (node) => {
-      const paragraphNode = node.children.at(0);
+      const paragraphNode = node.children[0];
       if (paragraphNode == null || paragraphNode.type !== "paragraph") return;
 
       // Skip if the first line is empty
@@ -318,7 +318,7 @@ export const remarkCallout: Plugin<[Options?], mdast.Root> = (_options) => {
         return;
       }
 
-      const calloutTypeTextNode = paragraphNode.children.at(0);
+      const calloutTypeTextNode = paragraphNode.children[0];
       if (calloutTypeTextNode == null || calloutTypeTextNode.type !== "text") {
         return;
       }
