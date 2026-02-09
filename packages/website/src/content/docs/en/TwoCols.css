@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 [data-two-cols] > div > div {
   &:first-child {
     @apply mt-0;

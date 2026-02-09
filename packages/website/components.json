@@ -1,8 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
+  "style": "new-york",
   "tailwind": {
-    "config": "tailwind.config.ts",
     "css": "src/styles/global.css",
     "baseColor": "zinc",
     "cssVariables": true,
