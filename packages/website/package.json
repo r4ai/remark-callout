@@ -62,7 +62,7 @@
     "remark-typedoc-astro-link": "workspace:*",
     "shiki": "3.13.0",
     "tailwind-merge": "3.3.1",
-    "tailwind-scrollbar": "3.1.0",
+    "tailwind-scrollbar": "4.0.2",
     "tailwind-variants": "3.1.1",
     "tailwindcss-animate": "1.0.7",
     "typedoc": "0.28.5",
