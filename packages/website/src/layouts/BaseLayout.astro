@@ -1,5 +1,7 @@
 ---
 import "@/styles/global.css"
+import "@/styles/codeblock.css"
+import "katex/dist/katex.min.css"
 
 import { Footer } from "@/components/Footer"
 import { Header } from "@/components/Header"
@@ -29,7 +31,7 @@ const { activeSlug, title } = Astro.props
       }
     </script>
   </head>
-  <body class="flex min-h-full flex-col bg-background">
+  <body class="bg-background flex min-h-full flex-col">
     <Header activeSlug={activeSlug} client:load />
     <div class="flex flex-1 flex-col">
       <slot />

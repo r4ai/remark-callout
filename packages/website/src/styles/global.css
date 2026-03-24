@@ -1,7 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "katex/dist/katex.min.css";
-@import "./codeblock.css";
 @plugin "@tailwindcss/typography";
 @plugin "tailwind-scrollbar";
 @custom-variant dark (&:where(.dark, .dark *));
