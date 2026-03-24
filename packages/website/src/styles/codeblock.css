@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+@reference "./global.css";
 
 html.dark .astro-code,
 html.dark .shiki,
