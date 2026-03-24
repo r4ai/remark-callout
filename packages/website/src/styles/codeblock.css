@@ -26,10 +26,6 @@ html.dark .shiki span {
     @apply h-6 content-center border-l-2 border-l-transparent px-4;
   }
 
-  & span.line:nth-last-child(1) {
-    @apply hidden;
-  }
-
   /* 行番号表示 */
   & code[data-line-numbers] {
     & {

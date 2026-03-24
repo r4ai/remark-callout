@@ -2,7 +2,7 @@
 
 [data-callout] {
   & {
-    @apply my-6 space-y-2 rounded-lg border border-blue-600/20 bg-blue-400/20 p-4 pb-5 dark:border-blue-800/20 dark:bg-blue-600/10;
+    @apply my-6 rounded-lg border border-blue-600/20 bg-blue-400/20 p-4 pb-5 dark:border-blue-800/20 dark:bg-blue-600/10;
   }
 
   & > [data-callout-title] {
@@ -30,7 +30,7 @@
 
   & > [data-callout-body] {
     & {
-      @apply space-y-2;
+      @apply mt-2 space-y-2;
     }
 
     & > * {
