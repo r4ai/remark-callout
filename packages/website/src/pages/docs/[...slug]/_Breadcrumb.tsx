@@ -20,7 +20,7 @@ export const DocsBreadcrumb: FC<_BreadcrumbProps> = ({ entry }) => {
         <BreadcrumbItem>
           <BreadcrumbLink href={`${metadata.base}/docs/en`}>Docs</BreadcrumbLink>
         </BreadcrumbItem>
-        {entry.slug
+        {entry.id
           .split("/")
           .splice(1)
           .map((slug, index, slugs) => (

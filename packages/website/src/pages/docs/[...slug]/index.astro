@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content"
+import { getCollection, render } from "astro:content"
 import type { CollectionEntry } from "astro:content"
 import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout"
 import CodeBlock from "@/components/CodeBlock.astro"
@@ -14,7 +14,7 @@ import { DocsBreadcrumb } from "./_Breadcrumb"
 export const getStaticPaths = (async () => {
   const docs = await getCollection("docs")
   return docs.map((doc) => ({
-    params: { slug: doc.slug },
+    params: { slug: doc.id },
     props: {
       entry: {
         ...doc,
@@ -28,12 +28,12 @@ type Props = {
 }
 const { entry } = Astro.props
 
-const { Content, headings } = await entry.render()
+const { Content, headings } = await render(entry)
 ---
 
-<BaseLayout activeSlug={`/docs/${entry.slug}`} title={`Docs | ${meta.name}`}>
+<BaseLayout activeSlug={`/docs/${entry.id}`} title={`Docs | ${meta.name}`}>
   <div class="mx-auto flex w-full max-w-screen-2xl justify-between">
-    <NavSideBar client:load entries={meta.entries[1].children} activeSlug={`/docs/${entry.slug}`} />
+    <NavSideBar client:load entries={meta.entries[1].children} activeSlug={`/docs/${entry.id}`} />
     <div
       class={twMerge(
         "prose prose-p:not-italic before:prose-p:content-none after:prose-p:content-none prose-code:before:content-none prose-code:after:content-none prose-code:border prose-code:px-[0.3rem] prose-code:py-0.5 prose-code:rounded-md prose-code:bg-muted/50 prose-headings:scroll-m-20",
