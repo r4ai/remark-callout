@@ -82,7 +82,7 @@ export const Playground: FC<PlaygroundProps> = ({ highlightedCss }) => {
           CSS: <div className="h-full py-2 text-sm" dangerouslySetInnerHTML={{ __html: highlightedCss }} />,
           Preview: (
             <div
-              className="prose h-full w-full px-4 py-2 dark:prose-invert"
+              className="prose dark:prose-invert h-full w-full px-4 py-2"
               // biome-ignore lint/security/noDangerouslySetInnerHtml: safe
               dangerouslySetInnerHTML={{ __html: html }}
             />
@@ -108,8 +108,8 @@ const Tab: FC<TabProps> = ({ tabs, defaultTab }) => {
           <div
             key={key}
             className={cn(
-              "flex h-full items-center border-b-[3px] border-transparent text-muted-foreground hover:text-foreground",
-              key === tab && "border-zinc-500 text-foreground",
+              "text-muted-foreground hover:text-foreground flex h-full items-center border-b-[3px] border-transparent",
+              key === tab && "text-foreground border-zinc-500",
             )}
           >
             <button type="button" onClick={() => setTab(key)}>

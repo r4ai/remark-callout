@@ -1,3 +1,5 @@
+@reference "./global.css";
+
 html.dark .astro-code,
 html.dark .shiki,
 html.dark .astro-code span,
@@ -24,10 +26,6 @@ html.dark .shiki span {
     @apply h-6 content-center border-l-2 border-l-transparent px-4;
   }
 
-  & span.line:nth-last-child(1) {
-    @apply hidden;
-  }
-
   /* 行番号表示 */
   & code[data-line-numbers] {
     & {
@@ -37,7 +35,8 @@ html.dark .shiki span {
     & > span[data-line]::before {
       content: counter(line);
       counter-increment: line;
-      @apply mr-4 inline-block w-4 text-right text-muted-foreground;
+      @apply mr-4 inline-block w-4 text-right;
+      color: var(--muted-foreground);
     }
   }
 

@@ -159,7 +159,7 @@ export const CalloutRoot: FC<CalloutRootProps> = ({
     <Details
       isFoldable={isFoldable}
       defaultFolded={defaultFolded}
-      className={cn("group/root my-6 space-y-2 rounded-lg border bg-card p-4", callout.className.root, className)}
+      className={cn("group/root bg-card my-6 rounded-lg border p-4", callout.className.root, className)}
     >
       {children}
     </Details>
@@ -198,7 +198,7 @@ export const CalloutBody: FC<CalloutBodyProps> = ({ children }) => {
   return (
     <div
       className={cn(
-        "flex flex-col gap-2",
+        "mt-2 flex flex-col gap-2",
         "prose-headings:my-0 prose-p:my-0 prose-blockquote:my-0 prose-pre:my-0 prose-ol:my-0 prose-ul:my-0",
       )}
     >

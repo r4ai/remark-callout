@@ -29,7 +29,7 @@ export const TOC: FC<TOCProps> = ({ headings, className, ...props }) => {
   return (
     <div>
       <div
-        className={cn("sticky top-[calc(3.5rem+1px)] mx-8 hidden min-w-56 max-w-64 flex-col gap-4 xl:flex", className)}
+        className={cn("sticky top-[calc(3.5rem+1px)] mx-8 hidden max-w-64 min-w-56 flex-col gap-4 xl:flex", className)}
         {...props}
       >
         <span className="mt-6 font-bold">On this page</span>

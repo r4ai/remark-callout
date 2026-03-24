@@ -23,7 +23,7 @@ type HeaderProps = {
 export const Header: FC<HeaderProps> = ({ activeSlug }) => {
   return (
     <TooltipProvider>
-      <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur">
         <div className="container flex h-14 max-w-screen-2xl flex-row items-center justify-between">
           <nav className="flex flex-row gap-4">
             <div className="md:hidden">
@@ -40,8 +40,8 @@ export const Header: FC<HeaderProps> = ({ activeSlug }) => {
                   <a
                     href={`${meta.base}${entry.slug}`}
                     className={cn(
-                      "text-muted-foreground transition hover:text-foreground",
-                      activeSlug.startsWith(entry.slug) && "font-medium text-foreground",
+                      "text-muted-foreground hover:text-foreground transition",
+                      activeSlug.startsWith(entry.slug) && "text-foreground font-medium",
                     )}
                   >
                     {entry.title}

@@ -1,5 +1,9 @@
 // @ts-check
 
+import { fileURLToPath } from "node:url"
+
+const remarkTypedocAstroLinkPath = fileURLToPath(new URL("../remark-typedoc-astro-link/dist/index.js", import.meta.url))
+
 /**
  * @typedef {import("typedoc").TypeDocOptions} TypeDocOptions
  * @typedef {import("typedoc-plugin-markdown").PluginOptions} MarkdownPluginOptions
@@ -36,6 +40,6 @@ export default {
   // typedoc-plugin-remark options
   remarkPlugins: [
     ["remark-mdx", {}],
-    ["remark-typedoc-astro-link", {}],
+    [remarkTypedocAstroLinkPath, {}],
   ],
 }

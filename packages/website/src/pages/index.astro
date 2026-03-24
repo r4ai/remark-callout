@@ -15,7 +15,7 @@ import { PaintbrushIcon, Settings2Icon } from "lucide-react"
         <div>@r4ai/</div>
         <div>remark-callout</div>
       </h1>
-      <p class="mx-auto text-muted-foreground sm:text-lg lg:mx-0 lg:text-xl">{meta.description}</p>
+      <p class="text-muted-foreground mx-auto sm:text-lg lg:mx-0 lg:text-xl">{meta.description}</p>
       <div class="mx-auto mt-4 flex flex-row flex-wrap justify-center gap-4 lg:mx-0 lg:justify-start">
         <FeatureCard title="Headless">
           <PaintbrushIcon slot="icon" className="m-auto size-6" />
@@ -32,7 +32,7 @@ import { PaintbrushIcon, Settings2Icon } from "lucide-react"
       <Callout
         type="note"
         isFoldable={false}
-        className="w-full max-w-md shadow-2xl shadow-zinc-300 dark:shadow-blue-900/30 lg:self-start"
+        className="w-full max-w-md shadow-2xl shadow-zinc-300 lg:self-start dark:shadow-blue-900/30"
         client:visible
       >
         <p>This is a note callout. It's a great way to add a little extra information to your markdown.</p>
@@ -51,7 +51,7 @@ import { PaintbrushIcon, Settings2Icon } from "lucide-react"
         type="theorem"
         isFoldable={true}
         defaultFolded
-        className="w-full max-w-md shadow-2xl shadow-purple-300 dark:shadow-purple-900/30 sm:w-[28rem] lg:self-end"
+        className="w-full max-w-md shadow-2xl shadow-purple-300 sm:w-[28rem] lg:self-end dark:shadow-purple-900/30"
         client:visible
       >
         <div slot="title" class="space-x-1 font-serif">
@@ -65,7 +65,7 @@ import { PaintbrushIcon, Settings2Icon } from "lucide-react"
           <p class="my-6">
             Let <InlineMath tex="A, B, A_{1}, A_{2}, \\cdots \\in \\mathcal{F}" />. Then, the following holds:
           </p>
-          <ol class="mb-2 ml-6 mt-6 list-decimal">
+          <ol class="mt-6 mb-2 ml-6 list-decimal">
             <li>
               <InlineMath tex="\\mu" /> is additive.
             </li>

@@ -68,7 +68,7 @@ const File: FC<FileProps> = ({ className, node, activeSlug, nested, ...props }) 
       href={`${metadata.base}${node.slug}`}
       data-active={node.slug === activeSlug}
       className={cn(
-        "my-0 block w-full truncate py-1.5 text-muted-foreground transition data-[active=true]:font-bold data-[active=true]:text-foreground hover:text-foreground",
+        "text-muted-foreground data-[active=true]:text-foreground hover:text-foreground my-0 block w-full truncate py-1.5 transition data-[active=true]:font-bold",
         nested && "ml-1 border-l pl-4",
         className,
       )}
@@ -94,7 +94,7 @@ const Directory: FC<DirectoryProps> = ({ node, activeSlug, nested }) => {
       className={cn(nested && "ml-1 border-l pl-4")}
     >
       <AccordionItem className="border-b-0" value={node.title}>
-        <AccordionTrigger className="py-1.5 text-muted-foreground hover:text-foreground hover:no-underline">
+        <AccordionTrigger className="text-muted-foreground hover:text-foreground py-1.5 hover:no-underline">
           {node.title}
         </AccordionTrigger>
         <AccordionContent className="pb-1.5 text-base">
