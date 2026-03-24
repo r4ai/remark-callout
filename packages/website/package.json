@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "typedoc": "bun run --cwd ../remark-typedoc-astro-link build && typedoc --options typedoc.config.js",
     "dev": "bun run typedoc && bun run astro dev",
     "build": "NODE_ENV=production bun run typedoc && bun run astro build",
     "preview": "astro preview",
