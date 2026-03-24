@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import metadata from "@/lib/metadata"
+import { Fragment } from "react"
 import type { FC } from "react"
 
 export type _BreadcrumbProps = {
@@ -24,9 +25,9 @@ export const DocsBreadcrumb: FC<_BreadcrumbProps> = ({ entry }) => {
           .split("/")
           .splice(1)
           .map((slug, index, slugs) => (
-            <>
-              <BreadcrumbSeparator key={`sep-${slug}`} />
-              <BreadcrumbItem key={`item-${slug}`}>
+            <Fragment key={slugs.slice(0, index + 1).join("/")}>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
                 {index < slugs.length - 1 ? (
                   pretty(slug)
                 ) : (
@@ -35,7 +36,7 @@ export const DocsBreadcrumb: FC<_BreadcrumbProps> = ({ entry }) => {
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
-            </>
+            </Fragment>
           ))}
       </BreadcrumbList>
     </Breadcrumb>
