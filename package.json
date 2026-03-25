@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@changesets/changelog-github": "0.5.1",
+    "@changesets/changelog-github": "0.6.0",
     "@changesets/cli": "2.30.0",
     "@tsconfig/node16": "16.1.8",
     "@types/bun": "1.3.11",
