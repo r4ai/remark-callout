@@ -34,7 +34,7 @@
     "astro": "6.0.8",
     "dedent": "^1.5.1",
     "katex": "^0.16.9",
-    "lucide-react": "^0.545.0",
+    "lucide-react": "^0.577.0",
     "prettier": "^3.2.5",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
