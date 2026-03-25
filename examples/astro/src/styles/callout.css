@@ -1,0 +1,435 @@
+/*
+ * callout.css
+ *
+ * CSS-only styling for remark-callout using custom element names.
+ *
+ * This file demonstrates how to style callouts produced by @r4ai/remark-callout
+ * using plain CSS — no JavaScript or React components required.
+ *
+ * When remark-callout is configured with custom element names, the generated
+ * HTML structure looks like this:
+ *
+ *   Non-foldable:
+ *   <callout-root type="note" isFoldable="false">
+ *     <callout-title type="note" isFoldable="false">Title</callout-title>
+ *     <callout-body>Body content</callout-body>
+ *   </callout-root>
+ *
+ *   Foldable (uses <details>/<summary> internally when using React components,
+ *   but renders as custom elements in the CSS-only approach):
+ *   <callout-root type="note" isFoldable="true">
+ *     <callout-title type="note" isFoldable="true">Title</callout-title>
+ *     <callout-body>Body content</callout-body>
+ *   </callout-root>
+ *
+ * Note: Native fold/expand behaviour requires JavaScript (e.g. the
+ * Custom Components approach). The CSS-only approach renders all callouts
+ * as static blocks.
+ */
+
+/* ============================================================
+   CSS Custom Properties (design tokens)
+   ============================================================ */
+
+:root {
+  --callout-border-radius: 0.5rem;
+  --callout-padding: 1rem;
+  --callout-gap: 0.5rem;
+  --callout-icon-size: 1.125rem;
+
+  /* default color (note / blue-500) — overridden per type below */
+  --callout-color: 59 130 246;
+}
+
+/* ============================================================
+   Custom element display resets
+   (browsers render unknown elements as inline by default)
+   ============================================================ */
+
+callout-root,
+callout-title,
+callout-body {
+  display: block;
+}
+
+/* ============================================================
+   Base callout container
+   ============================================================ */
+
+callout-root {
+  margin-block: 1.5rem;
+  border-radius: var(--callout-border-radius);
+  border: 1px solid rgba(var(--callout-color) / 0.25);
+  background-color: rgba(var(--callout-color) / 0.08);
+  padding: var(--callout-padding);
+}
+
+/* ============================================================
+   Callout title
+   ============================================================ */
+
+callout-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  color: rgb(var(--callout-color));
+}
+
+/* Icon via CSS mask (default: lucide-pencil) */
+callout-title::before {
+  display: block;
+  flex-shrink: 0;
+  width: var(--callout-icon-size);
+  height: var(--callout-icon-size);
+  background-color: currentColor;
+  content: "";
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  /* lucide:pencil */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE3IDNhMi44NSAyLjgzIDAgMSAxIDQgNEw3LjUgMjAuNUwyIDIybDEuNS01LjVabS0yIDJsNCA0Ii8+PC9zdmc+");
+}
+
+/* Fallback label when title content is empty */
+callout-title:empty::after {
+  content: "Note";
+}
+
+/* ============================================================
+   Callout body
+   ============================================================ */
+
+callout-body {
+  margin-top: var(--callout-gap);
+}
+
+callout-body > * {
+  margin: 0;
+}
+
+callout-body > * + * {
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   Callout type: note
+   ============================================================ */
+
+callout-root[type="note"] {
+  --callout-color: 59 130 246; /* blue-500 */
+}
+
+callout-root[type="note"] > callout-title::before {
+  /* lucide:pencil */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE3IDNhMi44NSAyLjgzIDAgMSAxIDQgNEw3LjUgMjAuNUwyIDIybDEuNS01LjVabS0yIDJsNCA0Ii8+PC9zdmc+");
+}
+
+callout-root[type="note"] > callout-title:empty::after {
+  content: "Note";
+}
+
+/* ============================================================
+   Callout type: info / todo
+   ============================================================ */
+
+callout-root[type="info"],
+callout-root[type="todo"] {
+  --callout-color: 59 130 246; /* blue-500 */
+}
+
+callout-root[type="info"] > callout-title::before {
+  /* lucide:info */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48cGF0aCBkPSJNMTIgMTZ2LTRtMC00aC4wMSIvPjwvZz48L3N2Zz4=");
+}
+
+callout-root[type="todo"] > callout-title::before {
+  /* lucide:circle-check-big */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTIyIDExLjA4VjEyYTEwIDEwIDAgMSAxLTUuOTMtOS4xNCIvPjxwYXRoIGQ9Im05IDExbDMgM0wyMiA0Ii8+PC9nPjwvc3ZnPg==");
+}
+
+callout-root[type="info"] > callout-title:empty::after {
+  content: "Info";
+}
+
+callout-root[type="todo"] > callout-title:empty::after {
+  content: "ToDo";
+}
+
+/* ============================================================
+   Callout type: abstract / summary / tldr
+   ============================================================ */
+
+callout-root[type="abstract"],
+callout-root[type="summary"],
+callout-root[type="tldr"] {
+  --callout-color: 6 182 212; /* cyan-500 */
+}
+
+callout-root[type="abstract"] > callout-title::before,
+callout-root[type="summary"] > callout-title::before,
+callout-root[type="tldr"] > callout-title::before {
+  /* lucide:clipboard-list */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHJlY3Qgd2lkdGg9IjgiIGhlaWdodD0iNCIgeD0iOCIgeT0iMiIgcng9IjEiIHJ5PSIxIi8+PHBhdGggZD0iTTE2IDRoMmEyIDIgMCAwIDEgMiAydjE0YTIgMiAwIDAgMS0yIDJINmEyIDIgMCAwIDEtMi0yVjZhMiAyIDAgMCAxIDItMmgybTQgN2g0bS00IDVoNG0tOC01aC4wMU04IDE2aC4wMSIvPjwvZz48L3N2Zz4=");
+}
+
+callout-root[type="abstract"] > callout-title:empty::after {
+  content: "Abstract";
+}
+callout-root[type="summary"] > callout-title:empty::after {
+  content: "Summary";
+}
+callout-root[type="tldr"] > callout-title:empty::after {
+  content: "TL;DR";
+}
+
+/* ============================================================
+   Callout type: tip / hint
+   ============================================================ */
+
+callout-root[type="tip"],
+callout-root[type="hint"] {
+  --callout-color: 6 182 212; /* cyan-500 */
+}
+
+callout-root[type="tip"] > callout-title::before,
+callout-root[type="hint"] > callout-title::before {
+  /* lucide:flame */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTguNSAxNC41QTIuNSAyLjUgMCAwIDAgMTEgMTJjMC0xLjM4LS41LTItMS0zYy0xLjA3Mi0yLjE0My0uMjI0LTQuMDU0IDItNmMuNSAyLjUgMiA0LjkgNCA2LjVjMiAxLjYgMyAzLjUgMyA1LjVhNyA3IDAgMSAxLTE0IDBjMC0xLjE1My40MzMtMi4yOTQgMS0zYTIuNSAyLjUgMCAwIDAgMi41IDIuNSIvPjwvc3ZnPg==");
+}
+
+callout-root[type="tip"] > callout-title:empty::after {
+  content: "Tip";
+}
+callout-root[type="hint"] > callout-title:empty::after {
+  content: "Hint";
+}
+
+/* ============================================================
+   Callout type: important
+   ============================================================ */
+
+callout-root[type="important"] {
+  --callout-color: 168 85 247; /* purple-500 */
+}
+
+callout-root[type="important"] > callout-title::before {
+  /* lucide:flame */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTguNSAxNC41QTIuNSAyLjUgMCAwIDAgMTEgMTJjMC0xLjM4LS41LTItMS0zYy0xLjA3Mi0yLjE0My0uMjI0LTQuMDU0IDItNmMuNSAyLjUgMiA0LjkgNCA2LjVjMiAxLjYgMyAzLjUgMyA1LjVhNyA3IDAgMSAxLTE0IDBjMC0xLjE1My40MzMtMi4yOTQgMS0zYTIuNSAyLjUgMCAwIDAgMi41IDIuNSIvPjwvc3ZnPg==");
+}
+
+callout-root[type="important"] > callout-title:empty::after {
+  content: "Important";
+}
+
+/* ============================================================
+   Callout type: success / check / done
+   ============================================================ */
+
+callout-root[type="success"],
+callout-root[type="check"],
+callout-root[type="done"] {
+  --callout-color: 34 197 94; /* green-500 */
+}
+
+callout-root[type="success"] > callout-title::before,
+callout-root[type="check"] > callout-title::before,
+callout-root[type="done"] > callout-title::before {
+  /* lucide:check */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTIwIDZMOSAxN2wtNS01Ii8+PC9zdmc+");
+}
+
+callout-root[type="success"] > callout-title:empty::after {
+  content: "Success";
+}
+callout-root[type="check"] > callout-title:empty::after {
+  content: "Check";
+}
+callout-root[type="done"] > callout-title:empty::after {
+  content: "Done";
+}
+
+/* ============================================================
+   Callout type: question / help / faq
+   ============================================================ */
+
+callout-root[type="question"],
+callout-root[type="help"],
+callout-root[type="faq"] {
+  --callout-color: 249 115 22; /* orange-500 */
+}
+
+callout-root[type="question"] > callout-title::before,
+callout-root[type="help"] > callout-title::before,
+callout-root[type="faq"] > callout-title::before {
+  /* lucide:circle-help */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48cGF0aCBkPSJNOS4wOSA5YTMgMyAwIDAgMSA1LjgzIDFjMCAyLTMgMy0zIDNtLjA4IDRoLjAxIi8+PC9nPjwvc3ZnPg==");
+}
+
+callout-root[type="question"] > callout-title:empty::after {
+  content: "Question";
+}
+callout-root[type="help"] > callout-title:empty::after {
+  content: "Help";
+}
+callout-root[type="faq"] > callout-title:empty::after {
+  content: "FAQ";
+}
+
+/* ============================================================
+   Callout type: warning / caution / attention
+   ============================================================ */
+
+callout-root[type="warning"],
+callout-root[type="caution"],
+callout-root[type="attention"] {
+  --callout-color: 249 115 22; /* orange-500 */
+}
+
+callout-root[type="warning"] > callout-title::before,
+callout-root[type="caution"] > callout-title::before,
+callout-root[type="attention"] > callout-title::before {
+  /* lucide:triangle-alert */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0ibTIxLjczIDE4bC04LTE0YTIgMiAwIDAgMC0zLjQ4IDBsLTggMTRBMiAyIDAgMCAwIDQgMjFoMTZhMiAyIDAgMCAwIDEuNzMtM00xMiA5djRtMCA0aC4wMSIvPjwvc3ZnPg==");
+}
+
+callout-root[type="warning"] > callout-title:empty::after {
+  content: "Warning";
+}
+callout-root[type="caution"] > callout-title:empty::after {
+  content: "Caution";
+}
+callout-root[type="attention"] > callout-title:empty::after {
+  content: "Attention";
+}
+
+/* ============================================================
+   Callout type: failure / fail / missing
+   ============================================================ */
+
+callout-root[type="failure"],
+callout-root[type="fail"],
+callout-root[type="missing"] {
+  --callout-color: 239 68 68; /* red-500 */
+}
+
+callout-root[type="failure"] > callout-title::before,
+callout-root[type="fail"] > callout-title::before,
+callout-root[type="missing"] > callout-title::before {
+  /* lucide:x */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTE4IDZMNiAxOE02IDZsMTIgMTIiLz48L3N2Zz4=");
+}
+
+callout-root[type="failure"] > callout-title:empty::after {
+  content: "Failure";
+}
+callout-root[type="fail"] > callout-title:empty::after {
+  content: "Fail";
+}
+callout-root[type="missing"] > callout-title:empty::after {
+  content: "Missing";
+}
+
+/* ============================================================
+   Callout type: danger / error
+   ============================================================ */
+
+callout-root[type="danger"],
+callout-root[type="error"] {
+  --callout-color: 239 68 68; /* red-500 */
+}
+
+callout-root[type="danger"] > callout-title::before,
+callout-root[type="error"] > callout-title::before {
+  /* lucide:zap */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik00IDE0YTEgMSAwIDAgMS0uNzgtMS42M2w5LjktMTAuMmEuNS41IDAgMCAxIC44Ni40NmwtMS45MiA2LjAyQTEgMSAwIDAgMCAxMyAxMGg3YTEgMSAwIDAgMSAuNzggMS42M2wtOS45IDEwLjJhLjUuNSAwIDAgMS0uODYtLjQ2bDEuOTItNi4wMkExIDEgMCAwIDAgMTEgMTR6Ii8+PC9zdmc+");
+}
+
+callout-root[type="danger"] > callout-title:empty::after {
+  content: "Danger";
+}
+callout-root[type="error"] > callout-title:empty::after {
+  content: "Error";
+}
+
+/* ============================================================
+   Callout type: bug
+   ============================================================ */
+
+callout-root[type="bug"] {
+  --callout-color: 239 68 68; /* red-500 */
+}
+
+callout-root[type="bug"] > callout-title::before {
+  /* lucide:bug */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0ibTggMmwxLjg4IDEuODhtNC4yNCAwTDE2IDJNOSA3LjEzdi0xYTMuMDAzIDMuMDAzIDAgMSAxIDYgMHYxIi8+PHBhdGggZD0iTTEyIDIwYy0zLjMgMC02LTIuNy02LTZ2LTNhNCA0IDAgMCAxIDQtNGg0YTQgNCAwIDAgMSA0IDR2M2MwIDMuMy0yLjcgNi02IDZtMCAwdi05Ii8+PHBhdGggZD0iTTYuNTMgOUM0LjYgOC44IDMgNy4xIDMgNW0zIDhIMm0xIDhjMC0yLjEgMS43LTMuOSAzLjgtNE0yMC45NyA1YzAgMi4xLTEuNiAzLjgtMy41IDRNMjIgMTNoLTRtLS44IDRjMi4xLjEgMy44IDEuOSAzLjggNCIvPjwvZz48L3N2Zz4=");
+}
+
+callout-root[type="bug"] > callout-title:empty::after {
+  content: "Bug";
+}
+
+/* ============================================================
+   Callout type: example
+   ============================================================ */
+
+callout-root[type="example"] {
+  --callout-color: 168 85 247; /* purple-500 */
+}
+
+callout-root[type="example"] > callout-title::before {
+  /* lucide:list */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTggNmgxM004IDEyaDEzTTggMThoMTNNMyA2aC4wMU0zIDEyaC4wMU0zIDE4aC4wMSIvPjwvc3ZnPg==");
+}
+
+callout-root[type="example"] > callout-title:empty::after {
+  content: "Example";
+}
+
+/* ============================================================
+   Callout type: quote / cite
+   ============================================================ */
+
+callout-root[type="quote"],
+callout-root[type="cite"] {
+  --callout-color: 113 113 122; /* zinc-500 */
+}
+
+callout-root[type="quote"] > callout-title::before,
+callout-root[type="cite"] > callout-title::before {
+  /* lucide:quote */
+  mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTMgMjFjMyAwIDctMSA3LThWNWMwLTEuMjUtLjc1Ni0yLjAxNy0yLTJINGMtMS4yNSAwLTIgLjc1LTIgMS45NzJWMTFjMCAxLjI1Ljc1IDIgMiAyYzEgMCAxIDAgMSAxdjFjMCAxLTEgMi0yIDJzLTEgLjAwOC0xIDEuMDMxVjIwYzAgMSAwIDEgMSAxbTEyIDBjMyAwIDctMSA3LThWNWMwLTEuMjUtLjc1Ny0yLjAxNy0yLTJoLTRjLTEuMjUgMC0yIC43NS0yIDEuOTcyVjExYzAgMS4yNS43NSAyIDIgMmguNzVjMCAyLjI1LjI1IDQtMi43NSA0djNjMCAxIDAgMSAxIDEiLz48L3N2Zz4=");
+}
+
+callout-root[type="quote"] > callout-title:empty::after {
+  content: "Quote";
+}
+callout-root[type="cite"] > callout-title:empty::after {
+  content: "Cite";
+}
+
+/* ============================================================
+   Nested callouts
+   ============================================================ */
+
+callout-root callout-root {
+  margin-block: 0.75rem;
+}
+
+/* ============================================================
+   Prose / typography resets inside callout body
+   ============================================================ */
+
+callout-body > p,
+callout-body > ul,
+callout-body > ol,
+callout-body > blockquote,
+callout-body > pre,
+callout-body > h1,
+callout-body > h2,
+callout-body > h3,
+callout-body > h4,
+callout-body > h5,
+callout-body > h6 {
+  margin: 0;
+}
