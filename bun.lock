@@ -8,7 +8,7 @@
         "@biomejs/biome": "1.9.4",
         "@changesets/changelog-github": "0.5.1",
         "@changesets/cli": "2.30.0",
-        "@tsconfig/node16": "16.1.8",
+        "@tsconfig/node18": "18.2.0",
         "@types/bun": "1.3.11",
         "lefthook": "1.13.6",
         "rimraf": "6.1.3",
@@ -716,7 +716,7 @@
 
     "@tailwindcss/vite": ["@tailwindcss/vite@4.2.2", "", { "dependencies": { "@tailwindcss/node": "4.2.2", "@tailwindcss/oxide": "4.2.2", "tailwindcss": "4.2.2" }, "peerDependencies": { "vite": "^5.2.0 || ^6 || ^7 || ^8" } }, "sha512-mEiF5HO1QqCLXoNEfXVA1Tzo+cYsrqV7w9Juj2wdUFyW07JRenqMG225MvPwr3ZD9N1bFQj46X7r33iHxLUW0w=="],
 
-    "@tsconfig/node16": ["@tsconfig/node16@16.1.8", "", {}, "sha512-T/CfdwFry660WjZor56z0F3pxeCllt8KOxWcHFW6ZEuULKUObTDEMdgtctyuJPxwqyWDsvHRfxHaJ4FIICyoqQ=="],
+    "@tsconfig/node18": ["@tsconfig/node18@18.2.0", "", {}, "sha512-yhxwIlFVSVcMym3O31HoMnRXpoenmpIxcj4Yoes2DUpe+xCJnA7ECQP1Vw889V0jTt/2nzvpLQ/UuMYCd3JPIg=="],
 
     "@turbo/darwin-64": ["@turbo/darwin-64@2.8.20", "", { "os": "darwin", "cpu": "x64" }, "sha512-FQ9EX1xMU5nbwjxXxM3yU88AQQ6Sqc6S44exPRroMcx9XZHqqppl5ymJF0Ig/z3nvQNwDmz1Gsnvxubo+nXWjQ=="],
 
