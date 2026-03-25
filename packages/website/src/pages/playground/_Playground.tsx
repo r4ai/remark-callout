@@ -1,51 +1,53 @@
-import { cn } from "@/lib/utils"
-import Editor from "@monaco-editor/react"
-import remarkCallout, { defaultOptions } from "@r4ai/remark-callout"
-import dedent from "dedent"
-import prettierPluginHtml from "prettier/plugins/html"
-import * as prettier from "prettier/standalone"
-import { type FC, type ReactNode, useEffect, useMemo, useState } from "react"
-import rehypeKatex from "rehype-katex"
-import rehypeStringify from "rehype-stringify"
-import remarkMath from "remark-math"
-import remarkParse from "remark-parse"
-import remarkRehype from "remark-rehype"
-import { codeToHtml } from "shiki/bundle/web"
-import { unified } from "unified"
-import "./_callout.css"
+import { cn } from "@/lib/utils";
+import Editor from "@monaco-editor/react";
+import remarkCallout, { defaultOptions } from "@r4ai/remark-callout";
+import dedent from "dedent";
+import prettierPluginHtml from "prettier/plugins/html";
+import * as prettier from "prettier/standalone";
+import { type FC, type ReactNode, useEffect, useMemo, useState } from "react";
+import rehypeKatex from "rehype-katex";
+import rehypeStringify from "rehype-stringify";
+import remarkMath from "remark-math";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { codeToHtml } from "shiki/bundle/web";
+import { unified } from "unified";
+import "./_callout.css";
 
 type PlaygroundProps = {
-  highlightedCss: string
-}
+  highlightedCss: string;
+};
 
 export const Playground: FC<PlaygroundProps> = ({ highlightedCss }) => {
-  const [markdown, setMarkdown] = useState(defaultMarkdown)
+  const [markdown, setMarkdown] = useState(defaultMarkdown);
   const html = useMemo(() => {
     try {
-      return render(markdown)
+      return render(markdown);
     } catch (e) {
-      return e instanceof Error ? `<pre>${[e.name, e.message, e.stack].join("\n")}</pre>` : String(e)
+      return e instanceof Error
+        ? `<pre>${[e.name, e.message, e.stack].join("\n")}</pre>`
+        : String(e);
     }
-  }, [markdown])
-  const [highlightedHtml, setHighlightedHtml] = useState("")
+  }, [markdown]);
+  const [highlightedHtml, setHighlightedHtml] = useState("");
 
   useEffect(() => {
     const highlightHtml = async () => {
       const formatted = await prettier.format(html, {
         parser: "html",
         plugins: [prettierPluginHtml],
-      })
+      });
       const highlighted = await codeToHtml(formatted, {
         lang: "html",
         themes: {
           light: "github-light",
           dark: "one-dark-pro",
         },
-      })
-      setHighlightedHtml(highlighted)
-    }
-    highlightHtml()
-  }, [html])
+      });
+      setHighlightedHtml(highlighted);
+    };
+    highlightHtml();
+  }, [html]);
 
   return (
     <div className="grid grow grid-rows-2 sm:grid-cols-2 sm:grid-rows-1">
@@ -78,8 +80,13 @@ export const Playground: FC<PlaygroundProps> = ({ highlightedCss }) => {
               dangerouslySetInnerHTML={{ __html: highlightedHtml }}
             />
           ),
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: safe
-          CSS: <div className="h-full py-2 text-sm" dangerouslySetInnerHTML={{ __html: highlightedCss }} />,
+          CSS: (
+            <div
+              className="h-full py-2 text-sm"
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: safe
+              dangerouslySetInnerHTML={{ __html: highlightedCss }}
+            />
+          ),
           Preview: (
             <div
               className="prose dark:prose-invert h-full w-full px-4 py-2"
@@ -90,16 +97,16 @@ export const Playground: FC<PlaygroundProps> = ({ highlightedCss }) => {
         }}
       />
     </div>
-  )
-}
+  );
+};
 
 type TabProps = {
-  defaultTab: string
-  tabs: Record<string, ReactNode>
-}
+  defaultTab: string;
+  tabs: Record<string, ReactNode>;
+};
 
 const Tab: FC<TabProps> = ({ tabs, defaultTab }) => {
-  const [tab, setTab] = useState<keyof typeof tabs>(defaultTab)
+  const [tab, setTab] = useState<keyof typeof tabs>(defaultTab);
 
   return (
     <div className="flex h-0 min-h-full flex-col overflow-auto">
@@ -127,8 +134,8 @@ const Tab: FC<TabProps> = ({ tabs, defaultTab }) => {
         {tabs[tab]}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const render = (html: string) =>
   unified()
@@ -139,7 +146,7 @@ const render = (html: string) =>
     .use(rehypeKatex)
     .use(rehypeStringify)
     .processSync(html)
-    .toString()
+    .toString();
 
 const defaultMarkdown = dedent`
   > [!note]
@@ -222,4 +229,4 @@ const defaultMarkdown = dedent`
 
   > [!cite]
   > Lorem ipsum dolor sit amet
-`
+`;

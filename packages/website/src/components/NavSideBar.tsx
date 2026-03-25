@@ -1,68 +1,107 @@
-import metadata from "@/lib/metadata"
-import { cn } from "@/lib/utils"
-import type { ComponentPropsWithoutRef, FC } from "react"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
+import metadata from "@/lib/metadata";
+import { cn } from "@/lib/utils";
+import type { ComponentPropsWithoutRef, FC } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 export type FileNode = {
-  type: "file"
-  slug: string
-  title: string
-}
+  type: "file";
+  slug: string;
+  title: string;
+};
 
 export type DirectoryNode = {
-  type: "directory"
-  slug: string
-  title: string
-  children: Node[]
-}
+  type: "directory";
+  slug: string;
+  title: string;
+  children: Node[];
+};
 
-export type Node = FileNode | DirectoryNode
+export type Node = FileNode | DirectoryNode;
 
 export type NavSideBarProps = ComponentPropsWithoutRef<"div"> & {
-  entries: Node[]
-  activeSlug: string
-}
+  entries: Node[];
+  activeSlug: string;
+};
 
-export const NavSideBar: FC<NavSideBarProps> = ({ className, entries, activeSlug, ...props }) => {
+export const NavSideBar: FC<NavSideBarProps> = ({
+  className,
+  entries,
+  activeSlug,
+  ...props
+}) => {
   return (
     <div>
-      <div className={cn("sticky top-[calc(3.5rem+1px)] hidden w-56 flex-col gap-3 p-4 md:flex", className)} {...props}>
-        <span className="inline-block w-full border-b pb-2 font-bold">Documentation</span>
+      <div
+        className={cn(
+          "sticky top-[calc(3.5rem+1px)] hidden w-56 flex-col gap-3 p-4 md:flex",
+          className,
+        )}
+        {...props}
+      >
+        <span className="inline-block w-full border-b pb-2 font-bold">
+          Documentation
+        </span>
         <nav>
           <Nodes nodes={entries} activeSlug={activeSlug} nested={false} />
         </nav>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export type NodesProps = ComponentPropsWithoutRef<"div"> & {
-  nodes: Node[]
-  activeSlug: string
-  nested: boolean
-}
+  nodes: Node[];
+  activeSlug: string;
+  nested: boolean;
+};
 
-export const Nodes: FC<NodesProps> = ({ nodes, activeSlug, nested, ...props }) => {
+export const Nodes: FC<NodesProps> = ({
+  nodes,
+  activeSlug,
+  nested,
+  ...props
+}) => {
   return (
     <div {...props}>
       {nodes.map((node) =>
         node.type === "directory" ? (
-          <Directory key={node.slug} node={node} activeSlug={activeSlug} nested={nested} />
+          <Directory
+            key={node.slug}
+            node={node}
+            activeSlug={activeSlug}
+            nested={nested}
+          />
         ) : (
-          <File key={node.slug} node={node} activeSlug={activeSlug} nested={nested} />
+          <File
+            key={node.slug}
+            node={node}
+            activeSlug={activeSlug}
+            nested={nested}
+          />
         ),
       )}
     </div>
-  )
-}
+  );
+};
 
 type FileProps = ComponentPropsWithoutRef<"a"> & {
-  node: Node & { type: "file" }
-  activeSlug: string
-  nested: boolean
-}
+  node: Node & { type: "file" };
+  activeSlug: string;
+  nested: boolean;
+};
 
-const File: FC<FileProps> = ({ className, node, activeSlug, nested, ...props }) => {
+const File: FC<FileProps> = ({
+  className,
+  node,
+  activeSlug,
+  nested,
+  ...props
+}) => {
   return (
     <a
       href={`${metadata.base}${node.slug}`}
@@ -76,14 +115,14 @@ const File: FC<FileProps> = ({ className, node, activeSlug, nested, ...props }) 
     >
       {node.title}
     </a>
-  )
-}
+  );
+};
 
 type DirectoryProps = {
-  node: Node & { type: "directory" }
-  activeSlug: string
-  nested: boolean
-}
+  node: Node & { type: "directory" };
+  activeSlug: string;
+  nested: boolean;
+};
 
 const Directory: FC<DirectoryProps> = ({ node, activeSlug, nested }) => {
   return (
@@ -102,17 +141,17 @@ const Directory: FC<DirectoryProps> = ({ node, activeSlug, nested }) => {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  )
-}
+  );
+};
 
 const has = (nodes: Node[], activeSlug: string) => {
   for (const node of nodes) {
     if (node.type === "file" && node.slug === activeSlug) {
-      return true
+      return true;
     }
     if (node.type === "directory" && has(node.children, activeSlug)) {
-      return true
+      return true;
     }
   }
-  return false
-}
+  return false;
+};

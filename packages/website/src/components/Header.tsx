@@ -1,9 +1,14 @@
-import { Button, type ButtonProps } from "@/components/ui/button"
-import meta from "@/lib/metadata"
-import { cn } from "@/lib/utils"
-import { GitHubLogoIcon, HamburgerMenuIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
-import { type FC, type ReactNode, useEffect, useState } from "react"
-import { Nodes } from "./NavSideBar"
+import { Button, type ButtonProps } from "@/components/ui/button";
+import meta from "@/lib/metadata";
+import { cn } from "@/lib/utils";
+import {
+  GitHubLogoIcon,
+  HamburgerMenuIcon,
+  MoonIcon,
+  SunIcon,
+} from "@radix-ui/react-icons";
+import { type FC, type ReactNode, useEffect, useState } from "react";
+import { Nodes } from "./NavSideBar";
 import {
   Drawer,
   DrawerContent,
@@ -12,13 +17,18 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./ui/drawer"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+} from "./ui/drawer";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 type HeaderProps = {
-  className?: string
-  activeSlug: string
-}
+  className?: string;
+  activeSlug: string;
+};
 
 export const Header: FC<HeaderProps> = ({ activeSlug }) => {
   return (
@@ -41,7 +51,8 @@ export const Header: FC<HeaderProps> = ({ activeSlug }) => {
                     href={`${meta.base}${entry.slug}`}
                     className={cn(
                       "text-muted-foreground hover:text-foreground transition",
-                      activeSlug.startsWith(entry.slug) && "text-foreground font-medium",
+                      activeSlug.startsWith(entry.slug) &&
+                        "text-foreground font-medium",
                     )}
                   >
                     {entry.title}
@@ -61,12 +72,12 @@ export const Header: FC<HeaderProps> = ({ activeSlug }) => {
         </div>
       </header>
     </TooltipProvider>
-  )
-}
+  );
+};
 
 type NavDrawerProps = {
-  activeSlug: string
-}
+  activeSlug: string;
+};
 
 const NavDrawer: FC<NavDrawerProps> = ({ activeSlug }) => {
   return (
@@ -80,10 +91,17 @@ const NavDrawer: FC<NavDrawerProps> = ({ activeSlug }) => {
         <div className="flex flex-col gap-4">
           <DrawerHeader>
             <DrawerTitle className="text-center">{meta.name}</DrawerTitle>
-            <DrawerDescription className="text-center">{meta.description}</DrawerDescription>
+            <DrawerDescription className="text-center">
+              {meta.description}
+            </DrawerDescription>
           </DrawerHeader>
           <nav>
-            <Nodes className="mx-auto max-w-sm px-8" nodes={meta.entries} activeSlug={activeSlug} nested={false} />
+            <Nodes
+              className="mx-auto max-w-sm px-8"
+              nodes={meta.entries}
+              activeSlug={activeSlug}
+              nested={false}
+            />
           </nav>
           <DrawerFooter>
             <div className="ml-auto flex flex-row">
@@ -98,10 +116,14 @@ const NavDrawer: FC<NavDrawerProps> = ({ activeSlug }) => {
         </div>
       </DrawerContent>
     </Drawer>
-  )
-}
+  );
+};
 
-const IconButton: FC<ButtonProps & { tooltip?: ReactNode }> = ({ children, tooltip, ...props }) => {
+const IconButton: FC<ButtonProps & { tooltip?: ReactNode }> = ({
+  children,
+  tooltip,
+  ...props
+}) => {
   return tooltip == null ? (
     <Button {...props}>{children}</Button>
   ) : (
@@ -113,48 +135,59 @@ const IconButton: FC<ButtonProps & { tooltip?: ReactNode }> = ({ children, toolt
       </TooltipTrigger>
       <TooltipContent>{tooltip}</TooltipContent>
     </Tooltip>
-  )
-}
+  );
+};
 
 const ToggleThemeButton: FC = () => {
-  const [theme, setTheme] = useState<"light" | "dark" | undefined>(undefined)
+  const [theme, setTheme] = useState<"light" | "dark" | undefined>(undefined);
 
   const getSavedTheme = () => {
-    const savedTheme = localStorage.getItem("theme") as "light" | "dark"
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark";
     switch (savedTheme) {
       case "light":
-        return "light"
+        return "light";
       case "dark":
-        return "dark"
+        return "dark";
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const savedTheme = getSavedTheme()
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    const savedTheme = getSavedTheme();
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light";
 
-    if (savedTheme != null) setTheme(savedTheme)
-    else setTheme(systemTheme)
-  }, [])
+    if (savedTheme != null) setTheme(savedTheme);
+    else setTheme(systemTheme);
+  }, []);
 
   useEffect(() => {
-    if (theme == null) return
-    localStorage.setItem("theme", theme)
-    document.documentElement.classList.remove(theme === "light" ? "dark" : "light")
-    document.documentElement.classList.add(theme)
-  }, [theme])
+    if (theme == null) return;
+    localStorage.setItem("theme", theme);
+    document.documentElement.classList.remove(
+      theme === "light" ? "dark" : "light",
+    );
+    document.documentElement.classList.add(theme);
+  }, [theme]);
 
   return (
     <IconButton
       onClick={() => {
-        setTheme(theme === "light" ? "dark" : "light")
+        setTheme(theme === "light" ? "dark" : "light");
       }}
-      tooltip={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+      tooltip={
+        theme === "light" ? "Switch to dark mode" : "Switch to light mode"
+      }
     >
-      {theme === "light" ? <SunIcon className="size-5" /> : <MoonIcon className="size-5" />}
+      {theme === "light" ? (
+        <SunIcon className="size-5" />
+      ) : (
+        <MoonIcon className="size-5" />
+      )}
     </IconButton>
-  )
-}
+  );
+};

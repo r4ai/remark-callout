@@ -1,18 +1,18 @@
 ---
-import { getCollection, render } from "astro:content"
-import type { CollectionEntry } from "astro:content"
-import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout"
-import CodeBlock from "@/components/CodeBlock.astro"
-import { NavSideBar } from "@/components/NavSideBar"
-import { TOC } from "@/components/TOC"
-import BaseLayout from "@/layouts/BaseLayout.astro"
-import meta from "@/lib/metadata"
-import type { GetStaticPaths } from "astro"
-import { twMerge } from "tailwind-merge"
-import { DocsBreadcrumb } from "./_Breadcrumb"
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout";
+import CodeBlock from "@/components/CodeBlock.astro";
+import { NavSideBar } from "@/components/NavSideBar";
+import { TOC } from "@/components/TOC";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import meta from "@/lib/metadata";
+import type { GetStaticPaths } from "astro";
+import { twMerge } from "tailwind-merge";
+import { DocsBreadcrumb } from "./_Breadcrumb";
 
 export const getStaticPaths = (async () => {
-  const docs = await getCollection("docs")
+  const docs = await getCollection("docs");
   return docs.map((doc) => ({
     params: { slug: doc.id },
     props: {
@@ -20,15 +20,15 @@ export const getStaticPaths = (async () => {
         ...doc,
       },
     },
-  }))
-}) satisfies GetStaticPaths
+  }));
+}) satisfies GetStaticPaths;
 
 type Props = {
-  entry: CollectionEntry<"docs">
-}
-const { entry } = Astro.props
+  entry: CollectionEntry<"docs">;
+};
+const { entry } = Astro.props;
 
-const { Content, headings } = await render(entry)
+const { Content, headings } = await render(entry);
 ---
 
 <BaseLayout activeSlug={`/docs/${entry.id}`} title={`Docs | ${meta.name}`}>

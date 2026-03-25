@@ -7,19 +7,19 @@ import {
   Pencil1Icon,
   QuestionMarkIcon,
   RocketIcon,
-} from "@radix-ui/react-icons"
-import type { FC, ReactNode } from "react"
+} from "@radix-ui/react-icons";
+import type { FC, ReactNode } from "react";
 
 function cn(...classes: (string | undefined | null | false)[]): string {
-  return classes.filter(Boolean).join(" ")
+  return classes.filter(Boolean).join(" ");
 }
 
 type CalloutConfig = {
-  label: string
-  icon: ReactNode
-  rootClass: string
-  titleClass: string
-}
+  label: string;
+  icon: ReactNode;
+  rootClass: string;
+  titleClass: string;
+};
 
 const callouts: Record<string, CalloutConfig> = {
   note: {
@@ -37,7 +37,8 @@ const callouts: Record<string, CalloutConfig> = {
   abstract: {
     label: "Abstract",
     icon: <RocketIcon className="size-5 shrink-0" />,
-    rootClass: "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
+    rootClass:
+      "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
     titleClass: "text-purple-600 dark:text-purple-400",
   },
   tip: {
@@ -49,7 +50,8 @@ const callouts: Record<string, CalloutConfig> = {
   important: {
     label: "Important",
     icon: <DrawingPinIcon className="size-5 shrink-0" />,
-    rootClass: "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
+    rootClass:
+      "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
     titleClass: "text-purple-600 dark:text-purple-400",
   },
   success: {
@@ -61,13 +63,15 @@ const callouts: Record<string, CalloutConfig> = {
   question: {
     label: "Question",
     icon: <QuestionMarkIcon className="size-5 shrink-0" />,
-    rootClass: "bg-yellow-500/10 border-yellow-600/20 dark:border-yellow-800/20",
+    rootClass:
+      "bg-yellow-500/10 border-yellow-600/20 dark:border-yellow-800/20",
     titleClass: "text-yellow-600 dark:text-yellow-400",
   },
   warning: {
     label: "Warning",
     icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
-    rootClass: "bg-orange-500/10 border-orange-600/20 dark:border-orange-800/20",
+    rootClass:
+      "bg-orange-500/10 border-orange-600/20 dark:border-orange-800/20",
     titleClass: "text-orange-600 dark:text-orange-400",
   },
   caution: {
@@ -97,7 +101,8 @@ const callouts: Record<string, CalloutConfig> = {
   example: {
     label: "Example",
     icon: <Pencil1Icon className="size-5 shrink-0" />,
-    rootClass: "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
+    rootClass:
+      "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
     titleClass: "text-purple-600 dark:text-purple-400",
   },
   quote: {
@@ -106,22 +111,22 @@ const callouts: Record<string, CalloutConfig> = {
     rootClass: "bg-zinc-500/10 border-zinc-600/20 dark:border-zinc-800/20",
     titleClass: "text-zinc-600 dark:text-zinc-400",
   },
-}
+};
 
 const getCallout = (type: string): CalloutConfig =>
-  callouts[type.toLowerCase()] ?? callouts.note
+  callouts[type.toLowerCase()] ?? callouts.note;
 
 // ----------------------------------------
 // CalloutRoot
 // ----------------------------------------
 
 export type CalloutRootProps = {
-  type: string
-  isFoldable: "true" | "false"
-  defaultFolded?: "true" | "false"
-  className?: string
-  children?: ReactNode
-}
+  type: string;
+  isFoldable: "true" | "false";
+  defaultFolded?: "true" | "false";
+  className?: string;
+  children?: ReactNode;
+};
 
 export const CalloutRoot: FC<CalloutRootProps> = ({
   children,
@@ -130,15 +135,15 @@ export const CalloutRoot: FC<CalloutRootProps> = ({
   isFoldable: isFoldableStr,
   defaultFolded: defaultFoldedStr,
 }) => {
-  const config = getCallout(type)
-  const isFoldable = isFoldableStr === "true"
-  const defaultFolded = defaultFoldedStr === "true"
+  const config = getCallout(type);
+  const isFoldable = isFoldableStr === "true";
+  const defaultFolded = defaultFoldedStr === "true";
 
   const sharedClass = cn(
     "group/root my-6 rounded-lg border p-4",
     config.rootClass,
     className,
-  )
+  );
 
   return isFoldable ? (
     <details open={!defaultFolded} className={sharedClass}>
@@ -146,32 +151,32 @@ export const CalloutRoot: FC<CalloutRootProps> = ({
     </details>
   ) : (
     <div className={sharedClass}>{children}</div>
-  )
-}
+  );
+};
 
 // ----------------------------------------
 // CalloutTitle
 // ----------------------------------------
 
 export type CalloutTitleProps = {
-  type: string
-  isFoldable: "true" | "false"
-  className?: string
-  children?: ReactNode
-}
+  type: string;
+  isFoldable: "true" | "false";
+  className?: string;
+  children?: ReactNode;
+};
 
 export const CalloutTitle: FC<CalloutTitleProps> = ({
   type,
   isFoldable: isFoldableStr,
   children,
 }) => {
-  const config = getCallout(type)
-  const isFoldable = isFoldableStr === "true"
+  const config = getCallout(type);
+  const isFoldable = isFoldableStr === "true";
 
   const sharedClass = cn(
     "flex flex-row items-center gap-2 font-bold",
     config.titleClass,
-  )
+  );
 
   return isFoldable ? (
     <summary className={sharedClass}>
@@ -184,17 +189,17 @@ export const CalloutTitle: FC<CalloutTitleProps> = ({
       {config.icon}
       <span>{children ?? config.label}</span>
     </div>
-  )
-}
+  );
+};
 
 // ----------------------------------------
 // CalloutBody
 // ----------------------------------------
 
 export type CalloutBodyProps = {
-  className?: string
-  children?: ReactNode
-}
+  className?: string;
+  children?: ReactNode;
+};
 
 export const CalloutBody: FC<CalloutBodyProps> = ({ children, className }) => {
   return (
@@ -207,5 +212,5 @@ export const CalloutBody: FC<CalloutBodyProps> = ({ children, className }) => {
     >
       {children}
     </div>
-  )
-}
+  );
+};
