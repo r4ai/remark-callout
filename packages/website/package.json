@@ -73,6 +73,6 @@
     "typedoc-plugin-missing-exports": "4.1.2",
     "typedoc-plugin-remark": "2.0.1",
     "typedoc-plugin-replace-text": "4.2.0",
-    "unist-util-visit": "5.0.0"
+    "unist-util-visit": "5.1.0"
   }
 }
