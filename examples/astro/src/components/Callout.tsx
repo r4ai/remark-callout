@@ -1,13 +1,13 @@
 import {
-  CheckIcon,
-  ChevronRightIcon,
-  DrawingPinIcon,
-  ExclamationTriangleIcon,
-  InfoCircledIcon,
-  Pencil1Icon,
-  QuestionMarkIcon,
-  RocketIcon,
-} from "@radix-ui/react-icons";
+  Check,
+  ChevronRight,
+  CircleHelp,
+  Info,
+  Pencil,
+  Pin,
+  Rocket,
+  TriangleAlert,
+} from "lucide-react";
 import type { FC, ReactNode } from "react";
 
 function cn(...classes: (string | undefined | null | false)[]): string {
@@ -49,163 +49,163 @@ const quoteTitleClass = "text-zinc-600 dark:text-zinc-400";
 const callouts: Record<string, CalloutConfig> = {
   note: {
     label: "Note",
-    icon: <Pencil1Icon className="size-5 shrink-0" />,
+    icon: <Pencil className="size-5 shrink-0" />,
     rootClass: noteRootClass,
     titleClass: noteTitleClass,
   },
   info: {
     label: "Info",
-    icon: <InfoCircledIcon className="size-5 shrink-0" />,
+    icon: <Info className="size-5 shrink-0" />,
     rootClass: noteRootClass,
     titleClass: noteTitleClass,
   },
   todo: {
     label: "ToDo",
-    icon: <CheckIcon className="size-5 shrink-0" />,
+    icon: <Check className="size-5 shrink-0" />,
     rootClass: noteRootClass,
     titleClass: noteTitleClass,
   },
   abstract: {
     label: "Abstract",
-    icon: <RocketIcon className="size-5 shrink-0" />,
+    icon: <Rocket className="size-5 shrink-0" />,
     rootClass: tipRootClass,
     titleClass: tipTitleClass,
   },
   summary: {
     label: "Summary",
-    icon: <RocketIcon className="size-5 shrink-0" />,
+    icon: <Rocket className="size-5 shrink-0" />,
     rootClass: tipRootClass,
     titleClass: tipTitleClass,
   },
   tldr: {
     label: "TL;DR",
-    icon: <RocketIcon className="size-5 shrink-0" />,
+    icon: <Rocket className="size-5 shrink-0" />,
     rootClass: tipRootClass,
     titleClass: tipTitleClass,
   },
   tip: {
     label: "Tip",
-    icon: <RocketIcon className="size-5 shrink-0" />,
+    icon: <Rocket className="size-5 shrink-0" />,
     rootClass: tipRootClass,
     titleClass: tipTitleClass,
   },
   hint: {
     label: "Hint",
-    icon: <RocketIcon className="size-5 shrink-0" />,
+    icon: <Rocket className="size-5 shrink-0" />,
     rootClass: tipRootClass,
     titleClass: tipTitleClass,
   },
   important: {
     label: "Important",
-    icon: <DrawingPinIcon className="size-5 shrink-0" />,
+    icon: <Pin className="size-5 shrink-0" />,
     rootClass: abstractRootClass,
     titleClass: abstractTitleClass,
   },
   success: {
     label: "Success",
-    icon: <CheckIcon className="size-5 shrink-0" />,
+    icon: <Check className="size-5 shrink-0" />,
     rootClass: successRootClass,
     titleClass: successTitleClass,
   },
   check: {
     label: "Check",
-    icon: <CheckIcon className="size-5 shrink-0" />,
+    icon: <Check className="size-5 shrink-0" />,
     rootClass: successRootClass,
     titleClass: successTitleClass,
   },
   done: {
     label: "Done",
-    icon: <CheckIcon className="size-5 shrink-0" />,
+    icon: <Check className="size-5 shrink-0" />,
     rootClass: successRootClass,
     titleClass: successTitleClass,
   },
   question: {
     label: "Question",
-    icon: <QuestionMarkIcon className="size-5 shrink-0" />,
+    icon: <CircleHelp className="size-5 shrink-0" />,
     rootClass: questionRootClass,
     titleClass: questionTitleClass,
   },
   help: {
     label: "Help",
-    icon: <QuestionMarkIcon className="size-5 shrink-0" />,
+    icon: <CircleHelp className="size-5 shrink-0" />,
     rootClass: questionRootClass,
     titleClass: questionTitleClass,
   },
   faq: {
     label: "FAQ",
-    icon: <QuestionMarkIcon className="size-5 shrink-0" />,
+    icon: <CircleHelp className="size-5 shrink-0" />,
     rootClass: questionRootClass,
     titleClass: questionTitleClass,
   },
   warning: {
     label: "Warning",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: warningRootClass,
     titleClass: warningTitleClass,
   },
   caution: {
     label: "Caution",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: warningRootClass,
     titleClass: warningTitleClass,
   },
   attention: {
     label: "Attention",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: warningRootClass,
     titleClass: warningTitleClass,
   },
   danger: {
     label: "Danger",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: dangerRootClass,
     titleClass: dangerTitleClass,
   },
   error: {
     label: "Error",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: dangerRootClass,
     titleClass: dangerTitleClass,
   },
   failure: {
     label: "Failure",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: dangerRootClass,
     titleClass: dangerTitleClass,
   },
   fail: {
     label: "Fail",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: dangerRootClass,
     titleClass: dangerTitleClass,
   },
   missing: {
     label: "Missing",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: dangerRootClass,
     titleClass: dangerTitleClass,
   },
   bug: {
     label: "Bug",
-    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    icon: <TriangleAlert className="size-5 shrink-0" />,
     rootClass: dangerRootClass,
     titleClass: dangerTitleClass,
   },
   example: {
     label: "Example",
-    icon: <Pencil1Icon className="size-5 shrink-0" />,
+    icon: <Pencil className="size-5 shrink-0" />,
     rootClass: abstractRootClass,
     titleClass: abstractTitleClass,
   },
   quote: {
     label: "Quote",
-    icon: <Pencil1Icon className="size-5 shrink-0" />,
+    icon: <Pencil className="size-5 shrink-0" />,
     rootClass: quoteRootClass,
     titleClass: quoteTitleClass,
   },
   cite: {
     label: "Cite",
-    icon: <Pencil1Icon className="size-5 shrink-0" />,
+    icon: <Pencil className="size-5 shrink-0" />,
     rootClass: quoteRootClass,
     titleClass: quoteTitleClass,
   },
@@ -280,7 +280,7 @@ export const CalloutTitle: FC<CalloutTitleProps> = ({
     <summary className={sharedClass}>
       {config.icon}
       <span>{children ?? config.label}</span>
-      <ChevronRightIcon className="ml-auto size-5 shrink-0 transition-transform group-open/root:rotate-90" />
+      <ChevronRight className="ml-auto size-5 shrink-0 transition-transform group-open/root:rotate-90" />
     </summary>
   ) : (
     <div className={sharedClass}>
