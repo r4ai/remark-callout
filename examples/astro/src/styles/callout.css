@@ -433,3 +433,87 @@ callout-body > h5,
 callout-body > h6 {
   margin: 0;
 }
+
+/* ============================================================
+   Dark mode overrides
+   Requires class="dark" on <html> — applied by ThemeToggle.astro
+   ============================================================ */
+
+/* Slightly higher opacity so callouts remain legible on dark backgrounds */
+.dark callout-root {
+  background-color: rgba(var(--callout-color) / 0.12);
+  border-color: rgba(var(--callout-color) / 0.2);
+}
+
+/* Shift each type to a lighter shade so the title/icon contrast well */
+.dark callout-root[type="note"] {
+  --callout-color: 96 165 250; /* blue-400 */
+}
+
+.dark callout-root[type="info"],
+.dark callout-root[type="todo"] {
+  --callout-color: 96 165 250; /* blue-400 */
+}
+
+.dark callout-root[type="abstract"],
+.dark callout-root[type="summary"],
+.dark callout-root[type="tldr"] {
+  --callout-color: 34 211 238; /* cyan-400 */
+}
+
+.dark callout-root[type="tip"],
+.dark callout-root[type="hint"] {
+  --callout-color: 34 211 238; /* cyan-400 */
+}
+
+.dark callout-root[type="important"] {
+  --callout-color: 192 132 252; /* purple-400 */
+}
+
+.dark callout-root[type="success"],
+.dark callout-root[type="check"],
+.dark callout-root[type="done"] {
+  --callout-color: 74 222 128; /* green-400 */
+}
+
+.dark callout-root[type="question"],
+.dark callout-root[type="help"],
+.dark callout-root[type="faq"] {
+  --callout-color: 251 146 60; /* orange-400 */
+}
+
+.dark callout-root[type="warning"],
+.dark callout-root[type="caution"],
+.dark callout-root[type="attention"] {
+  --callout-color: 251 146 60; /* orange-400 */
+}
+
+.dark callout-root[type="failure"],
+.dark callout-root[type="fail"],
+.dark callout-root[type="missing"] {
+  --callout-color: 248 113 113; /* red-400 */
+}
+
+.dark callout-root[type="danger"],
+.dark callout-root[type="error"] {
+  --callout-color: 248 113 113; /* red-400 */
+}
+
+.dark callout-root[type="bug"] {
+  --callout-color: 248 113 113; /* red-400 */
+}
+
+.dark callout-root[type="example"] {
+  --callout-color: 192 132 252; /* purple-400 */
+}
+
+.dark callout-root[type="quote"],
+.dark callout-root[type="cite"] {
+  --callout-color: 161 161 170; /* zinc-400 */
+}
+
+/* Foldable chevron tint on dark backgrounds */
+.dark details[data-callout] > summary[data-callout-title]::after,
+.dark details[data-callout][open] > summary[data-callout-title]::after {
+  background-color: #a3a3a3;
+}

@@ -1,9 +1,14 @@
 ---
+import ThemeToggle from "@/components/ThemeToggle.astro";
+import "@/styles/global.css";
+
 interface Props {
-  title?: string
+  title?: string;
 }
 
-const { title = "remark-callout Astro Example" } = Astro.props
+const { title = "remark-callout Astro Example" } = Astro.props;
+
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -12,8 +17,74 @@ const { title = "remark-callout Astro Example" } = Astro.props
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <!--
+      Anti-FOUC: read the stored theme and apply it synchronously before the
+      first paint so the user never sees a flash of the wrong colour scheme.
+    -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          if (stored === "dark" || (!stored && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (_) {
+          // localStorage / matchMedia may be unavailable — safe to ignore
+        }
+      })();
+    </script>
   </head>
-  <body>
+  <body
+    class="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50"
+  >
+    <header
+      class="sticky top-0 z-10 border-b border-neutral-200 bg-white/80 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-950/80"
+    >
+      <div
+        class="mx-auto flex max-w-3xl items-center justify-between px-6 py-3"
+      >
+        <!-- Home link -->
+        <a
+          href="/"
+          class="text-sm font-semibold text-neutral-700 transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-100"
+        >
+          remark-callout
+        </a>
+
+        <nav class="flex items-center gap-1">
+          <a
+            href="/custom-components"
+            class:list={[
+              "rounded-md px-3 py-1.5 text-sm transition-colors",
+              currentPath.startsWith("/custom-components")
+                ? "bg-neutral-100 font-medium text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100"
+                : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100",
+            ]}
+          >
+            Custom Components
+          </a>
+          <a
+            href="/css"
+            class:list={[
+              "rounded-md px-3 py-1.5 text-sm transition-colors",
+              currentPath.startsWith("/css")
+                ? "bg-neutral-100 font-medium text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100"
+                : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100",
+            ]}
+          >
+            CSS
+          </a>
+
+          <div class="ml-1 h-4 w-px bg-neutral-200 dark:bg-neutral-700"></div>
+
+          <ThemeToggle />
+        </nav>
+      </div>
+    </header>
+
     <slot />
   </body>
 </html>
