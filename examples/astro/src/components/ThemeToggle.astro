@@ -6,6 +6,7 @@
   id="theme-toggle"
   type="button"
   aria-label="Toggle theme"
+  aria-pressed="false"
   class="rounded-md p-2 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100"
 >
   <!-- Sun icon — shown when dark mode is active -->
@@ -56,6 +57,7 @@
     const isDark = html.classList.contains("dark");
     iconSun?.classList.toggle("hidden", !isDark);
     iconMoon?.classList.toggle("hidden", isDark);
+    toggle?.setAttribute("aria-pressed", String(isDark));
   }
 
   // Sync icons with the theme that was already applied by the anti-FOUC

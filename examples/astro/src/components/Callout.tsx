@@ -21,95 +21,193 @@ type CalloutConfig = {
   titleClass: string;
 };
 
+const warningRootClass =
+  "bg-orange-500/10 border-orange-600/20 dark:border-orange-800/20";
+const warningTitleClass = "text-orange-600 dark:text-orange-400";
+const dangerRootClass =
+  "bg-red-500/10 border-red-600/20 dark:border-red-800/20";
+const dangerTitleClass = "text-red-600 dark:text-red-400";
+const questionRootClass =
+  "bg-yellow-500/10 border-yellow-600/20 dark:border-yellow-800/20";
+const questionTitleClass = "text-yellow-600 dark:text-yellow-400";
+const abstractRootClass =
+  "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20";
+const abstractTitleClass = "text-purple-600 dark:text-purple-400";
+const tipRootClass =
+  "bg-cyan-500/10 border-cyan-600/20 dark:border-cyan-800/20";
+const tipTitleClass = "text-cyan-600 dark:text-cyan-400";
+const noteRootClass =
+  "bg-blue-500/10 border-blue-600/20 dark:border-blue-800/20";
+const noteTitleClass = "text-blue-600 dark:text-blue-400";
+const successRootClass =
+  "bg-green-500/10 border-green-600/20 dark:border-green-800/20";
+const successTitleClass = "text-green-600 dark:text-green-400";
+const quoteRootClass =
+  "bg-zinc-500/10 border-zinc-600/20 dark:border-zinc-800/20";
+const quoteTitleClass = "text-zinc-600 dark:text-zinc-400";
+
 const callouts: Record<string, CalloutConfig> = {
   note: {
     label: "Note",
     icon: <Pencil1Icon className="size-5 shrink-0" />,
-    rootClass: "bg-blue-500/10 border-blue-600/20 dark:border-blue-800/20",
-    titleClass: "text-blue-600 dark:text-blue-400",
+    rootClass: noteRootClass,
+    titleClass: noteTitleClass,
   },
   info: {
     label: "Info",
     icon: <InfoCircledIcon className="size-5 shrink-0" />,
-    rootClass: "bg-blue-500/10 border-blue-600/20 dark:border-blue-800/20",
-    titleClass: "text-blue-600 dark:text-blue-400",
+    rootClass: noteRootClass,
+    titleClass: noteTitleClass,
+  },
+  todo: {
+    label: "ToDo",
+    icon: <CheckIcon className="size-5 shrink-0" />,
+    rootClass: noteRootClass,
+    titleClass: noteTitleClass,
   },
   abstract: {
     label: "Abstract",
     icon: <RocketIcon className="size-5 shrink-0" />,
-    rootClass:
-      "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
-    titleClass: "text-purple-600 dark:text-purple-400",
+    rootClass: tipRootClass,
+    titleClass: tipTitleClass,
+  },
+  summary: {
+    label: "Summary",
+    icon: <RocketIcon className="size-5 shrink-0" />,
+    rootClass: tipRootClass,
+    titleClass: tipTitleClass,
+  },
+  tldr: {
+    label: "TL;DR",
+    icon: <RocketIcon className="size-5 shrink-0" />,
+    rootClass: tipRootClass,
+    titleClass: tipTitleClass,
   },
   tip: {
     label: "Tip",
     icon: <RocketIcon className="size-5 shrink-0" />,
-    rootClass: "bg-cyan-500/10 border-cyan-600/20 dark:border-cyan-800/20",
-    titleClass: "text-cyan-600 dark:text-cyan-400",
+    rootClass: tipRootClass,
+    titleClass: tipTitleClass,
+  },
+  hint: {
+    label: "Hint",
+    icon: <RocketIcon className="size-5 shrink-0" />,
+    rootClass: tipRootClass,
+    titleClass: tipTitleClass,
   },
   important: {
     label: "Important",
     icon: <DrawingPinIcon className="size-5 shrink-0" />,
-    rootClass:
-      "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
-    titleClass: "text-purple-600 dark:text-purple-400",
+    rootClass: abstractRootClass,
+    titleClass: abstractTitleClass,
   },
   success: {
     label: "Success",
     icon: <CheckIcon className="size-5 shrink-0" />,
-    rootClass: "bg-green-500/10 border-green-600/20 dark:border-green-800/20",
-    titleClass: "text-green-600 dark:text-green-400",
+    rootClass: successRootClass,
+    titleClass: successTitleClass,
+  },
+  check: {
+    label: "Check",
+    icon: <CheckIcon className="size-5 shrink-0" />,
+    rootClass: successRootClass,
+    titleClass: successTitleClass,
+  },
+  done: {
+    label: "Done",
+    icon: <CheckIcon className="size-5 shrink-0" />,
+    rootClass: successRootClass,
+    titleClass: successTitleClass,
   },
   question: {
     label: "Question",
     icon: <QuestionMarkIcon className="size-5 shrink-0" />,
-    rootClass:
-      "bg-yellow-500/10 border-yellow-600/20 dark:border-yellow-800/20",
-    titleClass: "text-yellow-600 dark:text-yellow-400",
+    rootClass: questionRootClass,
+    titleClass: questionTitleClass,
+  },
+  help: {
+    label: "Help",
+    icon: <QuestionMarkIcon className="size-5 shrink-0" />,
+    rootClass: questionRootClass,
+    titleClass: questionTitleClass,
+  },
+  faq: {
+    label: "FAQ",
+    icon: <QuestionMarkIcon className="size-5 shrink-0" />,
+    rootClass: questionRootClass,
+    titleClass: questionTitleClass,
   },
   warning: {
     label: "Warning",
     icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
-    rootClass:
-      "bg-orange-500/10 border-orange-600/20 dark:border-orange-800/20",
-    titleClass: "text-orange-600 dark:text-orange-400",
+    rootClass: warningRootClass,
+    titleClass: warningTitleClass,
   },
   caution: {
     label: "Caution",
     icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
-    rootClass: "bg-red-500/10 border-red-600/20 dark:border-red-800/20",
-    titleClass: "text-red-600 dark:text-red-400",
+    rootClass: warningRootClass,
+    titleClass: warningTitleClass,
+  },
+  attention: {
+    label: "Attention",
+    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    rootClass: warningRootClass,
+    titleClass: warningTitleClass,
   },
   danger: {
     label: "Danger",
     icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
-    rootClass: "bg-red-500/10 border-red-600/20 dark:border-red-800/20",
-    titleClass: "text-red-600 dark:text-red-400",
+    rootClass: dangerRootClass,
+    titleClass: dangerTitleClass,
+  },
+  error: {
+    label: "Error",
+    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    rootClass: dangerRootClass,
+    titleClass: dangerTitleClass,
   },
   failure: {
     label: "Failure",
     icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
-    rootClass: "bg-red-500/10 border-red-600/20 dark:border-red-800/20",
-    titleClass: "text-red-600 dark:text-red-400",
+    rootClass: dangerRootClass,
+    titleClass: dangerTitleClass,
+  },
+  fail: {
+    label: "Fail",
+    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    rootClass: dangerRootClass,
+    titleClass: dangerTitleClass,
+  },
+  missing: {
+    label: "Missing",
+    icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
+    rootClass: dangerRootClass,
+    titleClass: dangerTitleClass,
   },
   bug: {
     label: "Bug",
     icon: <ExclamationTriangleIcon className="size-5 shrink-0" />,
-    rootClass: "bg-red-500/10 border-red-600/20 dark:border-red-800/20",
-    titleClass: "text-red-600 dark:text-red-400",
+    rootClass: dangerRootClass,
+    titleClass: dangerTitleClass,
   },
   example: {
     label: "Example",
     icon: <Pencil1Icon className="size-5 shrink-0" />,
-    rootClass:
-      "bg-purple-500/10 border-purple-600/20 dark:border-purple-800/20",
-    titleClass: "text-purple-600 dark:text-purple-400",
+    rootClass: abstractRootClass,
+    titleClass: abstractTitleClass,
   },
   quote: {
     label: "Quote",
     icon: <Pencil1Icon className="size-5 shrink-0" />,
-    rootClass: "bg-zinc-500/10 border-zinc-600/20 dark:border-zinc-800/20",
-    titleClass: "text-zinc-600 dark:text-zinc-400",
+    rootClass: quoteRootClass,
+    titleClass: quoteTitleClass,
+  },
+  cite: {
+    label: "Cite",
+    icon: <Pencil1Icon className="size-5 shrink-0" />,
+    rootClass: quoteRootClass,
+    titleClass: quoteTitleClass,
   },
 };
 
