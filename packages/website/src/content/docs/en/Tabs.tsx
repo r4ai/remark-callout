@@ -1,14 +1,19 @@
-import { Tabs as ShadcnTabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import type { FC, ReactNode } from "react"
+import {
+  Tabs as ShadcnTabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import type { FC, ReactNode } from "react";
 
 export type TabsProps = {
-  [key: string]: ReactNode
-  children?: ReactNode
-  defaultValue: string
-}
+  [key: string]: ReactNode;
+  children?: ReactNode;
+  defaultValue: string;
+};
 
 export const Tabs: FC<TabsProps> = ({ defaultValue, children, ...props }) => {
-  const keys = Object.keys(props).sort()
+  const keys = Object.keys(props).sort();
   return (
     <ShadcnTabs defaultValue={defaultValue} className="mx-auto max-w-screen-md">
       <TabsList>
@@ -24,5 +29,5 @@ export const Tabs: FC<TabsProps> = ({ defaultValue, children, ...props }) => {
         </TabsContent>
       ))}
     </ShadcnTabs>
-  )
-}
+  );
+};

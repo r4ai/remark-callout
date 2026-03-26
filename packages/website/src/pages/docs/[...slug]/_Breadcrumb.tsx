@@ -1,25 +1,27 @@
-import type { CollectionEntry } from "astro:content"
+import type { CollectionEntry } from "astro:content";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import metadata from "@/lib/metadata"
-import { Fragment } from "react"
-import type { FC } from "react"
+} from "@/components/ui/breadcrumb";
+import metadata from "@/lib/metadata";
+import { Fragment } from "react";
+import type { FC } from "react";
 
 export type _BreadcrumbProps = {
-  entry: CollectionEntry<"docs">
-}
+  entry: CollectionEntry<"docs">;
+};
 
 export const DocsBreadcrumb: FC<_BreadcrumbProps> = ({ entry }) => {
   return (
     <Breadcrumb className="not-prose">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href={`${metadata.base}/docs/en`}>Docs</BreadcrumbLink>
+          <BreadcrumbLink href={`${metadata.base}/docs/en`}>
+            Docs
+          </BreadcrumbLink>
         </BreadcrumbItem>
         {entry.id
           .split("/")
@@ -31,7 +33,9 @@ export const DocsBreadcrumb: FC<_BreadcrumbProps> = ({ entry }) => {
                 {index < slugs.length - 1 ? (
                   pretty(slug)
                 ) : (
-                  <BreadcrumbLink href={`${metadata.base}/docs/en/${slugs.slice(0, index + 1).join("/")}`}>
+                  <BreadcrumbLink
+                    href={`${metadata.base}/docs/en/${slugs.slice(0, index + 1).join("/")}`}
+                  >
                     {entry.data.title}
                   </BreadcrumbLink>
                 )}
@@ -40,11 +44,11 @@ export const DocsBreadcrumb: FC<_BreadcrumbProps> = ({ entry }) => {
           ))}
       </BreadcrumbList>
     </Breadcrumb>
-  )
-}
+  );
+};
 
 const pretty = (str: string) =>
   str
     .split("-")
     .map((s) => (s.at(0)?.toUpperCase() ?? "") + s.slice(1))
-    .join(" ")
+    .join(" ");

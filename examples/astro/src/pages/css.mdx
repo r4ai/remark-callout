@@ -1,0 +1,241 @@
+---
+title: CSS Styling
+layout: "../layouts/BaseLayout.astro"
+---
+
+import "../styles/callout.css"
+
+<div class="prose prose-neutral mx-auto max-w-3xl px-6 py-10 dark:prose-invert">
+
+# CSS Styling Example
+
+This page demonstrates how to style callouts using **plain CSS** with no JavaScript
+components. [`@r4ai/remark-callout`](https://github.com/r4ai/remark-callout) is
+configured to emit custom HTML elements (`callout-root`, `callout-title`, `callout-body`),
+which can then be styled entirely in CSS.
+
+Unlike the [Custom Components](/custom-components) example, this approach requires
+**zero JavaScript** for rendering — making it ideal for purely static sites.
+
+---
+
+## Basic Callouts
+
+> [!note]
+> This is a **note** callout. The default type when no specific type is matched.
+
+> [!info]
+> This is an **info** callout. Use it to provide supplementary details.
+
+> [!tip]
+> This is a **tip** callout. Share helpful hints and best practices.
+
+> [!success]
+> This is a **success** callout. Indicate a positive outcome or completed task.
+
+> [!warning]
+> This is a **warning** callout. Draw attention to potential issues.
+
+> [!caution]
+> This is a **caution** callout. Warn users about serious risks.
+
+> [!danger]
+> This is a **danger** callout. Reserved for critical, breaking warnings.
+
+> [!failure]
+> This is a **failure** callout. Indicate something that went wrong.
+
+> [!bug]
+> This is a **bug** callout. Document known bugs or unexpected behavior.
+
+> [!example]
+> This is an **example** callout. Illustrate concepts with concrete examples.
+
+> [!quote]
+> This is a **quote** callout. Highlight notable quotations or references.
+
+---
+
+## All Supported Types
+
+> [!abstract]
+> `abstract` — also aliased as `summary` and `tldr`.
+
+> [!summary]
+> `summary` — alias for `abstract`.
+
+> [!tldr]
+> `tldr` — alias for `abstract`.
+
+> [!hint]
+> `hint` — alias for `tip`.
+
+> [!important]
+> `important` — draws extra attention to critical information.
+
+> [!check]
+> `check` — alias for `success`.
+
+> [!done]
+> `done` — alias for `success`.
+
+> [!question]
+> `question` — also aliased as `help` and `faq`.
+
+> [!help]
+> `help` — alias for `question`.
+
+> [!faq]
+> `faq` — alias for `question`.
+
+> [!attention]
+> `attention` — alias for `warning`.
+
+> [!fail]
+> `fail` — alias for `failure`.
+
+> [!missing]
+> `missing` — alias for `failure`.
+
+> [!error]
+> `error` — alias for `danger`.
+
+> [!cite]
+> `cite` — alias for `quote`.
+
+---
+
+## Custom Titles
+
+You can override the default title by adding text after the callout type.
+
+> [!note] Did you know?
+> Custom titles let you provide more meaningful context right in the callout header.
+
+> [!tip] Pro Tip
+> Combine custom titles with concise content to make your docs easy to scan.
+
+> [!caution] Breaking Change in v2.0
+> The configuration API has changed in v2.0. Check the migration guide before upgrading.
+
+> [!info] Installation
+> Install via your preferred package manager:
+>
+> ```sh
+> bun add -D @r4ai/remark-callout
+> ```
+
+---
+
+## Callouts with Rich Content
+
+Callouts can contain any Markdown content — lists, code, headings, and more.
+
+> [!example] Configuration
+> Add `remark-callout` to your `astro.config.ts`:
+>
+> ```ts
+> import { remarkCallout } from "@r4ai/remark-callout"
+> import { defineConfig } from "astro/config"
+>
+> export default defineConfig({
+>   markdown: {
+>     remarkPlugins: [remarkCallout],
+>   },
+> })
+> ```
+
+> [!note] Supported callout types
+> The following types are recognized out of the box:
+>
+> - `note`, `info`, `todo`
+> - `abstract`, `summary`, `tldr`
+> - `tip`, `hint`, `important`
+> - `success`, `check`, `done`
+> - `question`, `help`, `faq`
+> - `warning`, `caution`, `attention`
+> - `failure`, `fail`, `missing`
+> - `danger`, `error`
+> - `bug`
+> - `example`
+> - `quote`, `cite`
+
+---
+
+## Foldable Callouts
+
+Add `-` after the type to make a callout collapsible (collapsed by default),
+or `+` to make it collapsible but open by default.
+
+> [!note]- Collapsed by default
+> This callout starts **collapsed**. Click the title to expand it.
+>
+> Hidden content is revealed on expand — great for long notes or spoilers.
+
+> [!tip]+ Open by default (foldable)
+> This callout starts **open** but can be collapsed.
+>
+> Useful for optional information that most readers may want to see.
+
+> [!warning]- Read before proceeding
+> Make sure you have a full backup before running the following command.
+>
+> ```sh
+> rm -rf ./dist
+> ```
+
+---
+
+## Nested Callouts
+
+Callouts can be nested inside one another to represent hierarchical information.
+
+> [!note] Outer callout
+> This is the outer callout.
+>
+> > [!tip] Nested callout
+> > This is nested inside the outer callout.
+> >
+> > > [!caution] Deeply nested
+> > > Nesting can go as deep as your Markdown allows.
+
+---
+
+## How It Works
+
+This page uses the default HTML output from `remark-callout`, which emits
+custom elements (`callout-root`, `callout-title`, `callout-body`) styled via
+`src/styles/callout.css`.
+
+**No React components are used** — just CSS attribute selectors and custom
+properties (CSS variables) for per-type theming.
+
+The key pattern in `callout.css`:
+
+```css
+/* Base container */
+callout-root {
+  display: block;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(var(--callout-color) / 0.25);
+  background-color: rgba(var(--callout-color) / 0.08);
+  padding: 1rem;
+  margin-block: 1.5rem;
+}
+
+/* Per-type colour via CSS custom property */
+callout-root[type="note"]    { --callout-color: 59 130 246; }  /* blue-500  */
+callout-root[type="success"] { --callout-color: 34 197 94;  }  /* green-500 */
+callout-root[type="warning"] { --callout-color: 249 115 22; }  /* orange-500 */
+callout-root[type="danger"]  { --callout-color: 239 68 68;  }  /* red-500   */
+```
+
+> [!tip] Foldable callouts and CSS
+> Native foldable behaviour (`<details>`/`<summary>`) works out of the box when
+> you configure `remark-callout` to preserve the default HTML elements for
+> foldable callouts. When using custom element names (as in this example),
+> foldable callouts fall back to plain block elements — consider using the
+> [Custom Components](/custom-components) approach if you need interactive
+> folding without JavaScript workarounds.
+
+</div>

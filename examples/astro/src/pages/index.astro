@@ -1,0 +1,95 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="remark-callout Astro Example">
+  <main class="mx-auto max-w-3xl px-6 py-12">
+    <h1
+      class="mb-2 text-3xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50"
+    >
+      remark-callout Astro Example
+    </h1>
+    <p class="mb-8 text-neutral-600 dark:text-neutral-400">
+      This project demonstrates how to use
+      <a
+        href="https://github.com/r4ai/remark-callout"
+        class="text-blue-600 underline-offset-4 hover:underline dark:text-blue-400"
+      >
+        @r4ai/remark-callout
+      </a>
+      in an Astro project with MDX.
+    </p>
+
+    <ul class="flex list-none flex-col gap-4 p-0">
+      <li>
+        <a
+          href="/custom-components"
+          class="block rounded-lg border border-neutral-200 p-5 text-inherit no-underline transition-colors hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600"
+        >
+          <h2
+            class="mb-1 mt-0 text-lg font-semibold text-neutral-900 dark:text-neutral-100"
+          >
+            Custom Components
+          </h2>
+          <p class="m-0 text-sm text-neutral-500 dark:text-neutral-400">
+            Style callouts using custom React components with Tailwind CSS. Maps
+            <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >callout-root</code
+            >,
+            <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >callout-title</code
+            >, and
+            <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >callout-body</code
+            >
+            to React components via the MDX <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >components</code
+            > export. Supports foldable callouts with native
+            <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >&lt;details&gt;</code
+            >/<code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >&lt;summary&gt;</code
+            >.
+          </p>
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/css"
+          class="block rounded-lg border border-neutral-200 p-5 text-inherit no-underline transition-colors hover:border-neutral-400 dark:border-neutral-800 dark:hover:border-neutral-600"
+        >
+          <h2
+            class="mb-1 mt-0 text-lg font-semibold text-neutral-900 dark:text-neutral-100"
+          >
+            CSS Styling
+          </h2>
+          <p class="m-0 text-sm text-neutral-500 dark:text-neutral-400">
+            Style callouts using plain CSS — no JavaScript components required.
+            The custom elements
+            <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >callout-root</code
+            >,
+            <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >callout-title</code
+            >, and
+            <code
+              class="rounded bg-neutral-100 px-1 py-0.5 text-xs text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+              >callout-body</code
+            >
+            are styled via CSS attribute selectors and CSS custom properties for per-type
+            theming.
+          </p>
+        </a>
+      </li>
+    </ul>
+  </main>
+</BaseLayout>

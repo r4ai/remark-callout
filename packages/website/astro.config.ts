@@ -1,15 +1,18 @@
-import mdx from "@astrojs/mdx"
-import react from "@astrojs/react"
-import { type Options as RemarkCalloutOptions, remarkCallout } from "@r4ai/remark-callout"
-import tailwindcss from "@tailwindcss/vite"
-import type { AstroUserConfig } from "astro"
-import { defineConfig } from "astro/config"
-import rehypeKatex from "rehype-katex"
-import remarkMath from "remark-math"
-import metadata from "./src/lib/metadata"
+import mdx from "@astrojs/mdx";
+import react from "@astrojs/react";
+import {
+  type Options as RemarkCalloutOptions,
+  remarkCallout,
+} from "@r4ai/remark-callout";
+import tailwindcss from "@tailwindcss/vite";
+import type { AstroUserConfig } from "astro";
+import { defineConfig } from "astro/config";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
+import metadata from "./src/lib/metadata";
 
-type AstroVitePlugins = NonNullable<AstroUserConfig["vite"]>["plugins"]
-const tailwindPlugin = [tailwindcss()] as unknown as AstroVitePlugins
+type AstroVitePlugins = NonNullable<AstroUserConfig["vite"]>["plugins"];
+const tailwindPlugin = [tailwindcss()] as unknown as AstroVitePlugins;
 
 // https://astro.build/config
 export default defineConfig({
@@ -42,7 +45,7 @@ export default defineConfig({
                 isFoldable: callout.isFoldable.toString(),
                 defaultFolded: callout.defaultFolded?.toString(),
               },
-            }
+            };
           },
           title: (callout) => ({
             tagName: "callout-title",
@@ -66,4 +69,4 @@ export default defineConfig({
       },
     },
   },
-})
+});

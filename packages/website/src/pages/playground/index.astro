@@ -1,9 +1,9 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro"
-import meta from "@/lib/metadata"
-import { codeToHtml } from "shiki"
-import { Playground } from "./_Playground"
-import style from "./_callout.css?raw"
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import meta from "@/lib/metadata";
+import { codeToHtml } from "shiki";
+import { Playground } from "./_Playground";
+import style from "./_callout.css?raw";
 
 const highlightedCss = await codeToHtml(style, {
   lang: "css",
@@ -11,7 +11,7 @@ const highlightedCss = await codeToHtml(style, {
     light: "github-light",
     dark: "one-dark-pro",
   },
-})
+});
 ---
 
 <BaseLayout activeSlug="/playground" title={`Playground | ${meta.name}`}>

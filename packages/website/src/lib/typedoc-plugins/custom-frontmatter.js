@@ -1,5 +1,5 @@
 // @ts-check
-import { MarkdownPageEvent } from "typedoc-plugin-markdown"
+import { MarkdownPageEvent } from "typedoc-plugin-markdown";
 
 /**
  * Add title to the frontmatter
@@ -14,7 +14,7 @@ export const load = (app) => {
       page.frontmatter = {
         title: page.model?.name,
         ...page.frontmatter,
-      }
+      };
     },
-  )
-}
+  );
+};

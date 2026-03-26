@@ -72,9 +72,8 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
-  --font-sans:
-    "Mona Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
+  --font-sans: "Mona Sans", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
@@ -112,9 +111,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
@@ -122,9 +119,10 @@
   @font-face {
     font-family: "Mona Sans";
     /* prettier-ignore */
-    src:
-      url("/remark-callout/fonts/Mona-Sans/Mona-Sans.woff2") format("woff2 supports variations"),
-      url("/remark-callout/fonts/Mona-Sans/Mona-Sans.woff2") format("woff2-variations");
+    src: url("/remark-callout/fonts/Mona-Sans/Mona-Sans.woff2")
+      format("woff2 supports variations"),
+      url("/remark-callout/fonts/Mona-Sans/Mona-Sans.woff2")
+      format("woff2-variations");
     font-weight: 200 900;
     font-stretch: 75% 125%;
   }

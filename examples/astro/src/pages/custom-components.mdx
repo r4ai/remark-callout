@@ -1,0 +1,186 @@
+---
+title: Custom Components
+layout: "../layouts/BaseLayout.astro"
+---
+
+import { CalloutBody, CalloutRoot, CalloutTitle } from "@/components/Callout"
+
+export const components = {
+  "callout-root": CalloutRoot,
+  "callout-title": CalloutTitle,
+  "callout-body": CalloutBody,
+}
+
+<div class="prose prose-neutral mx-auto max-w-3xl px-6 py-10 dark:prose-invert">
+
+# Custom Components Example
+
+This page demonstrates how to use **custom React components** to render callouts
+produced by [`@r4ai/remark-callout`](https://github.com/r4ai/remark-callout).
+
+The plugin transforms callout blockquotes in Markdown into custom HTML elements
+(`callout-root`, `callout-title`, `callout-body`), which are then mapped to
+React components via the MDX `components` export.
+
+---
+
+## Basic Callouts
+
+> [!note]
+> This is a **note** callout. Use it to highlight general information.
+
+> [!info]
+> This is an **info** callout. Great for supplementary details.
+
+> [!tip]
+> This is a **tip** callout. Share helpful hints and best practices here.
+
+> [!success]
+> This is a **success** callout. Use it to indicate a positive outcome.
+
+> [!warning]
+> This is a **warning** callout. Draw attention to potential issues.
+
+> [!caution]
+> This is a **caution** callout. Warn users about serious risks.
+
+> [!danger]
+> This is a **danger** callout. Reserved for critical warnings.
+
+> [!failure]
+> This is a **failure** callout. Indicate something that went wrong.
+
+> [!bug]
+> This is a **bug** callout. Document known issues.
+
+> [!example]
+> This is an **example** callout. Illustrate concepts with concrete examples.
+
+> [!quote]
+> This is a **quote** callout. Highlight notable quotations.
+
+---
+
+## Custom Titles
+
+You can override the default title by adding text after the callout type.
+
+> [!note] Did you know?
+> You can set a custom title for any callout type by adding text
+> after the type declaration.
+
+> [!tip] Pro Tip
+> Combine custom titles with meaningful content for clear, scannable docs.
+
+> [!caution] Breaking Change in v2.0
+> The configuration API has changed in v2.0. Please refer to the
+> [migration guide](#) before upgrading.
+
+---
+
+## Foldable Callouts
+
+Add `-` after the type to make a callout collapsible (collapsed by default),
+or `+` to make it collapsible but open by default.
+
+> [!note]- Collapsed by default
+> This callout starts **collapsed**. Click the title to expand it.
+>
+> Here is some hidden content that appears on expand.
+
+> [!tip]+ Open by default (foldable)
+> This callout starts **open** but can be collapsed. Click the title to toggle.
+>
+> This is useful for content that is relevant but not always needed at a glance.
+
+> [!warning]- Read before proceeding
+> Make sure you have a full backup of your data before running this command.
+>
+> ```sh
+> rm -rf ./dist
+> ```
+
+---
+
+## Callouts with Rich Content
+
+Callouts can contain any Markdown content — lists, code blocks, headings, and more.
+
+> [!info] Installation
+> Install the plugin using your preferred package manager:
+>
+> ```sh
+> # bun
+> bun add -D @r4ai/remark-callout
+>
+> # npm
+> npm install -D @r4ai/remark-callout
+>
+> # pnpm
+> pnpm add -D @r4ai/remark-callout
+> ```
+
+> [!example] Configuration
+> Add the plugin to your `astro.config.ts`:
+>
+> ```ts
+> import { remarkCallout } from "@r4ai/remark-callout"
+> import { defineConfig } from "astro/config"
+>
+> export default defineConfig({
+>   markdown: {
+>     remarkPlugins: [remarkCallout],
+>   },
+> })
+> ```
+
+> [!note] Supported callout types
+> The following types are supported out of the box:
+>
+> - `note`, `info`, `todo`
+> - `abstract`, `summary`, `tldr`
+> - `tip`, `hint`, `important`
+> - `success`, `check`, `done`
+> - `question`, `help`, `faq`
+> - `warning`, `caution`, `attention`
+> - `failure`, `fail`, `missing`
+> - `danger`, `error`
+> - `bug`
+> - `example`
+> - `quote`, `cite`
+
+---
+
+## Nested Callouts
+
+Callouts can be nested inside each other.
+
+> [!note] Outer callout
+> This is the outer callout.
+>
+> > [!important] Inner callout
+> > This is nested inside the outer callout.
+> >
+> > > [!caution] Deeply nested
+> > > You can nest callouts as deeply as needed.
+
+---
+
+## How It Works
+
+The MDX `components` export at the top of this file maps the custom HTML elements
+emitted by `remark-callout` to React components:
+
+```ts
+export const components = {
+  "callout-root": CalloutRoot,
+  "callout-title": CalloutTitle,
+  "callout-body": CalloutBody,
+}
+```
+
+This approach lets you style callouts with full React component power —
+including Tailwind CSS classes, icons from `@radix-ui/react-icons`,
+and foldable `<details>`/`<summary>` elements for collapsible callouts.
+
+</div>

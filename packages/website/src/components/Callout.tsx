@@ -1,4 +1,4 @@
-import { cn, tw } from "@/lib/utils"
+import { cn, tw } from "@/lib/utils";
 import {
   CheckIcon,
   ChevronRightIcon,
@@ -7,17 +7,17 @@ import {
   Pencil1Icon,
   QuestionMarkIcon,
   RocketIcon,
-} from "@radix-ui/react-icons"
-import type { FC, ReactNode } from "react"
+} from "@radix-ui/react-icons";
+import type { FC, ReactNode } from "react";
 
 type Callout = {
-  label: string
-  icon: ReactNode
+  label: string;
+  icon: ReactNode;
   className: {
-    root: string
-    title: string
-  }
-}
+    root: string;
+    title: string;
+  };
+};
 
 export const callouts = {
   note: {
@@ -76,23 +76,34 @@ export const callouts = {
       title: tw`text-purple-600 dark:text-purple-400`,
     },
   },
-} as const satisfies Record<string, Callout>
+} as const satisfies Record<string, Callout>;
 
-const getCallout = (type: keyof typeof callouts) => callouts[type] ?? callouts.note
+const getCallout = (type: keyof typeof callouts) =>
+  callouts[type] ?? callouts.note;
 
 export type CalloutProps = {
-  type: keyof typeof callouts
-  isFoldable: boolean
-  defaultFolded?: boolean
-  title?: ReactNode
-  className?: string
-  children: ReactNode
-}
+  type: keyof typeof callouts;
+  isFoldable: boolean;
+  defaultFolded?: boolean;
+  title?: ReactNode;
+  className?: string;
+  children: ReactNode;
+};
 
-export const Callout: FC<CalloutProps> = ({ type, isFoldable, defaultFolded, title, children, className }) => {
-  const callout = getCallout(type)
-  const isFoldableString = isFoldable.toString() as "true" | "false"
-  const defaultFoldedString = defaultFolded?.toString() as "true" | "false" | undefined
+export const Callout: FC<CalloutProps> = ({
+  type,
+  isFoldable,
+  defaultFolded,
+  title,
+  children,
+  className,
+}) => {
+  const callout = getCallout(type);
+  const isFoldableString = isFoldable.toString() as "true" | "false";
+  const defaultFoldedString = defaultFolded?.toString() as
+    | "true"
+    | "false"
+    | undefined;
 
   return (
     <CalloutRoot
@@ -101,48 +112,61 @@ export const Callout: FC<CalloutProps> = ({ type, isFoldable, defaultFolded, tit
       isFoldable={isFoldableString}
       defaultFolded={defaultFoldedString}
     >
-      <CalloutTitle className={callout.className.title} type={type} isFoldable={isFoldableString}>
+      <CalloutTitle
+        className={callout.className.title}
+        type={type}
+        isFoldable={isFoldableString}
+      >
         {title}
       </CalloutTitle>
       <CalloutBody>{children}</CalloutBody>
     </CalloutRoot>
-  )
-}
+  );
+};
 
 type DetailsProps = {
-  isFoldable: boolean
-  defaultFolded?: boolean
-  children: ReactNode
-  className?: string
-}
+  isFoldable: boolean;
+  defaultFolded?: boolean;
+  children: ReactNode;
+  className?: string;
+};
 
-const Details: FC<DetailsProps> = ({ isFoldable, defaultFolded, children, ...props }) => {
+const Details: FC<DetailsProps> = ({
+  isFoldable,
+  defaultFolded,
+  children,
+  ...props
+}) => {
   return isFoldable ? (
     <details open={!defaultFolded} {...props}>
       {children}
     </details>
   ) : (
     <div {...props}>{children}</div>
-  )
-}
+  );
+};
 
 type SummaryProps = {
-  isFoldable: boolean
-  children: ReactNode
-  className?: string
-}
+  isFoldable: boolean;
+  children: ReactNode;
+  className?: string;
+};
 
 const Summary: FC<SummaryProps> = ({ isFoldable, children, ...props }) => {
-  return isFoldable ? <summary {...props}>{children}</summary> : <div {...props}>{children}</div>
-}
+  return isFoldable ? (
+    <summary {...props}>{children}</summary>
+  ) : (
+    <div {...props}>{children}</div>
+  );
+};
 
 export type CalloutRootProps = {
-  type: keyof typeof callouts
-  isFoldable: "true" | "false"
-  defaultFolded?: "true" | "false"
-  className?: string
-  children: ReactNode
-}
+  type: keyof typeof callouts;
+  isFoldable: "true" | "false";
+  defaultFolded?: "true" | "false";
+  className?: string;
+  children: ReactNode;
+};
 
 export const CalloutRoot: FC<CalloutRootProps> = ({
   children,
@@ -151,48 +175,61 @@ export const CalloutRoot: FC<CalloutRootProps> = ({
   isFoldable: isFoldableString,
   defaultFolded: defaultFoldedString,
 }) => {
-  const callout = getCallout(type)
-  const isFoldable = isFoldableString === "true"
-  const defaultFolded = defaultFoldedString === "true"
+  const callout = getCallout(type);
+  const isFoldable = isFoldableString === "true";
+  const defaultFolded = defaultFoldedString === "true";
 
   return (
     <Details
       isFoldable={isFoldable}
       defaultFolded={defaultFolded}
-      className={cn("group/root bg-card my-6 rounded-lg border p-4", callout.className.root, className)}
+      className={cn(
+        "group/root bg-card my-6 rounded-lg border p-4",
+        callout.className.root,
+        className,
+      )}
     >
       {children}
     </Details>
-  )
-}
+  );
+};
 
 export type CalloutTitleProps = {
-  type: keyof typeof callouts
-  className?: string
-  children?: ReactNode
-  isFoldable: "true" | "false"
-}
+  type: keyof typeof callouts;
+  className?: string;
+  children?: ReactNode;
+  isFoldable: "true" | "false";
+};
 
-export const CalloutTitle: FC<CalloutTitleProps> = ({ type, isFoldable: isFoldableString, children }) => {
-  const callout = getCallout(type)
-  const isFoldable = isFoldableString === "true"
+export const CalloutTitle: FC<CalloutTitleProps> = ({
+  type,
+  isFoldable: isFoldableString,
+  children,
+}) => {
+  const callout = getCallout(type);
+  const isFoldable = isFoldableString === "true";
 
   return (
     <Summary
       isFoldable={isFoldable}
-      className={cn("flex flex-row items-center gap-2 font-bold", callout.className.title)}
+      className={cn(
+        "flex flex-row items-center gap-2 font-bold",
+        callout.className.title,
+      )}
     >
       {callout.icon}
       <div>{children ?? callout.label}</div>
-      {isFoldable && <ChevronRightIcon className="size-5 shrink-0 transition-transform group-open/root:rotate-90" />}
+      {isFoldable && (
+        <ChevronRightIcon className="size-5 shrink-0 transition-transform group-open/root:rotate-90" />
+      )}
     </Summary>
-  )
-}
+  );
+};
 
 export type CalloutBodyProps = {
-  className?: string
-  children: ReactNode
-}
+  className?: string;
+  children: ReactNode;
+};
 
 export const CalloutBody: FC<CalloutBodyProps> = ({ children }) => {
   return (
@@ -204,5 +241,5 @@ export const CalloutBody: FC<CalloutBodyProps> = ({ children }) => {
     >
       {children}
     </div>
-  )
-}
+  );
+};
