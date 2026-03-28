@@ -48,7 +48,7 @@
     "vaul": "^1.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.4.9",
     "@r4ai/remark-callout": "workspace:*",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.13",
